@@ -9,7 +9,7 @@ og-image.png        link preview
 favicon*.png        favicons
 about/              portrait
 barber/             Zakład Barberski
-cv/                 CV (PL / EN)
+cv/                CV (PL / EN), PDF
 icons/              tool icons
 manture/            Manture
 zly-sen/            Zły Sen
