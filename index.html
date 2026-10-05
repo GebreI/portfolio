@@ -1367,6 +1367,21 @@ class Component extends DCLogic {
       el.classList.add('pg-hide'); io.observe(el);
     });
   }
+  // the shrunk rootMargin never reaches the last rows — reveal whatever is on screen once the page bottoms out
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    if (window.scrollY + window.innerHeight < d.scrollHeight - 8) return;
+    var n = 0;
+    Array.prototype.forEach.call(document.querySelectorAll('.pg-hide:not(.pg-rise)'), function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top >= window.innerHeight) return;
+      io.unobserve(el);
+      if (r.bottom <= 0) { el.classList.remove('pg-hide'); return; }
+      el.style.setProperty('--pgd', n++);
+      el.classList.add('pg-rise');
+      el.addEventListener('animationend', function () { el.classList.remove('pg-rise', 'pg-hide'); el.style.removeProperty('--pgd'); }, { once: true });
+    });
+  }, { passive: true });
   var t = null;
   function schedule() { clearTimeout(t); t = setTimeout(init, 300); }
   var root = document.querySelector('x-dc') || document.body;
