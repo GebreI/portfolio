@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800;900&amp;family=Space+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #f4f4f2; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: #ff5c1a; }
+  @keyframes coordMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes cueArrowOut { from { transform: none; } to { transform: translateX(calc(4.4em + 44px + 1.5em)); } }
+  @keyframes cueTextOut { 0% { -webkit-mask-position: 100% 0; mask-position: 100% 0; } 44%, 100% { -webkit-mask-position: 0% 0; mask-position: 0% 0; } }
+  @keyframes cueArrowBack { from { transform: translateX(calc(4.4em + 44px + 1.5em)); } to { transform: none; } }
+  @keyframes cueArrowIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+  @keyframes cueTextIn { from { -webkit-mask-position: 0% 0; mask-position: 0% 0; } to { -webkit-mask-position: 100% 0; mask-position: 100% 0; } }
+  @keyframes coordPulse { 0%, 100% { opacity: 1; } 50% { opacity: .18; } }
+  @keyframes coordUnderlineWipe {
+    0%   { transform: scaleX(1); transform-origin: right; }
+    48%  { transform: scaleX(0); transform-origin: right; }
+    52%  { transform: scaleX(0); transform-origin: left; }
+    100% { transform: scaleX(1); transform-origin: left; }
+  }
+</style>
+</helmet>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#f2f1ec"></rect><rect x="30" y="30" width="40" height="40" fill="#ff5c1a"></rect></svg></template>
+
+<div style="position:relative; background:#f4f4f2; color:#14140f; font-family:'Space Grotesk',sans-serif;">
+
+  <sc-if value="{{ showGrid }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute; inset:0; background-image:repeating-linear-gradient(to right, rgba(20,20,15,.06) 0 1px, transparent 1px 80px), repeating-linear-gradient(to bottom, rgba(20,20,15,.06) 0 1px, transparent 1px 80px); pointer-events:none; z-index:1;"></div>
+  </sc-if>
+
+  <div style="position:relative; z-index:2;">
+
+    <div ref="{{ barRef }}" style="position:sticky; top:0; z-index:20; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; justify-items:center; padding:{{ navPad }}; border-bottom:1px solid rgba(20,20,15,.14); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; background:rgba(244,244,242,.9); backdrop-filter:blur(10px); box-shadow:{{ navShadow }}; transition:padding .28s ease, box-shadow .28s ease;">
+      <div sc-camel-on-click="{{ toTop }}" title="Back to top" style="justify-self:start; display:flex; align-items:center; gap:10px; cursor:pointer;" style-hover="color:#ff5c1a;">
+        <div style="position:relative; width:{{ navMark }}; height:{{ navMark }}; background:{{ markBg }}; transition:width .28s ease, height .28s ease, background .28s ease;">
+          <span style="position:absolute; left:50%; top:50%; transform:{{ markArrowT }}; font-size:13px; line-height:1; color:#ff5c1a; opacity:{{ markArrow }}; transition:transform .5s cubic-bezier(.2,.7,.2,1) {{ markArrowDelay }}, opacity .35s ease {{ markArrowDelay }};">↑</span>
+        </div>
+        <div style="font-weight:700; font-size:{{ navName }}; transition:font-size .28s ease;">Gabriel Myśliwiec</div>
+      </div>
+      <div ref="{{ navRef }}" sc-camel-on-mouse-leave="{{ leaveNav }}" style="position:relative; display:flex; gap:{{ navGap }}; padding-top:{{ navPadBottomHover }}; padding-bottom:{{ navPadBottomHover }}; transition:gap .28s ease, padding-top .28s ease, padding-bottom .28s ease;">
+        <a ref="{{ workRef }}" href="#work" sc-camel-on-click="{{ goWork }}" sc-camel-on-mouse-enter="{{ enterWork }}" style="padding:{{ navLinkPad }}; margin:{{ navLinkMargin }}; transition:padding .28s ease, margin .28s ease; color:{{ colWork }}; transition:color .25s ease;">work</a>
+        <a ref="{{ experienceRef }}" href="#experience" sc-camel-on-click="{{ goExperience }}" sc-camel-on-mouse-enter="{{ enterExperience }}" style="padding:{{ navLinkPad }}; margin:{{ navLinkMargin }}; transition:padding .28s ease, margin .28s ease; color:{{ colExperience }}; transition:color .25s ease;">experience</a>
+        <a ref="{{ aboutRef }}" href="#about" sc-camel-on-click="{{ goAbout }}" sc-camel-on-mouse-enter="{{ enterAbout }}" style="padding:{{ navLinkPad }}; margin:{{ navLinkMargin }}; transition:padding .28s ease, margin .28s ease; color:{{ colAbout }}; transition:color .25s ease;">about</a>
+        <a ref="{{ contactRef }}" href="#contact" sc-camel-on-click="{{ goContact }}" sc-camel-on-mouse-enter="{{ enterContact }}" style="padding:{{ navLinkPad }}; margin:{{ navLinkMargin }}; transition:padding .28s ease, margin .28s ease; color:{{ colContact }}; transition:color .25s ease;">contact</a>
+        <span style="position:absolute; bottom:0; left:{{ dotLeft }}; width:4px; height:4px; border-radius:50%; background:#ff5c1a; opacity:{{ dotOpacity }}; transform:{{ dotTransform }}; transition:{{ dotTransition }};"></span>
+      </div>
+      <div style="justify-self:end; display:flex; align-items:center; gap:7px; color:#ff5c1a;"><span style="animation:coordPulse 2.6s ease-in-out infinite;">●</span>open to junior roles</div>
+    </div>
+
+    
+
+    <sc-if value="{{ showMarquee }}" hint-placeholder-val="{{ true }}">
+      <div style="position:relative; min-height:{{ heroH }}; box-sizing:border-box; display:flex; flex-direction:column; justify-content:center; padding:min(72px,5vh) 44px min(64px,4vh);">
+
+
+      <div style="display:flex; justify-content:space-between; padding-top:14px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#b0b0a7; letter-spacing:.1em;">50.06</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#b0b0a7; letter-spacing:.1em;">19.94</div>
+      </div>
+
+      <div style="flex:1 1 0; min-height:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+        <div style="display:inline-flex; flex-direction:column; align-items:center;">
+          <div ref="{{ l1Ref }}" style="font-family:'Archivo',sans-serif; font-weight:900; font-size:calc(min(9.6vw, 16vh, 122px) * {{ titleScale }}); line-height:.9; letter-spacing:-.05em; text-transform:uppercase; white-space:nowrap;">Junior title,</div>
+          <div ref="{{ l2Ref }}" style="display:flex; align-items:flex-end; gap:min(2.2vw,26px); white-space:nowrap;">
+            <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:min(9.6vw, 16vh, 122px); line-height:.9; letter-spacing:-.05em; text-transform:uppercase; color:#2b6fff; filter:blur(2px);">Senior</div>
+            <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:min(9.6vw, 16vh, 122px); line-height:.9; letter-spacing:-.05em; text-transform:uppercase; color:#ff5c1a;">appetite.</div>
+          </div>
+          <div style="width:0; min-width:100%; display:flex; flex-direction:column; align-items:center; gap:2px; margin-top:32px;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.6; letter-spacing:.02em; color:#3d3d38; text-align:center; text-wrap:balance;">A year ago I couldn't have built this. In a year I'll be embarrassed by it.</div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.6; letter-spacing:.02em; color:#3d3d38; text-align:center; text-wrap:balance;">That gap is the whole pitch — scroll down and check the direction it's pointing.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:56px; align-items:end; padding-top:min(34px,3vh);">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:2; letter-spacing:.06em; text-transform:uppercase; color:#5c5c56;">
+          <div>Kraków, Poland</div>
+          <div>UI/UX · Identity · E-commerce</div>
+          <div>Computer graphics, 2026</div>
+          <div style="font-size:10px; letter-spacing:.1em; text-transform:none; color:#b0b0a7;">−245</div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; text-align:right; color:#5c5c56;">
+          <div>03 selected projects</div>
+          <div>01 job in design</div>
+          <div style="display:flex; justify-content:flex-end; margin-top:10px; margin-right:-44px; padding-right:44px; overflow:hidden;"><a href="#work" onClick="{{ goWork }}" style="position:relative; display:inline-flex; gap:.6em; color:#ff5c1a; isolation:isolate; cursor:pointer; pointer-events:{{ scrollCueEvents }};" style-hover="color:#14140f;"><span style="order:2; display:inline-block;">scroll</span><span style="order:1; position:relative; z-index:1; display:inline-block; animation:{{ cueArrowAnim }};"><span style="position:absolute; right:100%; top:-4px; bottom:-4px; width:12em; background:linear-gradient(to right, rgba(244,244,242,1) 0%, rgba(244,244,242,1) 88%, rgba(244,244,242,0) 100%); pointer-events:none;"></span>↓</span></a></div>
+        </div>
+      </div>
+    </div><div ref="{{ bandRef }}" style="position:relative; border-top:1px solid rgba(20,20,15,.14); border-bottom:1px solid rgba(20,20,15,.14); overflow:hidden; padding:14px 0; background:#14140f;">
+        <div style="display:flex; width:max-content; animation:coordMarquee 110s linear infinite; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:#f4f4f2; gap:0;">
+          <div style="display:flex; gap:84px; padding-right:84px;">
+            <div>UI/UX design</div><div style="color:#ff5c1a;">✳</div><div>brand identity</div><div style="color:#ff5c1a;">✳</div><div>e-commerce</div><div style="color:#ff5c1a;">✳</div><div>packaging</div><div style="color:#ff5c1a;">✳</div><div>art direction</div><div style="color:#ff5c1a;">✳</div><div>editorial design</div><div style="color:#ff5c1a;">✳</div><div>web design</div><div style="color:#ff5c1a;">✳</div><div>product presentation</div><div style="color:#ff5c1a;">✳</div>
+            <div>UI/UX design</div><div style="color:#ff5c1a;">✳</div><div>brand identity</div><div style="color:#ff5c1a;">✳</div><div>e-commerce</div><div style="color:#ff5c1a;">✳</div><div>packaging</div><div style="color:#ff5c1a;">✳</div><div>art direction</div><div style="color:#ff5c1a;">✳</div><div>editorial design</div><div style="color:#ff5c1a;">✳</div><div>web design</div><div style="color:#ff5c1a;">✳</div><div>product presentation</div><div style="color:#ff5c1a;">✳</div>
+            <div>UI/UX design</div><div style="color:#ff5c1a;">✳</div><div>brand identity</div><div style="color:#ff5c1a;">✳</div><div>e-commerce</div><div style="color:#ff5c1a;">✳</div><div>packaging</div><div style="color:#ff5c1a;">✳</div><div>art direction</div><div style="color:#ff5c1a;">✳</div><div>editorial design</div><div style="color:#ff5c1a;">✳</div><div>web design</div><div style="color:#ff5c1a;">✳</div><div>product presentation</div><div style="color:#ff5c1a;">✳</div>
+          </div>
+          <div style="display:flex; gap:84px; padding-right:84px;">
+            <div>UI/UX design</div><div style="color:#ff5c1a;">✳</div><div>brand identity</div><div style="color:#ff5c1a;">✳</div><div>e-commerce</div><div style="color:#ff5c1a;">✳</div><div>packaging</div><div style="color:#ff5c1a;">✳</div><div>art direction</div><div style="color:#ff5c1a;">✳</div><div>editorial design</div><div style="color:#ff5c1a;">✳</div><div>web design</div><div style="color:#ff5c1a;">✳</div><div>product presentation</div><div style="color:#ff5c1a;">✳</div>
+            <div>UI/UX design</div><div style="color:#ff5c1a;">✳</div><div>brand identity</div><div style="color:#ff5c1a;">✳</div><div>e-commerce</div><div style="color:#ff5c1a;">✳</div><div>packaging</div><div style="color:#ff5c1a;">✳</div><div>art direction</div><div style="color:#ff5c1a;">✳</div><div>editorial design</div><div style="color:#ff5c1a;">✳</div><div>web design</div><div style="color:#ff5c1a;">✳</div><div>product presentation</div><div style="color:#ff5c1a;">✳</div>
+            <div>UI/UX design</div><div style="color:#ff5c1a;">✳</div><div>brand identity</div><div style="color:#ff5c1a;">✳</div><div>e-commerce</div><div style="color:#ff5c1a;">✳</div><div>packaging</div><div style="color:#ff5c1a;">✳</div><div>art direction</div><div style="color:#ff5c1a;">✳</div><div>editorial design</div><div style="color:#ff5c1a;">✳</div><div>web design</div><div style="color:#ff5c1a;">✳</div><div>product presentation</div><div style="color:#ff5c1a;">✳</div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <div ref="{{ divWorkRef }}" style="padding:122px 0; display:flex; flex-direction:column; align-items:center; gap:14px;">
+      <div style="position:relative; display:flex; gap:9px;">
+        <div style="width:6px; height:6px; background:#d8d7d0;"></div>
+        <div style="width:6px; height:6px; background:#d8d7d0;"></div>
+        <div style="width:6px; height:6px; background:#d8d7d0;"></div>
+        <div style="width:6px; height:6px; background:#d8d7d0;"></div>
+        <div style="position:absolute; top:0; left:0; width:6px; height:6px; background:#ff5c1a; opacity:{{ sqOnWork }}; transform:translateX({{ sqXWork }}); transition:transform .45s cubic-bezier(.65,0,.35,1), opacity .3s ease;"></div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.34em; text-transform:uppercase; color:#8a8a85; opacity:{{ labWork }}; transition:opacity .4s ease;">Work</div>
+    </div>
+
+    <div id="work" style="display:grid; grid-template-columns:72px minmax(0,1fr) minmax(0,1fr) 100px; gap:24px; padding:56px 44px 20px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:#a8a89f; border-bottom:1px solid rgba(20,20,15,.14);">
+      <div style="color:#a8a89f;">Index</div><div>project</div><div>discipline</div><div style="text-align:right;">year</div>
+    </div>
+    <div style="display:flex; flex-direction:column;">
+      <a href="#p01" style="display:grid; grid-template-columns:72px minmax(0,1fr) minmax(0,1fr) 100px; gap:24px; padding:20px 44px; border-bottom:1px solid rgba(20,20,15,.14); font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:.06em; text-transform:uppercase; transition:background 0s, color 0s;" style-hover="background:#14140f; color:#f4f4f2; transition:background .32s ease, color .32s ease;">
+        <div style="color:#a8a89f;">01</div><div style="font-weight:700;">Zły Sen</div><div>Interactive story · art direction</div><div style="text-align:right;">2026</div>
+      </a>
+      <a href="#p02" style="display:grid; grid-template-columns:72px minmax(0,1fr) minmax(0,1fr) 100px; gap:24px; padding:20px 44px; border-bottom:1px solid rgba(20,20,15,.14); font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:.06em; text-transform:uppercase; transition:background 0s, color 0s;" style-hover="background:#14140f; color:#f4f4f2; transition:background .32s ease, color .32s ease;">
+        <div style="color:#a8a89f;">02</div><div style="font-weight:700;">Manture</div><div>Brand identity · packaging</div><div style="text-align:right;">2026</div>
+      </a>
+      <a href="#p03" style="display:grid; grid-template-columns:72px minmax(0,1fr) minmax(0,1fr) 100px; gap:24px; padding:20px 44px; border-bottom:1px solid rgba(20,20,15,.14); font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:.06em; text-transform:uppercase; transition:background 0s, color 0s;" style-hover="background:#14140f; color:#f4f4f2; transition:background .32s ease, color .32s ease;">
+        <div style="color:#a8a89f;">03</div><div style="font-weight:700;">Zakład Barberski</div><div>App concept · UX/UI + branding</div><div style="text-align:right;">2025</div>
+      </a>
+    </div>
+
+    <div id="p01" style="padding-bottom:150px;">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; padding:130px 44px 20px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f;">
+        <div>Project 1 / 03</div>
+        <div>Interactive dark fantasy story</div>
+        <div>2026</div>
+      </div>
+      <div style="position:relative;">
+        <div style="display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:300px; gap:10px; padding:0 44px;">
+        <div style="position:relative; background:#0e0e0e; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="zly-sen/img-01.webp" alt="Zły Sen — open book and logo" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></div>
+        <div style="position:relative; background:#0e0e0e; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="zly-sen/img-02.webp" alt="Zły Sen — page spreads" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></div>
+        <div style="position:relative; background:#0e0e0e; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="zly-sen/img-03.webp" alt="Zły Sen — cover" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></div>
+        </div>
+        <div style="padding:22px 44px 0; font-size:clamp(56px,8.4vw,124px);">
+          <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(56px,8.4vw,124px); line-height:.86; letter-spacing:-.045em; text-transform:uppercase; color:#14140f;">Zły Sen</div>
+          <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(20px,2.4vw,34px); line-height:1; letter-spacing:.02em; text-transform:uppercase; margin-top:6px; display:flex; flex-wrap:wrap; column-gap:.4em;"><span style="color:#2b6fff; filter:blur(1px);">editorial</span><span style="color:#ff5c1a;">interactive story</span></div>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(260px,340px); gap:48px; padding:40px 44px 0;">
+        <div style="font-size:16px; line-height:1.68; color:#3d3d38; text-wrap:pretty;">Zły Sen — "Bad Dream" — is a branching dark-fantasy story I wrote, designed and art-directed myself. The reader moves through biological labyrinths, cold mechanical corridors and crystalline chambers, and the layout shifts with them: type, imagery and pacing all change as the world does.</div>
+        <div style="font-size:16px; line-height:1.68; color:#3d3d38; text-wrap:pretty;">The hard part was structure. Overt and hidden paths, decisions that pay off chapters later, several endings including the protagonist’s death — all of it mapped before a single spread was designed. It taught me to treat a story the way you treat a product: as a system of states someone navigates.</div>
+        <div style="display:flex; flex-direction:column; gap:13px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;">
+          <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Role</div><div style="text-align:right;">Concept · writing · art direction</div></div>
+          <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Tools</div><div style="text-align:right;">Photoshop · Illustrator</div></div>
+          <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Type</div><div style="text-align:right;">Personal project</div></div>
+          <div style="display:flex; margin-top:4px;">
+            <a sc-camel-on-mouse-enter="{{ wipe1Enter }}" href="https://www.behance.net/gallery/252936711/ZLY-SEN-BAD-DREAM-Interactive-Dark-Fantasy-Story" style="position:relative; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.12em; text-transform:uppercase; padding-bottom:5px;"><span style="position:relative; z-index:1;">View full case on Behance →</span><span style="position:absolute; left:0; right:0; bottom:0; height:2px; background:#ff5c1a; animation:{{ wipe1 }};"></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="p02" style="padding-bottom:150px;">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; padding:34px 44px 20px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f;">
+        <div>Project 2 / 03</div>
+        <div>Brand identity · men’s natural cosmetics</div>
+        <div>2026</div>
+      </div>
+      <div style="position:relative;">
+        <div style="display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:300px; gap:10px; padding:0 44px;">
+        <div style="position:relative; background:#eceef0; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="manture/img-04.webp" alt="Manture — product range and logo" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:70% center; display:block;"></div>
+        <div style="position:relative; background:#eceef0; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="manture/img-05.webp" alt="Manture — bottle and product icons" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></div>
+        <div style="position:relative; background:#eceef0; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="manture/img-06.webp" alt="Manture — mountain logo pattern" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></div>
+        </div>
+        <div style="padding:22px 44px 0; font-size:clamp(56px,8.4vw,124px);">
+          <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(56px,8.4vw,124px); line-height:.86; letter-spacing:-.045em; text-transform:uppercase; color:#14140f;">Manture</div>
+          <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(20px,2.4vw,34px); line-height:1; letter-spacing:.02em; text-transform:uppercase; margin-top:6px; display:flex; flex-wrap:wrap; column-gap:.4em;"><span style="color:#2b6fff; filter:blur(1px);">brand identity</span><span style="color:#ff5c1a;">packaging</span></div>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(260px,340px); gap:48px; padding:40px 44px 0;">
+        <div style="font-size:16px; line-height:1.68; color:#3d3d38; text-wrap:pretty;">Men’s grooming brands almost all reach for the same shelf: black, red, chrome, shouting. Manture is a natural cosmetics line, so that language would have been a lie — the brief was to look honest rather than aggressive.</div>
+        <div style="font-size:16px; line-height:1.68; color:#3d3d38; text-wrap:pretty;">I built the identity around restraint: a single-line mountain mark that says “less is more”, a palette of stone and slate greys instead of black and red, and typography that leaves room to breathe. The system covers the logo, a custom alphabet, palette, icon set and a packaging family — enough for a small line to stand on a shelf next to the shouting and still get picked up.</div>
+        <div style="display:flex; flex-direction:column; gap:13px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;">
+          <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Role</div><div style="text-align:right;">Brand identity design</div></div>
+          <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Tools</div><div style="text-align:right;">Illustrator · Photoshop</div></div>
+          <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Type</div><div style="text-align:right;">Concept</div></div>
+          <div style="display:flex; margin-top:4px;">
+            <a sc-camel-on-mouse-enter="{{ wipe2Enter }}" href="https://www.behance.net/gallery/253172927/Manture-Mens-Natural-Cosmetics-Brand-Identity" style="position:relative; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.12em; text-transform:uppercase; padding-bottom:5px;"><span style="position:relative; z-index:1;">View full case on Behance →</span><span style="position:absolute; left:0; right:0; bottom:0; height:2px; background:#ff5c1a; animation:{{ wipe2 }};"></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="p03" style="padding-bottom:40px;">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; padding:34px 44px 20px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f;">
+        <div>Project 3 / 03</div>
+        <div>Barbershop app concept · UX/UI design</div>
+        <div>2025</div>
+      </div>
+      <div style="position:relative;">
+        <div style="display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:300px; gap:10px; padding:0 44px;">
+        <div style="position:relative; background:#ffffff; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="barber/img-07.webp" alt="Zakład Barberski — app screens and logo" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:61% center; display:block;"></div>
+        <div style="position:relative; background:#ffffff; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="barber/img-08.webp" alt="Zakład Barberski — services screen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></div>
+        <div style="position:relative; background:#ffffff; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="barber/img-09.webp" alt="Zakład Barberski — about screen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></div>
+        </div>
+        <div style="padding:22px 44px 0; font-size:clamp(56px,8.4vw,124px);">
+          <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(56px,8.4vw,124px); line-height:.86; letter-spacing:-.045em; text-transform:uppercase; color:#14140f;">Zakład</div>
+          <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(56px,8.4vw,124px); line-height:.86; letter-spacing:-.045em; text-transform:uppercase; color:#14140f;">Barberski</div>
+          <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(20px,2.4vw,34px); line-height:1; letter-spacing:.02em; text-transform:uppercase; margin-top:6px; display:flex; flex-wrap:wrap; column-gap:.4em;"><span style="color:#2b6fff; filter:blur(1px);">UX/UI</span><span style="color:#ff5c1a;">branding</span></div>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(260px,340px); gap:48px; padding:40px 44px 0;">
+        <div style="font-size:16px; line-height:1.68; color:#3d3d38; text-wrap:pretty;">A barbershop app has three jobs: show what’s on offer, make the price clear before anyone books, and get new clients through the door. Every screen is built around one of them — services sorted the way clients actually search, the price and scope of each visit stated upfront, and directions one tap away.</div>
+        <div style="font-size:16px; line-height:1.68; color:#3d3d38; text-wrap:pretty;">Visually, the concept breaks from the clean-tech look most booking apps share. A bold, gothic identity drawn from the shop’s own character sets the tone, while a restrained black-and-white UI keeps content legible — an interface that feels like walking in, not a template with a logo dropped on it.</div>
+        <div style="display:flex; flex-direction:column; gap:13px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;">
+          <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Role</div><div style="text-align:right;">UX/UI design · branding</div></div>
+          <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Tools</div><div style="text-align:right;">Figma · Illustrator · Photoshop</div></div>
+          <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Type</div><div style="text-align:right;">Concept · mobile app &amp; web</div></div>
+          <div style="display:flex; margin-top:4px;">
+            <a sc-camel-on-mouse-enter="{{ wipe3Enter }}" href="https://www.behance.net/gallery/253233723" style="position:relative; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.12em; text-transform:uppercase; padding-bottom:5px;"><span style="position:relative; z-index:1;">View full case on Behance →</span><span style="position:absolute; left:0; right:0; bottom:0; height:2px; background:#ff5c1a; animation:{{ wipe3 }};"></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div ref="{{ divExperienceRef }}" style="padding:122px 0; display:flex; flex-direction:column; align-items:center; gap:14px;">
+      <div style="position:relative; display:flex; gap:9px;">
+        <div style="width:6px; height:6px; background:#d8d7d0;"></div>
+        <div style="width:6px; height:6px; background:#d8d7d0;"></div>
+        <div style="width:6px; height:6px; background:#d8d7d0;"></div>
+        <div style="width:6px; height:6px; background:#d8d7d0;"></div>
+        <div style="position:absolute; top:0; left:0; width:6px; height:6px; background:#ff5c1a; opacity:{{ sqOnExperience }}; transform:translateX({{ sqXExperience }}); transition:transform .45s cubic-bezier(.65,0,.35,1), opacity .3s ease;"></div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.34em; text-transform:uppercase; color:#8a8a85; opacity:{{ labExperience }}; transition:opacity .4s ease;">Experience</div>
+    </div>
+
+    <div id="experience" style="padding:0 44px 40px;">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; padding-bottom:20px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f;">
+        <div>Roles</div><div>2024 — now</div>
+      </div>
+      <div style="display:flex; flex-direction:column; border-bottom:1px solid rgba(20,20,15,.14);">
+        <div style="display:flex; flex-wrap:wrap; column-gap:48px; row-gap:24px; padding:36px 0 40px; border-top:1px solid rgba(20,20,15,.14); align-items:baseline;">
+          <div style="flex:1 1 200px; display:flex; align-items:baseline; gap:18px;">
+            <div style="flex:none; width:22px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; color:#ff5c1a;">01</div>
+            <div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:clamp(22px,2.1vw,28px); line-height:1.08; letter-spacing:-.02em; text-wrap:balance;">E-commerce Design &amp; Management</div>
+          </div>
+          <div style="flex:2 1 320px; font-size:16px; line-height:1.68; color:#3d3d38; text-wrap:pretty;">I design and visually develop websites for international markets — layout and UX/UI changes, graphics for the store, and product presentation that has to sell. I also oversee order fulfilment across Allegro and our own store, and coordinate the team on shipping.</div>
+          <div style="flex:1 1 260px; max-width:340px; margin-left:auto; display:flex; flex-direction:column; gap:13px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;">
+            <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Period</div><div style="text-align:right; color:#ff5c1a;">11.2025 — present</div></div>
+            <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Company</div><div style="text-align:right;">Datan Sp. z o.o.</div></div>
+            <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Place</div><div style="text-align:right;">Kraków</div></div>
+          </div>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; column-gap:48px; row-gap:24px; padding:22px 0 24px; border-top:1px solid rgba(20,20,15,.14); align-items:baseline; filter:opacity(.62);">
+          <div style="flex:1 1 200px; display:flex; align-items:baseline; gap:18px;">
+            <div style="flex:none; width:22px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; color:#a8a89f;">02</div>
+            <div style="font-family:'Archivo',sans-serif; font-weight:600; font-size:clamp(17px,1.5vw,20px); line-height:1.15; letter-spacing:-.02em; text-wrap:balance; color:#3d3d38;">Warehouse Associate</div>
+          </div>
+          <div style="flex:2 1 320px; font-size:14px; line-height:1.6; color:#5c5c56; text-wrap:pretty;">Order assembly, warehouse systems, quality checks. Where I learned what “on time” actually costs.</div>
+          <div style="flex:1 1 260px; max-width:340px; margin-left:auto; display:flex; flex-direction:column; gap:13px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;">
+            <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Period</div><div style="text-align:right;">01.2025 — 11.2025</div></div>
+            <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Company</div><div style="text-align:right;">Aramus Sp. z o.o.</div></div>
+          </div>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; column-gap:48px; row-gap:24px; padding:22px 0 24px; border-top:1px solid rgba(20,20,15,.14); align-items:baseline; filter:opacity(.62);">
+          <div style="flex:1 1 200px; display:flex; align-items:baseline; gap:18px;">
+            <div style="flex:none; width:22px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; color:#a8a89f;">03</div>
+            <div style="font-family:'Archivo',sans-serif; font-weight:600; font-size:clamp(17px,1.5vw,20px); line-height:1.15; letter-spacing:-.02em; text-wrap:balance; color:#3d3d38;">Customer Advisor</div>
+          </div>
+          <div style="flex:2 1 320px; font-size:14px; line-height:1.6; color:#5c5c56; text-wrap:pretty;">Advising customers on product and trend, hitting sales targets, handling returns and complaints.</div>
+          <div style="flex:1 1 260px; max-width:340px; margin-left:auto; display:flex; flex-direction:column; gap:13px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;">
+            <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Period</div><div style="text-align:right;">07.2024 — 10.2024</div></div>
+            <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Company</div><div style="text-align:right;">Sizeer · Marketing Investment Group</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div ref="{{ divAboutRef }}" style="padding:122px 0; display:flex; flex-direction:column; align-items:center; gap:14px;">
+      <div style="position:relative; display:flex; gap:9px;">
+        <div style="width:6px; height:6px; background:#d8d7d0;"></div>
+        <div style="width:6px; height:6px; background:#d8d7d0;"></div>
+        <div style="width:6px; height:6px; background:#d8d7d0;"></div>
+        <div style="width:6px; height:6px; background:#d8d7d0;"></div>
+        <div style="position:absolute; top:0; left:0; width:6px; height:6px; background:#ff5c1a; opacity:{{ sqOnAbout }}; transform:translateX({{ sqXAbout }}); transition:transform .45s cubic-bezier(.65,0,.35,1), opacity .3s ease;"></div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.34em; text-transform:uppercase; color:#8a8a85; opacity:{{ labAbout }}; transition:opacity .4s ease;">About</div>
+    </div>
+
+    <div id="about" style="display:grid; grid-template-columns:minmax(260px,340px) minmax(0,1fr); gap:72px; padding:0 44px 150px; align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div style="aspect-ratio:3 / 4; background:#e8e7e1; border:1px solid rgba(20,20,15,.2); overflow:hidden;">
+          <img src="about/portrait.webp" alt="Gabriel Myśliwiec" style="display:block; width:100%; height:100%; object-fit:cover; object-position:50% 30%;">
+        </div>
+        <div style="display:flex; justify-content:space-between; gap:16px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#a8a89f;"><div>Gabriel Myśliwiec</div><div>Kraków</div></div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:64px;">
+        <div style="display:flex; flex-direction:column; gap:24px;">
+          <div style="font-size:clamp(22px,2.2vw,30px); line-height:1.36; letter-spacing:-.015em; max-width:820px; text-wrap:pretty;">I'm a graphic and UI/UX designer with a computer graphics degree. I care about the whole picture — the identity, the layout and the moment someone actually uses it.</div>
+          <div style="font-size:16px; line-height:1.68; color:#3d3d38; max-width:620px; text-wrap:pretty;">Day to day I design for an online store selling to international markets — layouts, UX changes, store graphics and product presentation — and I see every change go live in front of real customers. Before design school I trained as an IT technician, so I know how the technical side works and can talk to developers in their own language.</div>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); column-gap:48px; row-gap:48px;">
+          <div style="display:flex; flex-direction:column; gap:16px;"><div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f; padding-bottom:10px; border-bottom:1px solid rgba(20,20,15,.14);">Education</div><div style="display:flex; flex-direction:column; gap:12px;"><div style="display:flex; flex-direction:column; gap:5px; padding-bottom:12px; border-bottom:1px solid rgba(20,20,15,.14);"><div style="font-size:16px; font-weight:600; line-height:1.3;">Computer Graphics</div><div style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.5; letter-spacing:.06em; color:#8a8a85;">Szkoła Grafiki Komputerowej · 2024 — 2026</div></div><div style="display:flex; flex-direction:column; gap:5px; padding-bottom:12px; border-bottom:1px solid rgba(20,20,15,.14);"><div style="font-size:16px; font-weight:600; line-height:1.3;">IT Specialist</div><div style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.5; letter-spacing:.06em; color:#8a8a85;">Technikum Energetyczno-Elektroniczne nr 9, Kraków · 2017 — 2021</div></div></div></div>
+          <div style="display:flex; flex-direction:column; gap:16px;"><div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f; padding-bottom:10px; border-bottom:1px solid rgba(20,20,15,.14);">Languages</div><div style="display:flex; flex-direction:column; gap:13px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;"><div style="display:flex; justify-content:space-between; gap:16px; padding-bottom:8px; border-bottom:1px solid rgba(20,20,15,.14);"><div>Polish</div><div style="color:#8a8a85;">native</div></div><div style="display:flex; justify-content:space-between; gap:16px; padding-bottom:8px; border-bottom:1px solid rgba(20,20,15,.14);"><div>English</div><div style="color:#8a8a85;">advanced</div></div></div></div>
+          <div style="display:flex; flex-direction:column; gap:16px;"><div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f; padding-bottom:10px; border-bottom:1px solid rgba(20,20,15,.14);">Tools</div><div style="display:flex; flex-wrap:wrap; gap:8px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;"><div style="display:flex; align-items:center; gap:7px; border:1px solid rgba(20,20,15,.24); padding:7px 11px;"><img src="icons/ico-figma.svg" alt="" width="12" height="12" style="display:block; width:12px; height:12px;">Figma</div><div style="display:flex; align-items:center; gap:7px; border:1px solid rgba(20,20,15,.24); padding:7px 11px;"><img src="icons/ico-photoshop.svg" alt="" width="12" height="12" style="display:block; width:12px; height:12px;">Photoshop</div><div style="display:flex; align-items:center; gap:7px; border:1px solid rgba(20,20,15,.24); padding:7px 11px;"><img src="icons/ico-illustrator.svg" alt="" width="12" height="12" style="display:block; width:12px; height:12px;">Illustrator</div><div style="display:flex; align-items:center; gap:7px; border:1px solid rgba(20,20,15,.24); padding:7px 11px;"><img src="icons/ico-indesign.svg" alt="" width="12" height="12" style="display:block; width:12px; height:12px;">InDesign</div><div style="display:flex; align-items:center; gap:7px; border:1px solid rgba(20,20,15,.24); padding:7px 11px;"><img src="icons/ico-canva.svg" alt="" width="12" height="12" style="display:block; width:12px; height:12px;">Canva</div><div style="display:flex; align-items:center; gap:7px; border:1px solid rgba(20,20,15,.24); padding:7px 11px;"><img src="icons/ico-claude.svg" alt="" width="12" height="12" style="display:block; width:12px; height:12px;">Claude</div><div style="display:flex; align-items:center; gap:7px; border:1px solid rgba(20,20,15,.24); padding:7px 11px;"><img src="icons/ico-chatgpt.svg" alt="" width="12" height="12" style="display:block; width:12px; height:12px;">ChatGPT</div></div></div>
+          <sc-if value="{{ showLearning }}" hint-placeholder-val="{{ false }}"><div style="display:flex; flex-direction:column; gap:16px;"><div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#2b6fff; padding-bottom:10px; border-bottom:1px solid rgba(43,111,255,.35);">Currently learning</div><div style="display:flex; flex-wrap:wrap; gap:8px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;"><div style="display:flex; align-items:center; gap:7px; border:1px solid #2b6fff; color:#2b6fff; padding:7px 11px;"><img src="icons/ico-claude-blue.svg" alt="" width="12" height="12" style="display:block; width:12px; height:12px;">Claude Code</div></div></div></sc-if>
+        </div>
+      </div>
+    </div>
+
+    <div ref="{{ divContactRef }}" style="padding:122px 0; display:flex; flex-direction:column; align-items:center; gap:14px;">
+      <div style="position:relative; display:flex; gap:9px;">
+        <div style="width:6px; height:6px; background:#d8d7d0;"></div>
+        <div style="width:6px; height:6px; background:#d8d7d0;"></div>
+        <div style="width:6px; height:6px; background:#d8d7d0;"></div>
+        <div style="width:6px; height:6px; background:#d8d7d0;"></div>
+        <div style="position:absolute; top:0; left:0; width:6px; height:6px; background:#ff5c1a; opacity:{{ sqOnContact }}; transform:translateX({{ sqXContact }}); transition:transform .45s cubic-bezier(.65,0,.35,1), opacity .3s ease;"></div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.34em; text-transform:uppercase; color:#8a8a85; opacity:{{ labContact }}; transition:opacity .4s ease;">Contact</div>
+    </div>
+
+    <div id="contact" style="padding:0 44px 60px; display:flex; flex-direction:column; gap:64px;">
+      <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(56px,9vw,132px); line-height:.88; letter-spacing:-.05em; text-transform:uppercase;"><div style="display:flex; flex-wrap:wrap; column-gap:.22em;"><span>Let's</span><span style="color:#2b6fff; filter:blur(1.4px);">work</span></div><div style="color:#ff5c1a;">together.</div></div>
+      <div style="display:grid; grid-template-columns:minmax(0,2fr) minmax(260px,340px); gap:48px; align-items:end;">
+        <div style="display:flex; flex-direction:column; gap:14px; container-type:inline-size;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f;">Write to me</div>
+          <a href="mailto:gabriel.mysliwiec10@gmail.com" style="align-self:flex-start; font-family:'Archivo',sans-serif; font-weight:800; font-size:min(40px, 5.6cqi); line-height:1.1; letter-spacing:-.02em; color:#14140f; border-bottom:2px solid #ff5c1a; padding-bottom:6px; white-space:nowrap;" style-hover="color:#ff5c1a;">gabriel.mysliwiec10@gmail.com</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:13px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;">
+          <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Phone</div><div style="text-align:right; display:flex; gap:12px;"><a href="tel:+48736612065" style="color:#14140f;" style-hover="color:#ff5c1a;">+48 736 612 065</a></div></div>
+          <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Behance</div><div style="text-align:right; display:flex; gap:12px;"><a href="https://www.behance.net/gabrielmyliwiec" target="_blank" rel="noopener" style="color:#14140f;" style-hover="color:#ff5c1a;">gabrielmyliwiec ↗</a></div></div>
+          <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">CV</div><div style="text-align:right; display:flex; gap:12px;"><a href="cv/CV-EN-Gabriel-Mysliwiec.pdf" target="_blank" rel="noopener" style="color:#14140f;" style-hover="color:#ff5c1a;">EN ↗</a><a href="cv/CV-PL-Gabriel-Mysliwiec.pdf" target="_blank" rel="noopener" style="color:#14140f;" style-hover="color:#ff5c1a;">PL ↗</a></div></div>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:24px; align-items:center; padding-top:24px; border-top:1px solid rgba(20,20,15,.14); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#8a8a85;">
+        <div>Kraków · 50.0614 N / 19.9366 E</div>
+        <div style="display:flex; justify-content:center; align-items:center; gap:8px; color:#ff5c1a;"><span style="animation:coordPulse 2.6s ease-in-out infinite;">●</span>open to junior design roles</div>
+        <div style="text-align:right;">© 2026 Gabriel Myśliwiec</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;showGrid&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;showMarquee&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;smoothScroll&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;showLearning&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Content&quot;,&quot;label&quot;:&quot;Show “Currently learning”&quot;}}">
+class Component extends DCLogic {
+  state = { scrolled: false, active: null, dotX: 0, hovered: null, viaClick: false };
+  _locked = null;
+  _go(id) {
+    return (e) => {
+      e.preventDefault();
+      const dv = this._divRefs[id] && this._divRefs[id].current;
+      const el = dv || document.getElementById(id);
+      if (!el) return;
+      this._locked = id;
+      clearTimeout(this._lockTimer);
+      const x = this._xOf(id);
+      this.setState(x == null
+        ? { active: id, hovered: null, viaClick: true }
+        : { active: id, hovered: null, viaClick: true, dotX: x });
+      const y = el.getBoundingClientRect().top + window.scrollY - 70;
+      this._glideTo(y);
+      this._lockTimer = setTimeout(() => {
+        this._locked = null;
+        this.setState({ viaClick: false });
+        this._onScroll();
+      }, 900);
+    };
+  }
+  _wipe(n) {
+    return () => {
+      const key = 'wipe' + n;
+      if (this.state[key]) return;
+      this.setState({ [key]: true });
+      clearTimeout(this['_wt' + n]);
+      this['_wt' + n] = setTimeout(() => this.setState({ [key]: false }), 640);
+    };
+  }
+  _xOf(id) {
+    const link = this._linkRefs[id] && this._linkRefs[id].current;
+    return link ? link.offsetLeft + link.offsetWidth / 2 : null;
+  }
+  _enter(id) {
+    return () => {
+      if (this._locked) return;
+      const x = this._xOf(id);
+      this.setState(x == null ? { hovered: id } : { hovered: id, dotX: x });
+    };
+  }
+  _leave() {
+    return () => {
+      const id = this._locked || this.state.active;
+      const x = id ? this._xOf(id) : null;
+      clearTimeout(this._hmTimer);
+      this._hmTimer = setTimeout(() => this.setState({ hoverMove: false }), 460);
+      this.setState(x == null ? { hovered: null, hoverMove: true } : { hovered: null, hoverMove: true, dotX: x });
+    };
+  }
+  _navRef = React.createRef();
+  _barRef = React.createRef();
+  _l1Ref = React.createRef();
+  _l2Ref = React.createRef();
+  _fitTitle = () => {
+    const a = this._l1Ref.current, b = this._l2Ref.current;
+    if (!a || !b) return;
+    const cur = this.state.titleScale || 1;
+    const w1 = a.getBoundingClientRect().width / cur;
+    const w2 = b.getBoundingClientRect().width;
+    if (!w1 || !w2) return;
+    const next = Math.min(1.6, Math.max(0.7, w2 / w1));
+    if (Math.abs(next - cur) > 0.005) this.setState({ titleScale: next });
+  };
+  _divRefs = { work: React.createRef(), experience: React.createRef(), about: React.createRef(), contact: React.createRef() };
+  _divVis = () => {
+    const bar = this._barRef.current;
+    const top = bar ? bar.offsetHeight : 93;
+    const out = {};
+    let changed = false;
+    for (const id of ['work', 'experience', 'about', 'contact']) {
+      const el = this._divRefs[id].current;
+      let on = false;
+      if (el) {
+        const r = el.getBoundingClientRect();
+        on = r.bottom > top + 20 && r.top < window.innerHeight - 20;
+      }
+      this._seen = this._seen || {};
+      if (on && this.state.active === id) {
+        if (!this._seen[id]) {
+          this._seen[id] = true;
+          setTimeout(() => {
+            this._moved = Object.assign({}, this._moved, { [id]: true });
+            this.forceUpdate();
+          }, 80);
+        }
+      }
+      out[id] = !!this._seen[id];
+      if ((this.state.divVis || {})[id] !== out[id]) changed = true;
+    }
+    if (changed) this.setState({ divVis: out });
+  };
+  _bandRef = React.createRef();
+  _maxScroll() {
+    return Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+  }
+  _stopLerp = () => {
+    if (this._raf) cancelAnimationFrame(this._raf);
+    this._raf = null;
+  };
+  _startLerp() {
+    if (this._raf) return;
+    const token = (this._token = (this._token || 0) + 1);
+    let last = window.scrollY;
+    let stalls = 0;
+    const step = () => {
+      if (token !== this._token) { this._raf = null; return; }
+      const cur = window.scrollY;
+      this._target = Math.min(this._maxScroll(), Math.max(0, this._target));
+      const d = this._target - cur;
+      if (Math.abs(d) < 0.6) { this._raf = null; return; }
+      if (Math.abs(cur - last) < 0.5) {
+        if (++stalls > 3) { this._raf = null; return; }
+      } else stalls = 0;
+      last = cur;
+      window.scrollTo(0, cur + d * 0.12);
+      this._raf = requestAnimationFrame(step);
+    };
+    this._raf = requestAnimationFrame(step);
+  }
+  _onWheel = (e) => {
+    if (this.props.smoothScroll === false) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (e.ctrlKey) return;
+    e.preventDefault();
+    const base = this._raf ? this._target : window.scrollY;
+    this._target = Math.min(this._maxScroll(), Math.max(0, base + e.deltaY));
+    this._startLerp();
+  };
+  _glideTo(y) {
+    this._target = Math.min(this._maxScroll(), Math.max(0, y));
+    this._startLerp();
+  }
+  _fitHero = () => {
+    if ((window.scrollY || 0) > 60) return;
+    const bar = this._barRef.current, band = this._bandRef.current;
+    if (!bar) return;
+    const h = window.innerHeight - bar.offsetHeight - (band ? band.offsetHeight : 0);
+    if (h > 320 && Math.abs(h - (this._heroPx || 0)) > 1) {
+      this._heroPx = h;
+      this.setState({ heroPx: h });
+    }
+  };
+  _linkRefs = { work: React.createRef(), experience: React.createRef(), about: React.createRef(), contact: React.createRef() };
+  _measure() {
+    if (!this._locked && !this.state.hovered && this.state.active) return;
+    const id = this._locked || this.state.hovered || this.state.active ||
+      (this.state.dotX ? null : this._ids?.[0]);
+    if (!id) return;
+    const link = this._linkRefs[id].current, nav = this._navRef.current;
+    if (!link || !nav) return;
+    const x = link.offsetLeft + link.offsetWidth / 2;
+    if (Math.abs(x - this.state.dotX) > 0.5) this.setState({ dotX: x });
+  }
+  componentDidUpdate() {
+    this._fitTitle();
+    this._measure();
+    const vis = !!(this._locked || this.state.hovered || this.state.active);
+    if (vis !== this._wasVisible) {
+      this._wasVisible = vis;
+      if (vis) requestAnimationFrame(() => this.forceUpdate());
+    }
+  }
+  componentDidMount() {
+    this._ids = ['work', 'experience', 'about', 'contact'];
+    this._onScroll = () => {
+      const y = window.scrollY || document.documentElement.scrollTop;
+      const next = y > 60;
+      const probe = y + window.innerHeight * 0.34;
+      let active = null;
+      for (const id of this._ids) {
+        const dv = this._divRefs[id] && this._divRefs[id].current;
+        const el = dv || document.getElementById(id);
+        if (el && el.getBoundingClientRect().top + y <= probe) active = id;
+      }
+      const doc = document.documentElement;
+      if (y + window.innerHeight >= doc.scrollHeight - 4) active = 'contact';
+      if (this._locked) active = this._locked;
+      let glide = null;
+      if (!this._locked && !this.state.hovered && active) {
+        const i = this._ids.indexOf(active);
+        const top = (id) => {
+          const el = document.getElementById(id);
+          return el ? el.getBoundingClientRect().top + y : null;
+        };
+        const a = top(active), b = i < this._ids.length - 1 ? top(this._ids[i + 1]) : null;
+        const xa = this._xOf(active);
+        const xb = i < this._ids.length - 1 ? this._xOf(this._ids[i + 1]) : null;
+        if (xa != null) glide = xa;
+      }
+      {
+        const tops = this._ids.map(id => {
+          const el = (this._divRefs[id] && this._divRefs[id].current) || document.getElementById(id);
+          return el ? el.getBoundingClientRect().top + y : null;
+        });
+        let frac = 0;
+        for (let i = 0; i < tops.length; i++) {
+          if (tops[i] == null || probe < tops[i]) break;
+          frac = i;
+        }
+        if (y + window.innerHeight >= document.documentElement.scrollHeight - 4) {
+          frac = this._ids.length - 1;
+        }
+        frac = Math.max(frac, this._sqFrac || 0);
+        if (Math.abs(frac - (this._sqFrac || 0)) > 0.01) {
+          this._sqFrac = frac;
+          this.setState({ sqFrac: frac });
+        }
+      }
+      const changed = next !== this.state.scrolled || active !== this.state.active;
+      if (changed || (glide != null && Math.abs(glide - this.state.dotX) > 0.5)) {
+        const s = { scrolled: next, active };
+        if (glide != null) s.dotX = glide;
+        this.setState(s);
+      }
+      this._divVis();
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    this._onResize = () => { this._measure(); this._fitHero(); this._divVis(); this._fitTitle(); };
+    requestAnimationFrame(this._fitTitle);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(this._fitTitle);
+    requestAnimationFrame(this._divVis);
+    this._fitHero();
+    requestAnimationFrame(this._fitHero);
+    window.addEventListener('wheel', this._onWheel, { passive: false });
+    ['keydown', 'touchstart', 'mousedown'].forEach(t =>
+      window.addEventListener(t, this._stopLerp, { passive: true }));
+    window.addEventListener('resize', this._onResize);
+    this._measure();
+    this._onScroll();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onResize);
+    window.removeEventListener('wheel', this._onWheel);
+    ['keydown', 'touchstart', 'mousedown'].forEach(t =>
+      window.removeEventListener(t, this._stopLerp));
+    this._token = (this._token || 0) + 1;
+    this._stopLerp();
+  }
+  renderVals() {
+    const s = this.state.scrolled;
+    const cur = this._locked || this.state.hovered || this.state.active;
+    const wipeAnim = 'coordUnderlineWipe .62s cubic-bezier(.65,0,.35,1) 1';
+    return {
+      wipe1: this.state.wipe1 ? wipeAnim : 'none',
+      wipe2: this.state.wipe2 ? wipeAnim : 'none',
+      wipe3: this.state.wipe3 ? wipeAnim : 'none',
+      wipe1Enter: this._wipe(1),
+      wipe2Enter: this._wipe(2),
+      wipe3Enter: this._wipe(3),
+      sqXWork: '0px',
+      sqXExperience: (this._moved || {}).experience ? '15px' : '0px',
+      sqXAbout: (this._moved || {}).about ? '30px' : '15px',
+      sqXContact: (this._moved || {}).contact ? '45px' : '30px',
+      sqOnWork: (this.state.divVis || {}).work ? 1 : 0,
+      sqOnExperience: 1,
+      sqOnAbout: 1,
+      sqOnContact: 1,
+      divWorkRef: this._divRefs.work,
+      divExperienceRef: this._divRefs.experience,
+      divAboutRef: this._divRefs.about,
+      divContactRef: this._divRefs.contact,
+      labWork: (this.state.divVis || {}).work ? 1 : 0,
+      labExperience: (this.state.divVis || {}).experience ? 1 : 0,
+      labAbout: (this.state.divVis || {}).about ? 1 : 0,
+      labContact: (this.state.divVis || {}).contact ? 1 : 0,
+      l1Ref: this._l1Ref,
+      l2Ref: this._l2Ref,
+      titleScale: this.state.titleScale || 1,
+      barRef: this._barRef,
+      bandRef: this._bandRef,
+      heroH: this.state.heroPx ? this.state.heroPx + 'px' : 'auto',
+      dotTransition: (!cur || !this._wasVisible)
+        ? 'transform .34s cubic-bezier(.2,1.4,.4,1), opacity .25s ease'
+        : (this.state.viaClick
+          ? 'left .3s cubic-bezier(.2,.9,.2,1), transform .3s cubic-bezier(.2,1.4,.4,1), opacity .25s ease'
+          : ((this.state.hovered || this.state.hoverMove)
+            ? 'left .4s cubic-bezier(.65,0,.35,1), transform .4s cubic-bezier(.2,1.4,.4,1), opacity .3s ease'
+            : 'left .4s cubic-bezier(.65,0,.35,1), transform .4s cubic-bezier(.2,1.4,.4,1), opacity .3s ease')),
+      dotTransform: (this._locked || this.state.hovered || this.state.active) ? 'translateY(0)' : 'translateY(-11px)',
+
+      navPad: s ? '6px 44px' : '30px 44px',
+      navMark: s ? '8px' : '11px',
+      navName: '11px',
+      navGap: '0px',
+      navLinkPad: s ? '6px 17px' : '30px 17px',
+      navLinkMargin: s ? '-6px 0' : '-30px 0',
+      navPadBottomHover: '9px',
+      navLinkPadY: s ? '10px' : '22px',
+      navShadow: s ? '0 6px 20px -14px rgba(20,20,15,.6)' : 'none',
+      markBg: s ? 'transparent' : '#14140f',
+      markArrow: s ? 1 : 0,
+      markArrowT: s ? 'translate(-50%,-50%)' : 'translate(calc(-50% - 26px),-50%)',
+      markArrowDelay: s ? '.42s' : '0s',
+      cueArrowAnim: s ? ((this._cueUsed = true), 'cueArrowOut .55s cubic-bezier(.7,0,.3,1) both') : (this._cueUsed ? 'cueArrowBack .55s cubic-bezier(.7,0,.3,1) both' : 'none'),
+      scrollCueEvents: s ? 'none' : 'auto',
+      toTop: () => this._glideTo(0),
+      navRef: this._navRef,
+      workRef: this._linkRefs.work,
+      experienceRef: this._linkRefs.experience,
+      aboutRef: this._linkRefs.about,
+      contactRef: this._linkRefs.contact,
+      dotOpacity: (this.state.hovered || this.state.active) ? 1 : 0,
+      dotLeft: (this.state.dotX - 2) + 'px',
+      colWork: cur === 'work' ? '#ff5c1a' : 'inherit',
+      colExperience: cur === 'experience' ? '#ff5c1a' : 'inherit',
+      colAbout: cur === 'about' ? '#ff5c1a' : 'inherit',
+      colContact: cur === 'contact' ? '#ff5c1a' : 'inherit',
+      goWork: this._go('work'),
+      goExperience: this._go('experience'),
+      goAbout: this._go('about'),
+      goContact: this._go('contact'),
+      enterWork: this._enter('work'),
+      enterExperience: this._enter('experience'),
+      enterAbout: this._enter('about'),
+      enterContact: this._enter('contact'),
+      leaveNav: this._leave(),
+      showGrid: this.props.showGrid ?? true,
+      showMarquee: this.props.showMarquee ?? true,
+      showLearning: this.props.showLearning ?? true
+    };
+  }
+}
+</script>
+
+
+<div id="__claude_design_branding"><style>#__claude_design_branding{position:fixed;right:16px;bottom:16px;z-index:2147483646;display:flex;align-items:center;gap:7px;height:30px;padding:0 5px 0 10px;border-radius:999px;font-family:"Anthropic Sans",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-size:12.5px;font-weight:400;line-height:1;letter-spacing:normal;text-transform:none;color:#141413;background:rgba(255,255,255,.86);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);box-shadow:0 0 0 .5px rgba(31,30,29,.14),0 2px 10px rgba(0,0,0,.09)}
+#__claude_design_branding *{box-sizing:border-box;margin:0}
+#__claude_design_branding a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+#__claude_design_branding a:hover span{text-decoration:underline}
+#__claude_design_branding svg{flex:none}
+#__claude_design_branding a svg{color:#D97757}
+#__claude_design_branding button{width:20px;height:20px;padding:0;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:currentColor;opacity:.55;border:0;background:none;cursor:pointer;flex:none;font:inherit;transition:opacity .14s}
+#__claude_design_branding button:hover{opacity:1;background:rgba(127,127,127,.22)}
+@media print{#__claude_design_branding{display:none}}</style><a href="https://claude.com/product/design" target="_blank" rel="noopener noreferrer"><svg width="14" height="14" viewBox="0 0 20 21" fill="none" aria-hidden="true"><path fill="currentColor" d="M9.99902 0C15.5258 0.000170936 19.999 4.50643 19.999 10.0547C19.999 11.7656 19.5863 12.9976 18.7861 13.8203C17.9924 14.6362 16.9465 14.9138 15.9854 15.0078C15.05 15.0993 14.0097 15.0262 13.2549 15.0186C12.8524 15.0145 12.5177 15.0267 12.2441 15.0703C11.9682 15.1144 11.8143 15.1813 11.7305 15.2432C11.4745 15.4322 11.3353 15.7121 11.2656 16.1602C11.2303 16.3875 11.2168 16.6362 11.209 16.9131C11.2017 17.1715 11.1986 17.4893 11.1807 17.7705C11.1469 18.2975 11.0495 19.0865 10.4199 19.5908C9.7846 20.0996 8.88652 20.1057 7.85449 19.877C7.36399 19.7682 6.88652 19.6232 6.42578 19.4453C2.66989 17.9949 0.000187748 14.3414 0 10.0547C0 4.50643 4.47223 0.000171048 9.99902 0ZM9.99902 1.60547C5.36781 1.60564 1.60547 5.38391 1.60547 10.0547C1.60566 13.6582 3.84823 16.7296 7.00391 17.9482C7.39027 18.0974 7.79085 18.2184 8.20215 18.3096C9.1375 18.5169 9.384 18.3633 9.41602 18.3379C9.4524 18.3087 9.54558 18.1915 9.5791 17.668C9.5947 17.4239 9.59473 17.1786 9.60352 16.8672C9.61179 16.5742 9.62831 16.2435 9.67969 15.9131C9.78359 15.2455 10.0474 14.4906 10.7764 13.9521C11.1479 13.6778 11.5842 13.5493 11.9912 13.4844C12.4007 13.4191 12.8434 13.4088 13.2705 13.4131C14.1753 13.4222 15.0071 13.4905 15.8291 13.4102C16.6257 13.3322 17.2249 13.1235 17.6357 12.7012C18.0401 12.2855 18.3935 11.5261 18.3936 10.0547C18.3936 5.38391 14.6302 1.60564 9.99902 1.60547ZM5.11621 9.86719C5.86386 9.91468 6.45486 10.5348 6.45508 11.2939C6.45506 12.0838 5.81519 12.7245 5.02539 12.7246C4.28481 12.7246 3.67573 12.1617 3.60254 11.4404L3.59473 11.2939L3.60156 11.1533C3.66942 10.4596 4.23282 9.91186 4.93359 9.86719H5.11621ZM14.9814 7.19141C15.729 7.23889 16.3199 7.85919 16.3203 8.61816C16.3203 9.40801 15.6804 10.0487 14.8906 10.0488C14.1501 10.0487 13.5409 9.48586 13.4678 8.76465L13.46 8.61816L13.4668 8.47754C13.5348 7.78403 14.0983 7.23618 14.7988 7.19141H14.9814ZM6.4541 4.93457C7.20161 4.9822 7.79275 5.60231 7.79297 6.36133C7.79288 7.151 7.15291 7.7917 6.36328 7.79199C5.62274 7.79199 5.01369 7.22903 4.94043 6.50781L4.93262 6.36133L4.93945 6.2207C5.00731 5.52698 5.5707 4.97922 6.27148 4.93457H6.4541ZM11.3867 3.59668C12.1343 3.64419 12.7253 4.26436 12.7256 5.02344C12.7256 5.81326 12.0857 6.45393 11.2959 6.4541C10.5553 6.4541 9.94622 5.89123 9.87305 5.16992L9.86523 5.02344L9.87207 4.88281C9.93996 4.18912 10.5033 3.64133 11.2041 3.59668H11.3867Z"></path></svg><span>Made with Claude Design</span></a><button type="button" aria-label="Dismiss" onclick="this.parentElement.remove()"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></button></div><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;700&family=Jost:wght@300;400;500&display=swap">
+<style id="pj-modal-css">
+  #p01, #p02, #p03 { position: relative; isolation: isolate; }
+  #p01.pj-hot, #p02.pj-hot, #p03.pj-hot { cursor: pointer; }
+  #p01::before, #p02::before, #p03::before {
+    content: ""; position: absolute; inset: 108px 22px 118px 22px; z-index: -1;
+    background: rgba(20,20,15,.035); border: 1px solid rgba(20,20,15,.16);
+    opacity: 0; transition: opacity .25s ease; pointer-events: none;
+  }
+  #p01.pj-hot::before, #p02.pj-hot::before, #p03.pj-hot::before { opacity: 1; }
+  /* match each block's own spacing: ~22px above the header row, ~32px below the text */
+  #p02::before { inset: 12px 22px 118px 22px; }
+  #p03::before { inset: 12px 22px 8px 22px; }
+  #p01 a, #p02 a, #p03 a { cursor: pointer; }
+
+  #pj-cursor {
+    position: fixed; left: 0; top: 0; z-index: 900; pointer-events: none;
+    font: 500 11px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase;
+    background: #ff5c1a; color: #fff; padding: 8px 11px; white-space: nowrap;
+    opacity: 0; transform: translate(-9999px, -9999px); transition: opacity .15s ease;
+  }
+  #pj-cursor.on { opacity: 1; }
+
+  #pj-modal {
+    position: fixed; inset: 0; z-index: 1000; overflow-y: auto; overscroll-behavior: contain;
+    background: rgba(20,20,15,.55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    opacity: 0; pointer-events: none; transition: opacity .25s ease;
+  }
+  #pj-modal.open { opacity: 1; pointer-events: auto; }
+  #pj-modal .pj-panel {
+    position: relative; max-width: 1180px; margin: 40px auto; background: #f4f4f2; color: #14140f; font-family: 'Space Grotesk', sans-serif;
+    border: 1px solid rgba(20,20,15,.2); box-shadow: 0 30px 80px rgba(0,0,0,.25);
+    transform: translateY(16px); transition: transform .3s cubic-bezier(.2,.7,.2,1);
+  }
+  #pj-modal.open .pj-panel { transform: none; }
+  @keyframes pgRise { from { opacity: 0; translate: 0 40px; } to { opacity: 1; translate: 0 0; } }
+  .pg-hide { opacity: 0; }
+  #pj-modal .pg-hide { opacity: 1; }
+  #pj-modal .pg-rise { animation: none; }
+  .pg-rise { animation: pgRise 1.1s cubic-bezier(.16,.8,.24,1) both; animation-delay: calc(var(--pgd, 0) * 130ms + 60ms); }
+  @keyframes pjRise { from { opacity: 0; transform: translateY(18px); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+  #pj-modal .pj-rise { opacity: 0; animation: pjRise .7s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--d, 0) * 80ms + 120ms); }
+  #pj-modal .pj-wait { opacity: 0; }
+  #pj-modal .pj-wait.pj-rise, #pj-modal .pj-rise { animation-delay: calc(var(--d, 0) * 80ms + 60ms); }
+  @media (prefers-reduced-motion: reduce) { #pj-modal .pj-rise { animation: none; opacity: 1; } #pj-modal .pj-wait { opacity: 1; } }
+  #pj-modal .pj-body img.pj-seq:not(.pj-in) { opacity: 0; }
+  #pj-modal .pj-body img.pj-seq { transition: opacity .5s ease; }
+  @media (prefers-reduced-motion: reduce) { #pj-modal .pj-body img.pj-seq { transition: none; } }
+  #pj-modal .pj-panel:focus { outline: none; }
+  #pj-modal .pj-nav button:focus:not(:focus-visible) { outline: none; }
+  #pj-modal .pj-bar {
+    position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    padding: 16px 32px; background: rgba(244,244,242,.94); backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(20,20,15,.14);
+    font: 11px/1.4 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; color: #a8a89f;
+  }
+  #pj-modal .pj-meta { display: flex; gap: 28px; flex-wrap: wrap; }
+  #pj-modal .pj-meta span:first-child { color: #14140f; }
+  #pj-modal .pj-nav { display: flex; gap: 8px; }
+  #pj-modal .pj-nav button {
+    font: inherit; letter-spacing: inherit; text-transform: inherit; color: #14140f; background: transparent;
+    border: 1px solid rgba(20,20,15,.2); padding: 8px 12px; cursor: pointer; transition: background .15s, color .15s, border-color .15s;
+  }
+  #pj-modal .pj-nav button:hover { background: #14140f; color: #f4f4f2; border-color: #14140f; }
+  #pj-modal .pj-nav .pj-close:hover { background: #ff5c1a; border-color: #ff5c1a; }
+  #pj-modal .pj-nav .pj-top { opacity: 0; visibility: hidden; transition: opacity .2s ease, visibility .2s, background .15s, color .15s, border-color .15s; }
+  #pj-modal.scrolled .pj-nav .pj-top { opacity: 1; visibility: visible; }
+  #pj-modal .pj-nav .pj-top { margin-right: 16px; }
+  #pj-modal .pj-bar { min-height: 69px; box-sizing: border-box; padding: 16px 32px !important; }
+  #pj-modal .pj-meta { flex: 1 1 0; min-width: 0; flex-wrap: nowrap !important; overflow: hidden; }
+  #pj-modal .pj-meta span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  #pj-modal .pj-meta span:first-child { flex: none; }
+  @media (max-width: 1100px) { #pj-modal .pj-meta span:not(:first-child) { display: none; } }
+  #pj-modal .pj-nav { align-items: center; }
+  #pj-modal .pj-nav button { box-sizing: border-box; height: 36px !important; padding: 0 !important; display: inline-flex; align-items: center; justify-content: center; gap: .35em; white-space: nowrap; }
+  #pj-modal .pj-nav .pj-top { width: 84px; }
+  #pj-modal .pj-nav .pj-prev, #pj-modal .pj-nav .pj-next { width: 96px; }
+  #pj-modal .pj-nav .pj-close { width: 104px; }
+  #pj-modal .pj-nav .pj-close { margin-left: 16px; }
+  #pj-modal .pj-body { padding: 56px 32px 64px; }
+  #pj-modal .pj-title > div:not(:last-child) { font-size: clamp(48px, 7vw, 104px) !important; }
+  #pj-modal .pj-title > div:last-child { padding-bottom: 0 !important; margin-top: 6px !important; }
+  #pj-modal .pj-panel.dark .pj-title > div:first-child { background: none !important; -webkit-text-fill-color: currentColor !important; }
+  #pj-modal .pj-title > div:last-child span { color: inherit !important; filter: none !important; }
+  #pj-modal .pj-lead { margin-top: 40px; }
+  #pj-modal .pj-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+  #pj-modal figure { margin: 0; border: 1px solid rgba(20,20,15,.18); background: #e9e9e6; }
+  #pj-modal figure img { display: block; width: 100%; height: auto; }
+  #pj-modal .pj-body img[width] { height: auto; }
+  #pj-modal .pj-text { margin-top: 56px; padding: 0 !important; }
+  #pj-modal .pj-cover { margin-top: 40px; }
+  #pj-modal .pj-sections { margin-top: 88px; display: flex; flex-direction: column; gap: 88px; }
+  #pj-modal .pj-sec-head { display: grid; grid-template-columns: 120px minmax(0,1fr); column-gap: 24px; row-gap: 10px; align-items: baseline; margin-bottom: 22px; }
+  #pj-modal .pj-sec-n { font: 11px/1 'JetBrains Mono', monospace; letter-spacing: .14em; color: #a8a89f; }
+  #pj-modal .pj-sec-head h3 { margin: 0; font: 900 clamp(26px, 3vw, 40px)/1 'Archivo', sans-serif; letter-spacing: -.02em; text-transform: uppercase; }
+  #pj-modal .pj-sec-head p { grid-column: 2; margin: 0; max-width: 620px; font-size: 16px; line-height: 1.65; color: #3d3d38; text-wrap: pretty; }
+  #pj-modal .pj-sections figure { background: #fff; }
+
+
+  /* ---- Zły Sen theme: Crimson Text + project palette ----
+     Auburn #A62A2A · White Marble #E8E8E8 · Dark Silver #B0B0B0 · Lebanese Black #181C1C */
+  #pj-modal .pj-panel.dark { --zs-red: #A62A2A; --zs-white: #E8E8E8; --zs-silver: #B0B0B0; --zs-black: #181C1C;
+    --zs-line: rgba(176,176,176,.16); --zs-serif: 'Crimson Text', 'Cormorant Garamond', Georgia, serif;
+    background: #0a0909; border-color: var(--zs-black); color: var(--zs-silver); font-family: var(--zs-serif); }
+  #pj-modal .pj-panel.dark .pj-bar { background: rgba(24,28,28,.94); border-bottom-color: var(--zs-line);
+    font: 400 15px/1.3 var(--zs-serif); letter-spacing: .08em; text-transform: none; font-variant: small-caps; color: rgba(176,176,176,.7); }
+  #pj-modal .pj-panel.dark .pj-meta span:first-child { color: var(--zs-white); }
+  #pj-modal .pj-panel.dark .pj-nav button { font: inherit; letter-spacing: inherit; font-variant: inherit; color: var(--zs-white);
+    border-color: var(--zs-line); padding: 6px 14px; }
+  #pj-modal .pj-panel.dark .pj-nav button:hover { background: var(--zs-white); color: var(--zs-black); border-color: var(--zs-white); }
+  #pj-modal .pj-panel.dark .pj-nav .pj-close:hover { background: var(--zs-red); border-color: var(--zs-red); color: var(--zs-white); }
+  #pj-modal .pj-panel.dark, #pj-modal .pj-panel.dark * { font-family: var(--zs-serif) !important; }
+  #pj-modal .pj-panel.dark .pj-title > div:first-child { font-family: var(--zs-serif) !important; font-weight: 600 !important;
+    font-size: clamp(48px, 6.4vw, 88px) !important; line-height: .95 !important; letter-spacing: .01em !important;
+    text-transform: uppercase !important; color: #7a1d20 !important;
+    text-shadow: 0 0 .06em rgba(122,29,32,.9), 0 0 .3em rgba(122,29,32,.35); }
+  #pj-modal .pj-panel.dark .pj-title > div:last-child { font-family: var(--zs-serif) !important; font-weight: 400 !important;
+    font-size: clamp(16px, 1.4vw, 19px) !important; letter-spacing: .12em !important; text-transform: none !important;
+    font-variant: small-caps; color: var(--zs-silver) !important; filter: none !important; margin-top: 18px !important; }
+  #pj-modal .pj-panel.dark .pj-body { padding-top: 72px; }
+  #pj-modal .pj-panel.dark .pj-text { margin-top: 64px; gap: 48px !important; }
+  #pj-modal .pj-panel.dark .pj-title > div:last-child::before { content: "[ "; }
+  #pj-modal .pj-panel.dark .pj-title > div:last-child::after { content: " ]"; }
+  #pj-modal .pj-panel.dark .pj-text > div { font-family: var(--zs-serif) !important; font-size: 17px !important; line-height: 1.65 !important; color: var(--zs-silver) !important; }
+  #pj-modal .pj-panel.dark .pj-text > div:last-child { font-size: 15px !important; letter-spacing: .06em !important; gap: 12px !important;
+    text-transform: none !important; font-variant: small-caps; color: var(--zs-white) !important; }
+  #pj-modal .pj-panel.dark .pj-text > div:last-child > div { border-bottom-color: var(--zs-line) !important; padding-bottom: 10px !important; }
+  #pj-modal .pj-panel.dark .pj-text > div:last-child > div > div:first-child { color: rgba(176,176,176,.6) !important; }
+  #pj-modal .pj-panel.dark .pj-text a { font-family: var(--zs-serif) !important; font-size: 16px !important; letter-spacing: .1em !important;
+    text-transform: none !important; font-variant: small-caps; color: var(--zs-white); }
+  #pj-modal .pj-panel.dark .pj-text a span:last-child { background: var(--zs-red) !important; height: 1px !important; }
+  #pj-modal .pj-panel.dark .zs-intro { color: var(--zs-silver); }
+  #pj-modal .pj-panel.dark .zs-intro p:last-child { color: var(--zs-red); }
+  #pj-modal .pj-panel.dark .zs-label { color: rgba(176,176,176,.6); }
+  #pj-modal .pj-panel.dark .zs-ctrl { font: 400 15px/1 var(--zs-serif); letter-spacing: .1em; text-transform: none; font-variant: small-caps; color: rgba(176,176,176,.7); }
+  #pj-modal .pj-panel.dark .zs-dots button { background-image: linear-gradient(rgba(176,176,176,.28), rgba(176,176,176,.28)); }
+  #pj-modal .pj-panel.dark .zs-dots button.on { background-image: linear-gradient(var(--zs-red), var(--zs-red)); }
+  #pj-modal .pj-panel.dark .zs-dots button:hover { background-image: linear-gradient(var(--zs-white), var(--zs-white)); }
+
+  /* ---- Zakład Barberski theme: Old Standard TT + Inter, black / white / red ---- */
+  #pj-modal .pj-panel.barber { --zb-ink: #0d0d0d; --zb-red: #d4161c; --zb-line: rgba(13,13,13,.12);
+    --zb-serif: 'Old Standard TT', 'Bodoni Moda', Georgia, serif; --zb-sans: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    background: #fff; color: var(--zb-ink); border-color: var(--zb-line); }
+  #pj-modal .pj-panel.barber, #pj-modal .pj-panel.barber * { font-family: var(--zb-sans) !important; }
+  #pj-modal .pj-panel.barber .pj-bar { background: rgba(255,255,255,.94); border-bottom-color: var(--zb-line);
+    font-size: 13px; line-height: 1.3; letter-spacing: 0; text-transform: none; color: rgba(13,13,13,.5); }
+  #pj-modal .pj-panel.barber .pj-meta span:first-child { color: var(--zb-ink); }
+  #pj-modal .pj-panel.barber .pj-nav button { font-size: 13px; font-weight: 500; letter-spacing: 0; text-transform: none;
+    color: var(--zb-ink); border: 1.5px solid var(--zb-ink); border-radius: 999px; padding: 7px 16px; }
+  #pj-modal .pj-panel.barber .pj-nav button:hover { background: var(--zb-ink); color: #fff; border-color: var(--zb-ink); }
+  #pj-modal .pj-panel.barber .pj-nav .pj-close:hover { background: var(--zb-red); border-color: var(--zb-red); color: #fff; }
+  #pj-modal .pj-panel.barber .pj-body { padding-top: 72px; }
+  #pj-modal .pj-panel.barber .pj-title > div:first-child { font-size: 0 !important; line-height: 0 !important; color: transparent !important;
+    width: clamp(320px, 42vw, 560px); aspect-ratio: 1259 / 317; background: url(barber/zb-tytul.png) left center / contain no-repeat; }
+  #pj-modal .pj-panel.barber .pj-title > div:not(:first-child):not(:last-child) { display: none !important; }
+  #pj-modal .pj-panel.barber .pj-title > div:last-child { font-family: var(--zb-sans) !important; font-weight: 400 !important;
+    font-size: 15px !important; letter-spacing: .04em !important; text-transform: uppercase !important;
+    color: var(--zb-ink) !important; filter: none !important; margin-top: 18px !important; }
+  #pj-modal .pj-panel.barber .pj-text { margin-top: 64px; gap: 48px !important; }
+  #pj-modal .pj-panel.barber .pj-text > div { font-size: 16px !important; line-height: 1.65 !important; color: #3a3a3a !important; }
+  #pj-modal .pj-panel.barber .pj-text > div:last-child { font-size: 14px !important; line-height: 1.4 !important; letter-spacing: 0 !important;
+    text-transform: none !important; color: var(--zb-ink) !important; gap: 12px !important; }
+  #pj-modal .pj-panel.barber .pj-text > div:last-child * { letter-spacing: 0 !important; text-transform: none !important; }
+  #pj-modal .pj-panel.barber .pj-text > div:last-child > div { border-bottom-color: var(--zb-line) !important; padding-bottom: 10px !important; }
+  #pj-modal .pj-panel.barber .pj-text > div:last-child > div > div:first-child { color: rgba(13,13,13,.45) !important; }
+  #pj-modal .pj-panel.barber .pj-text a { display: inline-flex !important; align-items: center; gap: 8px; margin-top: 8px;
+    font-size: 14px !important; font-weight: 500 !important; letter-spacing: 0 !important; text-transform: none !important;
+    color: var(--zb-ink) !important; border: 1.5px solid var(--zb-ink); border-radius: 999px; padding: 10px 22px !important;
+    transition: background .15s, color .15s; }
+  #pj-modal .pj-panel.barber .pj-text a:hover { background: var(--zb-ink); color: #fff !important; }
+  #pj-modal .pj-panel.barber .pj-text a * { color: inherit !important; }
+  #pj-modal .pj-panel.barber .pj-text a span:last-child:not(:first-child) { display: none !important; }
+  #pj-modal .pj-panel.barber .pj-cover { margin-top: 72px; border: 0; background: #fff; }
+  #pj-modal .pj-panel.barber .pj-sections figure, #pj-modal .pj-panel.barber figure { border: 0; background: #fff; }
+  #pj-modal .pj-panel.barber .pj-sec-n { font-size: 14px; line-height: 1.2; letter-spacing: .04em; color: rgba(13,13,13,.45); }
+  #pj-modal .pj-panel.barber .pj-sec-head h3 { font-family: var(--zb-serif) !important; font-weight: 400; font-size: clamp(30px, 3.4vw, 46px);
+    letter-spacing: 0; text-transform: none; line-height: 1.05; }
+  #pj-modal .pj-panel.barber .pj-sec-head p { font-size: 16px; line-height: 1.65; color: #3a3a3a; }
+  #pj-modal .pj-panel.barber .pj-sec-head { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: 48px; row-gap: 12px;
+    align-items: end; margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--zb-line); }
+  #pj-modal .pj-panel.barber .pj-sec-n { grid-column: 1; grid-row: 1; }
+  #pj-modal .pj-panel.barber .pj-sec-head h3 { grid-column: 1; grid-row: 2; }
+  #pj-modal .pj-panel.barber .pj-sec-head p { grid-column: 2; grid-row: 1 / span 2; max-width: 560px; }
+  @media (max-width: 760px) {
+    #pj-modal .pj-panel.barber .pj-sec-head { grid-template-columns: 1fr; }
+    #pj-modal .pj-panel.barber .pj-sec-head p { grid-column: 1; grid-row: 3; }
+  }
+  #pj-modal .pj-panel.barber .pj-sections { margin-top: 96px; gap: 96px; }
+
+  /* ---- Manture theme: Jost, Onyx / Shadow Grey / Pale Slate / Bright Snow ---- */
+  #pj-modal .pj-panel.manture { --mt-onyx: #090A0B; --mt-shadow: #212529; --mt-slate: #ADB5BD; --mt-snow: #F8F9FA;
+    --mt-line: rgba(33,37,41,.14); --mt-sans: 'Jost', 'Futura', 'Century Gothic', sans-serif;
+    background: var(--mt-snow); color: var(--mt-onyx); border-color: var(--mt-line); }
+  #pj-modal .pj-panel.manture, #pj-modal .pj-panel.manture * { font-family: var(--mt-sans) !important; }
+  #pj-modal .pj-panel.manture .pj-bar { background: rgba(248,249,250,.94); border-bottom-color: var(--mt-line);
+    font-size: 12px; font-weight: 400; letter-spacing: .2em; text-transform: uppercase; color: rgba(33,37,41,.5); }
+  #pj-modal .pj-panel.manture .pj-meta span:first-child { color: var(--mt-onyx); }
+  #pj-modal .pj-panel.manture .pj-nav button { font-size: 12px; font-weight: 400; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--mt-onyx); border: 1px solid var(--mt-slate); border-radius: 0; padding: 8px 14px; }
+  #pj-modal .pj-panel.manture .pj-nav button:hover { background: var(--mt-onyx); color: var(--mt-snow); border-color: var(--mt-onyx); }
+  #pj-modal .pj-panel.manture .pj-nav .pj-close:hover { background: var(--mt-shadow); border-color: var(--mt-shadow); }
+  #pj-modal .pj-panel.manture .pj-body { padding-top: 72px; }
+  #pj-modal .pj-panel.manture .pj-title > div:first-child { font-size: 0 !important; line-height: 0 !important; color: transparent !important;
+    width: clamp(300px, 38vw, 520px); aspect-ratio: 4207 / 312; background: url(manture/manture-logotyp.png) left center / contain no-repeat; }
+  #pj-modal .pj-panel.manture .pj-title > div:not(:first-child):not(:last-child) { display: none !important; }
+  #pj-modal .pj-panel.manture .pj-title > div:last-child { font-weight: 400 !important; font-size: 13px !important; letter-spacing: .3em !important;
+    text-transform: uppercase !important; color: var(--mt-shadow) !important; filter: none !important; margin-top: 18px !important; }
+  #pj-modal .pj-panel.manture .pj-text { margin-top: 64px; gap: 48px !important; }
+  #pj-modal .pj-panel.manture .pj-text > div { font-size: 17px !important; font-weight: 400 !important; line-height: 1.65 !important; color: var(--mt-shadow) !important; }
+  #pj-modal .pj-panel.manture .pj-text > div:last-child { font-size: 12px !important; line-height: 1.4 !important; letter-spacing: .2em !important;
+    text-transform: uppercase !important; color: var(--mt-onyx) !important; gap: 12px !important; }
+  #pj-modal .pj-panel.manture .pj-text > div:last-child > div { border-bottom-color: var(--mt-line) !important; padding-bottom: 10px !important; }
+  #pj-modal .pj-panel.manture .pj-text > div:last-child > div > div:first-child { color: rgba(33,37,41,.5) !important; }
+  #pj-modal .pj-panel.manture .pj-text a { font-size: 12px !important; letter-spacing: .24em !important; color: var(--mt-onyx) !important; }
+  #pj-modal .pj-panel.manture .pj-text a span:last-child { background: var(--mt-onyx) !important; height: 1px !important; }
+  #pj-modal .mt-flow { margin: 72px -32px -64px; background: #F8F9FA; overflow: hidden; }
+  #pj-modal .mt-full { display: block; width: 100%; height: auto; }
+  #pj-modal .mt-ab { position: relative; }
+  #pj-modal .mt-pc { position: absolute; height: auto; display: block; pointer-events: none; }
+  #pj-modal .mt-pc.mt-whole { position: relative; width: 100%; }
+  #pj-modal .mt-first { -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%); mask-image: linear-gradient(to bottom, transparent 0%, #000 22%); }
+  #pj-modal .mt-strip { padding: clamp(48px, 6.5vw, 96px) 0; }
+  #pj-modal .mt-dark { background: linear-gradient(to bottom, #090b0c 0%, #070a0b 55%, #030507 100%); color: #F8F9FA; }
+  #pj-modal .mt-slate { background: linear-gradient(to bottom, #c9cfd4 0%, #c3c9ce 30%, #a9afb4 55%, #6e7378 78%, #2a2e32 92%, #090b0c 100%); color: #090A0B; padding-bottom: clamp(72px, 9vw, 130px); }
+  #pj-modal .mt-snow { background: #f8fafb; color: #090A0B; }
+  #pj-modal .mt-snow-fade { background: linear-gradient(to bottom, #f8fafb 0%, #f1f3f5 45%, #e2e6e9 75%, #d0d5da 100%); }
+  #pj-modal .mt-flow > * + * { margin-top: -1px; }
+  #pj-modal .mt-flow > * { position: relative; }
+  #pj-modal .mt-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px; padding: 0 clamp(24px, 4.2vw, 56px); }
+  #pj-modal .mt-note { max-width: 860px; margin: 0 auto; padding: 0 32px; }
+  #pj-modal .mt-strip p { margin: 0 0 22px; font-size: 17px; line-height: 1.6; font-weight: 400; text-wrap: pretty; }
+  #pj-modal .mt-strip p:last-child { margin-bottom: 0; }
+  #pj-modal .mt-strip b { font-weight: 500; }
+  #pj-modal .mt-cols .mt-lab { display: block; margin-bottom: 28px; }
+  #pj-modal .mt-lab { font-size: 12px; letter-spacing: .12em; opacity: .7; margin-right: 4px; }
+  #pj-modal .mt-sm { background: #f8fafb; padding: 0 clamp(24px, 4.2vw, 56px) clamp(72px, 9vw, 130px); }
+  #pj-modal .mt-sm-head { display: flex; align-items: center; gap: 20px; margin: 0 0 24px; font-size: 12px; letter-spacing: .3em; text-transform: uppercase; color: #212529; }
+  #pj-modal .mt-sm-head::after { content: ""; flex: 1; height: 1px; background: rgba(33,37,41,.16); order: 1; }
+  #pj-modal .mt-sm-head span:last-child { order: 2; color: rgba(33,37,41,.5); letter-spacing: .2em; }
+  #pj-modal .mt-sm-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(6px, .8vw, 12px); }
+  #pj-modal .mt-sm-car { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; margin-top: clamp(56px, 7vw, 104px); }
+  #pj-modal .mt-sm img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; }
+  @media (max-width: 760px) {
+    #pj-modal .pj-panel.manture .pj-body { padding-top: 40px; }
+    #pj-modal .pj-panel.manture .pj-text { margin-top: 40px; gap: 28px !important; }
+    #pj-modal .pj-panel.manture .pj-cover { margin-top: 48px; }
+    #pj-modal .mt-flow { margin: 48px -16px -48px; }
+    #pj-modal .mt-cols { grid-template-columns: 1fr; gap: 40px; padding: 0 20px; }
+    #pj-modal .mt-sm { padding: 0 16px 72px; }
+    #pj-modal .mt-sm-car { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    #pj-modal .mt-note { padding: 0 20px; }
+    #pj-modal .mt-strip p { font-size: 16px; }
+  }
+
+
+  #pj-modal .zs-flow { container-type: inline-size; background: url(zly-sen/zs-bg-top.webp) center top / 100% auto no-repeat, url(zly-sen/zs-bg-row.webp) center top / 100% 8px repeat-y, #0b0b0b !important; }
+  #pj-modal .zs-flow { position: relative; }
+  #pj-modal .zs-flow::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: clamp(160px, 22cqi, 420px); background: linear-gradient(to bottom, #0a0909 0%, rgba(10,9,9,.85) 30%, rgba(10,9,9,.4) 65%, rgba(10,9,9,0) 100%); pointer-events: none; z-index: 1; }
+  #pj-modal .zs-lower { position: relative; height: calc(7940 * 100cqi / 1920); background: url(zly-sen/zs-bg-low2.webp) center top / 100% 100% no-repeat; font-family: 'Crimson Text', Georgia, serif; color: #e8e8e8; }
+  #pj-modal .zs-pc { position: absolute; height: auto; display: block; pointer-events: none; }
+  #pj-modal .zs-symb { -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent), linear-gradient(to bottom, transparent, #000 4%, #000 96%, transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent), linear-gradient(to bottom, transparent, #000 4%, #000 96%, transparent); mask-composite: intersect; }
+  #pj-modal .zs-lower > section { position: absolute; left: 0; right: 0; }
+  #pj-modal .zs-typo { top: calc(273 * 100cqi / 1920); }
+  #pj-modal .zs-colors { top: calc(1675 * 100cqi / 1920); }
+  #pj-modal .zs-pages { top: calc(4038 * 100cqi / 1920); }
+  #pj-modal .zs-end { top: calc(7226 * 100cqi / 1920); text-align: center; }
+  #pj-modal .zs-part > img { display: block; width: 100%; height: auto; }
+  #pj-modal .zs-tag { display: block; font-size: max(13px, calc(22 * 100cqi / 1920)); line-height: 1; font-variant: small-caps; letter-spacing: .04em; color: #b0b0b0; }
+  #pj-modal .zs-typo .zs-txt { position: absolute; top: calc(113 * 100cqi / 1920); right: calc(150 * 100cqi / 1920); text-align: right; }
+  #pj-modal .zs-typo .zs-tag { position: absolute; right: calc(130 * 100cqi / 1920); top: 0; white-space: nowrap; }
+  #pj-modal .zs-face { padding-top: calc(150 * 100cqi / 1920); }
+  #pj-modal .zs-face b { display: block; font-weight: 400; font-size: max(20px, calc(44 * 100cqi / 1920)); line-height: 1; font-variant: small-caps; white-space: nowrap; }
+  #pj-modal .zs-face span { display: block; margin-top: calc(6 * 100cqi / 1920); font-size: max(11px, calc(16 * 100cqi / 1920)); color: #b0b0b0; }
+  #pj-modal .zs-abc { margin: calc(56 * 100cqi / 1920) 0 0; font-size: max(13px, calc(32 * 100cqi / 1920)); line-height: 1.36; white-space: nowrap; }
+  #pj-modal .zs-colors .zs-txt { position: absolute; inset: 0; }
+  #pj-modal .zs-colors .zs-tag { position: absolute; top: calc(56 * 100cqi / 1920); left: 0; right: 0; text-align: center; }
+  #pj-modal .zs-sw > div { position: absolute; top: calc(262 * 100cqi / 1920); display: flex; flex-direction: column; font-size: max(10px, calc(16 * 100cqi / 1920)); line-height: 1.3; white-space: nowrap; }
+  #pj-modal .zs-sw > div:nth-child(1) { left: 9.4%; } #pj-modal .zs-sw > div:nth-child(2) { left: 30.1%; }
+  #pj-modal .zs-sw > div:nth-child(3) { left: 55.7%; } #pj-modal .zs-sw > div:nth-child(4) { left: 78.3%; }
+  #pj-modal .zs-sw b { font-weight: 400; font-size: max(16px, calc(42 * 100cqi / 1920)); line-height: 1; font-variant: small-caps; }
+  #pj-modal .zs-sw i { font-style: normal; font-size: max(11px, calc(21 * 100cqi / 1920)); margin: calc(4 * 100cqi / 1920) 0 calc(22 * 100cqi / 1920); }
+  #pj-modal .zs-motto { margin: 0; font-size: max(16px, calc(34 * 100cqi / 1920)); line-height: 1; letter-spacing: .02em; text-transform: uppercase; color: #b0b0b0; }
+  #pj-modal .zs-sign { margin: calc(118 * 100cqi / 1920) 0 0; font-size: max(12px, calc(21 * 100cqi / 1920)); line-height: 1.3; font-variant: small-caps; color: #9a9a9a; }
+  #pj-modal .zs-mid { background-color: transparent; }
+  /* ---- Zły Sen presentation flow ---- */
+  #pj-modal .zs-flow { margin: 72px -32px -64px; background: #0a0909; }
+  #pj-modal .zs-flow > .zs-full:first-child { -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 38%); mask-image: linear-gradient(to bottom, transparent 0%, #000 38%); }
+  #pj-modal .zs-flow > .zs-full:first-child { margin-top: -40px; }
+  #pj-modal .zs-full { display: block; width: 100%; height: auto; }
+  #pj-modal .zs-mid { background-size: 100% 100%; background-repeat: no-repeat; padding: 24px 0 140px; -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 92%, transparent 100%); mask-image: linear-gradient(to bottom, #000 0%, #000 92%, transparent 100%); }
+  #pj-modal .zs-intros { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 80px; max-width: 1040px; margin: 0 auto; padding: 0 32px; }
+  #pj-modal .zs-intro { text-align: center;
+    font-family: 'Crimson Text', Georgia, serif; font-size: 17px; line-height: 1.65; color: #a9a39c; }
+  #pj-modal .zs-intro p { margin: 0 0 16px; text-wrap: pretty; }
+  #pj-modal .zs-intro p:last-child { color: #a3262a; margin-bottom: 0; }
+  #pj-modal .zs-label { display: block; margin-bottom: 24px; font-variant: small-caps; letter-spacing: .12em; color: #6f6a64; }
+  #pj-modal .zs-slider { width: 84%; margin: 110px auto 0; }
+  #pj-modal .zs-slides { position: relative; aspect-ratio: 1600 / 1035; }
+  #pj-modal .zs-slides img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+    opacity: 0; transition: opacity 1.2s ease; }
+  #pj-modal .zs-slides img.on { opacity: 1; }
+  #pj-modal .zs-ctrl { display: flex; justify-content: space-between; align-items: center; margin-top: 18px;
+    font: 11px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; color: #6f6a64; }
+  #pj-modal .zs-dots { display: flex; gap: 6px; }
+  #pj-modal .zs-dots button { width: 22px; height: 14px; padding: 0; border: 0; cursor: pointer;
+    background: linear-gradient(rgba(255,255,255,.22), rgba(255,255,255,.22)) center / 100% 2px no-repeat; }
+  #pj-modal .zs-dots button.on { background-image: linear-gradient(#a3262a, #a3262a); }
+  #pj-modal .zs-dots button:hover { background-image: linear-gradient(#ece8e3, #ece8e3); }
+  @media (max-width: 760px) {
+    #pj-modal .pj-panel { margin: 0; min-height: 100%; border: 0; }
+    #pj-modal .pj-bar { padding: 12px 16px; }
+    #pj-modal .pj-meta span:not(:first-child) { display: none; }
+    #pj-modal .pj-nav button { padding: 0 !important; }
+    #pj-modal .pj-nav .pj-top, #pj-modal .pj-nav .pj-prev, #pj-modal .pj-nav .pj-next, #pj-modal .pj-nav .pj-close { width: 40px; }
+    #pj-modal .pj-bar { min-height: 61px; padding: 12px 16px !important; }
+    #pj-modal .pj-nav .lbl { display: none; }
+    #pj-modal .pj-nav .pj-top { margin-right: 8px; }
+    #pj-modal .pj-nav .pj-close { margin-left: 8px; }
+    #pj-modal .pj-body { padding: 36px 16px 48px; }
+    #pj-modal .pj-tiles { grid-template-columns: 1fr; }
+    #pj-modal .pj-sections { margin-top: 56px; gap: 56px; }
+    #pj-modal .pj-sec-head { grid-template-columns: 1fr; }
+    #pj-modal .pj-sec-head p { grid-column: 1; }
+    #pj-modal .zs-flow { margin: 48px -16px -48px; }
+    #pj-modal .zs-slider { width: 92%; margin-top: 64px; }
+    #pj-modal .zs-intro { font-size: 17px; }
+    #pj-modal .zs-intros { grid-template-columns: 1fr; gap: 40px; padding: 0 20px; }
+    #pj-modal .zs-mid { padding-bottom: 80px; }
+    #pj-modal .pj-text { grid-template-columns: 1fr !important; gap: 28px !important; }
+    #pj-modal .pj-panel.dark .pj-body, #pj-modal .pj-panel.barber .pj-body { padding-top: 40px; }
+    #pj-modal .pj-panel.dark .pj-text, #pj-modal .pj-panel.barber .pj-text { margin-top: 40px; gap: 28px !important; }
+    #pj-modal .pj-panel.barber .pj-cover { margin-top: 48px; }
+    #pj-modal .pj-panel.barber .pj-sections { margin-top: 56px; gap: 56px; }
+  }
+</style>
+<div id="pj-cursor">Open project ↗</div>
+<div id="pj-modal" role="dialog" aria-modal="true" aria-label="Project overview">
+  <div class="pj-panel" tabindex="-1">
+    <div class="pj-bar">
+      <div class="pj-meta"></div>
+      <div class="pj-nav">
+        <button type="button" class="pj-top" aria-label="Back to top">↑<span class="lbl"> Top</span></button>
+        <button type="button" class="pj-prev" aria-label="Previous project">←<span class="lbl"> Prev</span></button>
+        <button type="button" class="pj-next" aria-label="Next project"><span class="lbl">Next </span>→</button>
+        <button type="button" class="pj-close" aria-label="Close"><span class="lbl">Close </span>✕</button>
+      </div>
+    </div>
+    <div class="pj-body"></div>
+  </div>
+</div>
+<template id="pj-gallery-p01" data-theme="dark">
+<div class="zs-flow">
+<img width="1920" height="900" class="zs-full" src="zly-sen/img-10.webp" alt="Zły Sen — title">
+<div class="zs-mid" style="background-image:url(zly-sen/img-11.webp)">
+<div class="zs-intros"><div class="zs-intro"><span class="zs-label">[ pl ]</span><p>„Zły sen” to mroczna, wielowarstwowa opowieść interaktywna osadzona w realiach dark fantasy, łącząca narrację paragrafową z bogatą oprawą wizualną. Gracz eksploruje tajemnicze podziemia i nieustannie zmieniające się środowiska, podejmując decyzje, które prowadzą go przez kolejne etapy przygody – od biologicznych labiryntów, przez chłodne, mechaniczne korytarze, aż po krystaliczne komnaty pełne iluzji i śmiertelnych zagrożeń.</p><p>Struktura gry obejmuje zarówno ścieżki jawne, jak i ukryte, a każda podjęta decyzja niesie ze sobą konsekwencje. Wybory mogą prowadzić do odkrycia sekretnych lokacji, zdobycia nowych informacji lub jednego z wielu zakończeń, w tym śmierci bohatera.</p><p>Projekt został stworzony z myślą o odbiorcach poszukujących głębokiego, immersyjnego doświadczenia, które w spójny sposób łączy słowo z obrazem.</p></div><div class="zs-intro"><span class="zs-label">[ en ]</span><p>“Bad Dream” is a dark, multi-layered interactive tale set in a dark fantasy universe, blending choice-driven text with rich visuals. Players explore mysterious dungeons and constantly shifting environments, making decisions that guide them through the subsequent stages of their adventure — from biological labyrinths and cold, mechanical corridors to crystalline chambers filled with illusions and deadly threats.</p><p>The game’s structure features both overt and hidden paths, with every decision carrying its own consequences. Choices can lead to discovering secret locations, uncovering new lore, or reaching one of many endings, including the protagonist’s death.</p><p>The project was created for audiences seeking a deep, immersive experience that seamlessly blends the written word with imagery.</p></div></div>
+<div class="zs-slider"><div class="zs-slides"><img width="1600" height="1035" src="zly-sen/img-12.webp" alt="Zły Sen — spread, pages 2–3" data-pp="2–3" class="on"><img width="1600" height="1035" src="zly-sen/img-13.webp" alt="Zły Sen — spread, pages 6–7" data-pp="6–7"><img width="1600" height="1035" src="zly-sen/img-14.webp" alt="Zły Sen — spread, pages 10–11" data-pp="10–11"><img width="1600" height="1035" src="zly-sen/img-15.webp" alt="Zły Sen — spread, pages 16–17" data-pp="16–17"><img width="1600" height="1035" src="zly-sen/img-16.webp" alt="Zły Sen — spread, pages 28–29" data-pp="28–29"><img width="1600" height="1035" src="zly-sen/img-17.webp" alt="Zły Sen — spread, pages 38–39" data-pp="38–39"><img width="1600" height="1035" src="zly-sen/img-18.webp" alt="Zły Sen — spread, pages 52–53" data-pp="52–53"></div>
+<div class="zs-ctrl"><span class="zs-count">pp. 2–3</span><div class="zs-dots"><button type="button" aria-label="Spread 1" class="on"></button><button type="button" aria-label="Spread 2"></button><button type="button" aria-label="Spread 3"></button><button type="button" aria-label="Spread 4"></button><button type="button" aria-label="Spread 5"></button><button type="button" aria-label="Spread 6"></button><button type="button" aria-label="Spread 7"></button></div></div></div>
+</div>
+<div class="zs-lower"><img class="zs-pc zs-symb" width="640" height="190" src="zly-sen/zs-sym1.webp" alt="" aria-hidden="true" style="left:33.333%;top:calc(45 * 100cqi / 1920);width:33.333%" loading="lazy"><img class="zs-pc" width="1299" height="1085" src="zly-sen/zs-p01.webp" alt="" style="left:1.458%;top:calc(343 * 100cqi / 1920);width:67.656%" loading="lazy"><img class="zs-pc" width="354" height="21" src="zly-sen/zs-p02.webp" alt="" style="left:73.906%;top:calc(437 * 100cqi / 1920);width:18.438%" loading="lazy"><img class="zs-pc" width="354" height="64" src="zly-sen/zs-p03.webp" alt="" style="left:73.906%;top:calc(602 * 100cqi / 1920);width:18.438%" loading="lazy"><img class="zs-pc" width="354" height="211" src="zly-sen/zs-p04.webp" alt="" style="left:73.906%;top:calc(719 * 100cqi / 1920);width:18.438%" loading="lazy"><img class="zs-pc zs-symb" width="640" height="182" src="zly-sen/zs-sym2.webp" alt="" aria-hidden="true" style="left:33.333%;top:calc(1408 * 100cqi / 1920);width:33.333%" loading="lazy"><img class="zs-pc" width="1920" height="345" src="zly-sen/zs-p05.webp" alt="" style="left:0.000%;top:calc(1570 * 100cqi / 1920);width:100.000%" loading="lazy"><img class="zs-pc" width="480" height="230" src="zly-sen/zs-p06.webp" alt="" style="left:0.000%;top:calc(1915 * 100cqi / 1920);width:25.000%" loading="lazy"><img class="zs-pc" width="520" height="230" src="zly-sen/zs-p07.webp" alt="" style="left:25.000%;top:calc(1915 * 100cqi / 1920);width:27.083%" loading="lazy"><img class="zs-pc" width="400" height="230" src="zly-sen/zs-p08.webp" alt="" style="left:52.083%;top:calc(1915 * 100cqi / 1920);width:20.833%" loading="lazy"><img class="zs-pc" width="520" height="230" src="zly-sen/zs-p09.webp" alt="" style="left:72.917%;top:calc(1915 * 100cqi / 1920);width:27.083%" loading="lazy"><img class="zs-pc" width="1920" height="1699" src="zly-sen/zs-p10.webp" alt="" style="left:0.000%;top:calc(2145 * 100cqi / 1920);width:100.000%" loading="lazy"><img class="zs-pc zs-symb" width="640" height="144" src="zly-sen/zs-sym3.webp" alt="" aria-hidden="true" style="left:33.333%;top:calc(3824 * 100cqi / 1920);width:33.333%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p11.webp" alt="" style="left:27.292%;top:calc(4202 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p12.webp" alt="" style="left:50.990%;top:calc(4202 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p13.webp" alt="" style="left:74.688%;top:calc(4202 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p14.webp" alt="" style="left:3.594%;top:calc(4514 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p15.webp" alt="" style="left:27.292%;top:calc(4514 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p16.webp" alt="" style="left:50.990%;top:calc(4514 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p17.webp" alt="" style="left:74.688%;top:calc(4514 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p18.webp" alt="" style="left:3.594%;top:calc(4826 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p19.webp" alt="" style="left:27.292%;top:calc(4826 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p20.webp" alt="" style="left:50.990%;top:calc(4826 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p21.webp" alt="" style="left:74.688%;top:calc(4826 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p22.webp" alt="" style="left:3.594%;top:calc(5137 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p23.webp" alt="" style="left:27.292%;top:calc(5137 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p24.webp" alt="" style="left:50.990%;top:calc(5137 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p25.webp" alt="" style="left:74.688%;top:calc(5137 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p26.webp" alt="" style="left:3.594%;top:calc(5449 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p27.webp" alt="" style="left:27.292%;top:calc(5449 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p28.webp" alt="" style="left:50.990%;top:calc(5449 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p29.webp" alt="" style="left:74.688%;top:calc(5449 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p30.webp" alt="" style="left:3.594%;top:calc(5761 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p31.webp" alt="" style="left:27.292%;top:calc(5761 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc" width="417" height="274" src="zly-sen/zs-p32.webp" alt="" style="left:50.990%;top:calc(5761 * 100cqi / 1920);width:21.719%" loading="lazy"><img class="zs-pc zs-symb" width="640" height="440" src="zly-sen/zs-sym4.webp" alt="" aria-hidden="true" style="left:33.333%;top:calc(6265 * 100cqi / 1920);width:33.333%" loading="lazy">
+<section class="zs-end"><div class="zs-txt"><p class="zs-motto">Errare humanum est</p><p class="zs-sign">Gabriel Myśliwiec<br>MMXXV</p></div></section></div>
+</div>
+</template>
+<template id="pj-gallery-p02" data-theme="manture">
+<div class="mt-flow">
+<div class="mt-ab mt-first"><img width="1920" height="1080" class="mt-full" src="manture/mt-ab01-g.webp" alt="Manture — logo" loading="lazy"><img class="mt-pc" width="750" height="366" src="manture/mt-ab01-09-0001.webp" alt="" style="left:30.104%;top:33.333%;width:39.063%" loading="lazy"></div>
+<div class="mt-strip mt-dark"><div class="mt-cols">
+<div><span class="mt-lab">[ PL ]</span><p><b>Identyfikacja marki</b> — Manture, naturalne kosmetyki dla mężczyzn<br><b>Rola:</b> Projektowanie identyfikacji marki | Narzędzia: Illustrator, Photoshop | 2026</p><p>Identyfikacja wizualna marki naturalnych kosmetyków dla mężczyzn, stworzona jako alternatywa dla typowego, agresywnego czarno-czerwonego stylu „męskich” marek kosmetycznych — oparta na spokoju, bliskości natury i prostocie zamiast nadmiaru.</p></div>
+<div><span class="mt-lab">[ EN ]</span><p><b>Brand Identity</b> — Manture, Men’s Natural Cosmetics<br><b>Role:</b> Brand Identity Design | Tools: Illustrator, Photoshop | 2026</p><p>A brand identity for a men’s natural cosmetics line, built to stand apart from the typical aggressive black-and-red “masculine grooming” look with a calmer, nature-driven identity centered on simplicity and quality over excess.</p></div>
+</div></div>
+<div class="mt-ab"><img width="1920" height="1988" class="mt-full" src="manture/mt-ab03-g.webp" alt="Manture — logo construction, pattern and alphabet" loading="lazy"><img class="mt-pc" width="1792" height="376" src="manture/mt-ab03-07-00s0.webp" alt="" style="left:3.438%;top:13.380%;width:93.333%" loading="lazy"><img class="mt-pc" width="1144" height="126" src="manture/mt-ab03-07-0001t.webp" alt="" style="left:37.500%;top:35.714%;width:59.583%" loading="lazy"><img class="mt-pc" width="682" height="50" src="manture/mt-ab03-07-0000l.webp" alt="" style="left:3.333%;top:36.016%;width:35.521%" loading="lazy"><img class="mt-pc" width="1124" height="1034" src="manture/mt-ab03-07-03p0.webp" alt="" style="left:38.229%;top:44.869%;width:58.542%" loading="lazy"><img class="mt-pc" width="696" height="364" src="manture/mt-ab03-07-01s0.webp" alt="" style="left:3.229%;top:45.473%;width:36.250%" loading="lazy"><img class="mt-pc" width="690" height="188" src="manture/mt-ab03-07-0003t.webp" alt="" style="left:3.021%;top:65.895%;width:35.938%" loading="lazy"><img class="mt-pc" width="268" height="160" src="manture/mt-ab03-07-02M.webp" alt="" style="left:2.917%;top:81.187%;width:13.958%" loading="lazy"><img class="mt-pc" width="268" height="160" src="manture/mt-ab03-07-02A.webp" alt="" style="left:14.375%;top:81.187%;width:13.958%" loading="lazy"><img class="mt-pc" width="268" height="160" src="manture/mt-ab03-07-02N.webp" alt="" style="left:25.833%;top:81.187%;width:13.958%" loading="lazy"></div>
+<div class="mt-strip mt-slate"><div class="mt-note">
+<p><span class="mt-lab">[ PL ]</span> Symbol góry odzwierciedla filozofię marki „mniej znaczy więcej” — prosta, geometryczna forma, która sugeruje jednocześnie siłę i bliskość z naturą.</p>
+<p><span class="mt-lab">[ EN ]</span> The mountain mark reflects the brand’s “less is more” philosophy — a simple, geometric symbol that reads as both strength and closeness to nature.</p>
+</div></div>
+<div class="mt-ab" style="background:linear-gradient(to bottom, #090b0c, #0a0c0e 50%, #f5f8f7)"><img width="1920" height="1080" class="mt-pc mt-whole" src="manture/mt-ab05.webp" alt="Manture — colour palette" loading="lazy"></div>
+<div class="mt-strip mt-snow mt-snow-fade"><div class="mt-note">
+<p><span class="mt-lab">[ PL ]</span> Paleta barw opiera się na naturalnych odcieniach szarości i kamienia zamiast typowej „męskiej” czerni i czerwieni, wspierając naturalny, stonowany charakter marki.</p>
+<p><span class="mt-lab">[ EN ]</span> The palette stays in neutral stone and slate tones rather than typical black-and-red “masculine” branding, supporting the brand’s natural, understated positioning.</p>
+</div></div>
+<div class="mt-ab"><img width="1920" height="1080" class="mt-full" src="manture/mt-ab07-g.webp" alt="Manture — brand imagery" loading="lazy"><img class="mt-pc" width="504" height="776" src="manture/mt-ab07-03-0001.webp" alt="" style="left:36.875%;top:14.074%;width:26.250%" loading="lazy"><img class="mt-pc" width="502" height="772" src="manture/mt-ab07-03-0000.webp" alt="" style="left:2.917%;top:14.259%;width:26.146%" loading="lazy"><img class="mt-pc" width="502" height="774" src="manture/mt-ab07-03-0002.webp" alt="" style="left:70.938%;top:14.259%;width:26.146%" loading="lazy"></div>
+<div class="mt-ab"><img width="1920" height="2882" class="mt-full" src="manture/mt-ab08-g.webp" alt="Manture — icons and packaging" loading="lazy"><img class="mt-pc" width="452" height="680" src="manture/mt-ab08-02-0004.webp" alt="" style="left:9.792%;top:16.724%;width:23.542%" loading="lazy"><img class="mt-pc" width="450" height="862" src="manture/mt-ab08-02-0011.webp" alt="" style="left:70.938%;top:34.004%;width:23.438%" loading="lazy"><img class="mt-pc" width="642" height="360" src="manture/mt-ab08-02-0005.webp" alt="" style="left:0.000%;top:43.581%;width:33.438%" loading="lazy"><img class="mt-pc" width="1132" height="832" src="manture/mt-ab08-02-0007.webp" alt="" style="left:20.521%;top:63.081%;width:58.958%" loading="lazy"><img class="mt-pc" width="158" height="104" src="manture/mt-ab08-02-0002.webp" alt="" style="left:88.854%;top:93.754%;width:8.229%" loading="lazy"><img class="mt-pc" width="268" height="64" src="manture/mt-ab08-02-0003.webp" alt="" style="left:2.917%;top:95.142%;width:13.958%" loading="lazy"></div>
+<div class="mt-strip mt-snow"><div class="mt-note">
+<p><span class="mt-lab">[ PL ]</span> Symbol góry pozostaje mały i spójny na całej linii produktów, dzięki czemu różne kształty butelek i tubek tworzą jeden spójny system.</p>
+<p><span class="mt-lab">[ EN ]</span> Packaging keeps the mountain mark small and consistent across the full product line, so the range reads as one system even across different bottle and tube shapes.</p>
+</div></div>
+<div class="mt-sm"><div class="mt-sm-head"><span>Social media — Instagram feed</span><span>4:5</span></div><div class="mt-sm-grid"><img width="1080" height="1350" src="manture/mt-sm-01.webp" alt="Manture — social media post 01" loading="lazy"><img width="1080" height="1350" src="manture/mt-sm-02.webp" alt="Manture — social media post 02" loading="lazy"><img width="1080" height="1350" src="manture/mt-sm-03.webp" alt="Manture — social media post 03" loading="lazy"><img width="1080" height="1350" src="manture/mt-sm-04.webp" alt="Manture — social media post 04" loading="lazy"><img width="1080" height="1350" src="manture/mt-sm-05.webp" alt="Manture — social media post 05" loading="lazy"><img width="1080" height="1350" src="manture/mt-sm-06.webp" alt="Manture — social media post 06" loading="lazy"><img width="1080" height="1350" src="manture/mt-sm-07.webp" alt="Manture — social media post 07" loading="lazy"><img width="1080" height="1350" src="manture/mt-sm-08.webp" alt="Manture — social media post 08" loading="lazy"><img width="1080" height="1350" src="manture/mt-sm-09.webp" alt="Manture — social media post 09" loading="lazy"><img width="1080" height="1350" src="manture/mt-sm-10.webp" alt="Manture — social media post 10" loading="lazy"><img width="1080" height="1350" src="manture/mt-sm-11.webp" alt="Manture — social media post 11" loading="lazy"><img width="1080" height="1350" src="manture/mt-sm-12.webp" alt="Manture — social media post 12" loading="lazy"></div>
+<div class="mt-sm-car-wrap"><div class="mt-sm-head" style="margin-top:clamp(56px,7vw,104px)"><span>Karuzela / Carousel</span><span>4 slides</span></div><div class="mt-sm-car" style="margin-top:0"><img width="1080" height="1350" src="manture/mt-sm-c1.webp" alt="Manture — carousel slide 1" loading="lazy"><img width="1080" height="1350" src="manture/mt-sm-c2.webp" alt="Manture — carousel slide 2" loading="lazy"><img width="1080" height="1350" src="manture/mt-sm-c3.webp" alt="Manture — carousel slide 3" loading="lazy"><img width="1080" height="1350" src="manture/mt-sm-c4.webp" alt="Manture — carousel slide 4" loading="lazy"></div></div></div>
+<div class="mt-strip mt-snow" style="padding-top:0"><div class="mt-note">
+<p><span class="mt-lab">[ PL ]</span> Komunikacja w social media przenosi system marki na feed: przenikające się gradienty, cienka linia gór i spokojna typografia. Plakaty kampanii przeplatają się z produktami w rytmie jasny / ciemny, a karuzela prowadzi jedną linią przez wszystkie slajdy.</p>
+<p><span class="mt-lab">[ EN ]</span> Social media carries the brand system onto the feed: blended gradients, a thin mountain line and quiet typography. Campaign posters alternate with product posts in a light / dark rhythm, and the carousel runs one continuous line across every slide.</p>
+</div></div>
+<div class="mt-ab"><img width="1920" height="360" class="mt-full" src="manture/mt-ab10-g.webp" alt="Manture — closing" loading="lazy"><img class="mt-pc" width="354" height="220" src="manture/mt-ab10-00-0000.webp" alt="" style="left:40.521%;top:16.667%;width:18.438%" loading="lazy"></div>
+</div>
+</template>
+<template id="pj-gallery-p03" data-theme="barber">
+<figure class="pj-cover"><span class="mt-ab" style="display:block"><img width="2240" height="1263" class="mt-full" src="barber/bb-img-23-g.webp" alt="Zakład Barberski — case study cover"><img class="mt-pc" width="160" height="56" src="barber/bb-img-23-0.webp" alt="" style="left:0.000%;top:0.000%;width:7.143%" loading="lazy"><img class="mt-pc" width="664" height="1252" src="barber/bb-img-23-2.webp" alt="" style="left:35.179%;top:0.000%;width:29.643%" loading="lazy"><img class="mt-pc" width="164" height="74" src="barber/bb-img-23-3.webp" alt="" style="left:92.679%;top:0.000%;width:7.321%" loading="lazy"><img class="mt-pc" width="76" height="278" src="barber/bb-img-23-4.webp" alt="" style="left:96.607%;top:40.697%;width:3.393%" loading="lazy"><img class="mt-pc" width="72" height="264" src="barber/bb-img-23-1.webp" alt="" style="left:0.000%;top:41.330%;width:3.214%" loading="lazy"></span></figure>
+<div class="pj-sections">
+<section class="pj-sec"><div class="pj-sec-head"><span class="pj-sec-n">01 / 05</span><h3>Landing page</h3><p>The landing page opens with the brand and one clear call to action, followed by recommended services, a short introduction with the shop’s location, and social links — everything a first-time visitor needs to decide, in a single scroll.</p></div><figure><span class="mt-ab" style="display:block"><img width="2240" height="838" class="mt-full" src="barber/bb-img-24-g.webp" alt="Zakład Barberski — landing page" loading="lazy"><img class="mt-pc" width="380" height="692" src="barber/bb-img-24-2.webp" alt="" style="left:41.339%;top:11.695%;width:16.964%" loading="lazy"><img class="mt-pc" width="284" height="490" src="barber/bb-img-24-1.webp" alt="" style="left:29.018%;top:22.673%;width:12.679%" loading="lazy"><img class="mt-pc" width="284" height="490" src="barber/bb-img-24-3.webp" alt="" style="left:58.036%;top:22.673%;width:12.679%" loading="lazy"><img class="mt-pc" width="72" height="378" src="barber/bb-img-24-0.webp" alt="" style="left:0.000%;top:27.446%;width:3.214%" loading="lazy"><img class="mt-pc" width="72" height="336" src="barber/bb-img-24-4.webp" alt="" style="left:96.786%;top:29.833%;width:3.214%" loading="lazy"></span></figure></section>
+<section class="pj-sec"><div class="pj-sec-head"><span class="pj-sec-n">02 / 05</span><h3>Services</h3><p>Services are grouped into Hair, Beard and Eyebrows, with a filter for quick narrowing. Barbershop clients usually arrive knowing what they want, so the structure favours fast finding over open browsing.</p></div><figure><span class="mt-ab" style="display:block"><img width="2240" height="1312" class="mt-full" src="barber/bb-img-25-g.webp" alt="Zakład Barberski — services" loading="lazy"><img class="mt-pc" width="540" height="450" src="barber/bb-img-25-2.webp" alt="" style="left:60.982%;top:2.896%;width:24.107%" loading="lazy"><img class="mt-pc" width="534" height="1216" src="barber/bb-img-25-1.webp" alt="" style="left:19.196%;top:7.165%;width:23.839%" loading="lazy"><img class="mt-pc" width="540" height="404" src="barber/bb-img-25-3.webp" alt="" style="left:60.982%;top:37.043%;width:24.107%" loading="lazy"><img class="mt-pc" width="72" height="266" src="barber/bb-img-25-5.webp" alt="" style="left:96.786%;top:39.787%;width:3.214%" loading="lazy"><img class="mt-pc" width="72" height="234" src="barber/bb-img-25-0.webp" alt="" style="left:0.000%;top:41.159%;width:3.214%" loading="lazy"><img class="mt-pc" width="540" height="404" src="barber/bb-img-25-4.webp" alt="" style="left:60.982%;top:67.683%;width:24.107%" loading="lazy"></span></figure></section>
+<section class="pj-sec"><div class="pj-sec-head"><span class="pj-sec-n">03 / 05</span><h3>Detail page</h3><p>Each service page spells out exactly what the visit includes — consultation, wash, cut, styling — next to the price, so there are no surprises before booking. Related services at the bottom surface add-ons without breaking the flow.</p></div><figure><span class="mt-ab" style="display:block"><img width="2240" height="1136" class="mt-full" src="barber/bb-img-26-g.webp" alt="Zakład Barberski — detail page" loading="lazy"><img class="mt-pc" width="264" height="126" src="barber/bb-img-26-4.webp" alt="" style="left:71.964%;top:18.838%;width:11.786%" loading="lazy"><img class="mt-pc" width="222" height="294" src="barber/bb-img-26-1.webp" alt="" style="left:9.911%;top:22.359%;width:9.911%" loading="lazy"><img class="mt-pc" width="860" height="702" src="barber/bb-img-26-3.webp" alt="" style="left:30.089%;top:24.472%;width:38.393%" loading="lazy"><img class="mt-pc" width="414" height="646" src="barber/bb-img-26-5.webp" alt="" style="left:71.786%;top:26.232%;width:18.482%" loading="lazy"><img class="mt-pc" width="72" height="308" src="barber/bb-img-26-6.webp" alt="" style="left:96.786%;top:36.444%;width:3.214%" loading="lazy"><img class="mt-pc" width="72" height="220" src="barber/bb-img-26-0.webp" alt="" style="left:0.000%;top:40.317%;width:3.214%" loading="lazy"><img class="mt-pc" width="398" height="404" src="barber/bb-img-26-2.webp" alt="" style="left:9.732%;top:46.655%;width:17.768%" loading="lazy"></span></figure></section>
+<section class="pj-sec"><div class="pj-sec-head"><span class="pj-sec-n">04 / 05</span><h3>About page</h3><p>Barbers are introduced by name and photo alongside the shop’s story. For a service this personal, knowing who will be holding the scissors builds trust before the first visit.</p></div><figure><span class="mt-ab" style="display:block"><img width="2240" height="1136" class="mt-full" src="barber/bb-img-27-g.webp" alt="Zakład Barberski — about page" loading="lazy"><img class="mt-pc" width="886" height="782" src="barber/bb-img-27-4.webp" alt="" style="left:44.018%;top:19.014%;width:39.554%" loading="lazy"><img class="mt-pc" width="222" height="132" src="barber/bb-img-27-1.webp" alt="" style="left:23.571%;top:19.190%;width:9.911%" loading="lazy"><img class="mt-pc" width="204" height="622" src="barber/bb-img-27-2.webp" alt="" style="left:19.107%;top:27.817%;width:9.107%" loading="lazy"><img class="mt-pc" width="204" height="624" src="barber/bb-img-27-3.webp" alt="" style="left:28.750%;top:27.817%;width:9.107%" loading="lazy"><img class="mt-pc" width="72" height="312" src="barber/bb-img-27-5.webp" alt="" style="left:96.786%;top:36.268%;width:3.214%" loading="lazy"><img class="mt-pc" width="72" height="220" src="barber/bb-img-27-0.webp" alt="" style="left:0.000%;top:40.317%;width:3.214%" loading="lazy"></span></figure></section>
+<section class="pj-sec"><div class="pj-sec-head"><span class="pj-sec-n">05 / 05</span><h3>Contact page</h3><p>Phone, email, address, a map and a “Get directions” action sit together on one screen, removing friction for first-time visitors trying to find the shop.</p></div><figure><span class="mt-ab" style="display:block"><img width="2240" height="1061" class="mt-full" src="barber/bb-img-28-g.webp" alt="Zakład Barberski — contact page" loading="lazy"><img class="mt-pc" width="532" height="1008" src="barber/bb-img-28-2.webp" alt="" style="left:24.196%;top:3.959%;width:23.750%" loading="lazy"><img class="mt-pc" width="688" height="538" src="barber/bb-img-28-3.webp" alt="" style="left:49.643%;top:10.368%;width:30.714%" loading="lazy"><img class="mt-pc" width="72" height="350" src="barber/bb-img-28-7.webp" alt="" style="left:96.786%;top:31.480%;width:3.214%" loading="lazy"><img class="mt-pc" width="72" height="264" src="barber/bb-img-28-0.webp" alt="" style="left:0.000%;top:35.627%;width:3.214%" loading="lazy"><img class="mt-pc" width="396" height="144" src="barber/bb-img-28-4.webp" alt="" style="left:56.161%;top:58.624%;width:17.679%" loading="lazy"><img class="mt-pc" width="134" height="134" src="barber/bb-img-28-5.webp" alt="" style="left:59.911%;top:68.426%;width:5.982%" loading="lazy"><img class="mt-pc" width="132" height="130" src="barber/bb-img-28-6.webp" alt="" style="left:64.107%;top:68.615%;width:5.893%" loading="lazy"><img class="mt-pc" width="160" height="73" src="barber/bb-img-28-1.webp" alt="" style="left:0.000%;top:93.120%;width:7.143%" loading="lazy"><img class="mt-pc" width="164" height="73" src="barber/bb-img-28-8.webp" alt="" style="left:92.679%;top:93.120%;width:7.321%" loading="lazy"></span></figure></section>
+</div>
+</template>
+<script>
+(function () {
+  var IDS = ['p01', 'p02', 'p03'];
+  var modal = document.getElementById('pj-modal');
+  var cursor = document.getElementById('pj-cursor');
+  var current = -1, lastFocus = null;
+
+  function blockFrom(el) {
+    while (el && el !== document) {
+      if (el.id && IDS.indexOf(el.id) > -1) return el;
+      el = el.parentNode;
+    }
+    return null;
+  }
+
+
+  var buildId = 0;
+  function riseIn(body) {
+    var els = [];
+    var title = body.querySelector('.pj-title');
+    if (title) Array.prototype.forEach.call(title.children, function (c) { if (getComputedStyle(c).display !== 'none') els.push(c); });
+    var text = body.querySelector('.pj-text');
+    if (text) Array.prototype.forEach.call(text.children, function (col, k, all) {
+      if (k === all.length - 1 && col.children.length > 1) Array.prototype.forEach.call(col.children, function (row) { els.push(row); });
+      else els.push(col);
+    });
+    var after = text ? text.nextElementSibling : null;
+    if (after) els.push(after);
+    els.forEach(function (el, k) { el.classList.remove('pj-rise'); void el.offsetWidth; el.style.setProperty('--d', k); el.classList.add('pj-rise'); });
+    if (popIO) popIO.disconnect();
+    var later = body.querySelectorAll('.pj-sec-head, .mt-strip .mt-cols > div, .mt-strip .mt-note p, .zs-intro, .zs-slider, .zs-pc, .mt-pc, .zs-end p');
+    popIO = new IntersectionObserver(function (entries) {
+      var n = 0;
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var t = e.target; popIO.unobserve(t);
+        var go = function (d) { t.style.setProperty('--d', d); t.classList.remove('pj-wait'); t.classList.add('pj-rise'); };
+        if (t.tagName === 'IMG' && !(t.classList.contains('pj-in') && t.naturalWidth)) {
+          if (t.dataset.src && !t.getAttribute('src')) t.src = t.dataset.src;
+          t.addEventListener('load', function () { t.classList.add('pj-in'); go(0); }, { once: true });
+        } else go(n++);
+      });
+    }, { root: modal, threshold: 0, rootMargin: '0px 0px -18% 0px' });
+    later.forEach(function (el) { el.classList.add('pj-wait'); popIO.observe(el); });
+    if (!modal.__endReveal) { modal.__endReveal = true; modal.addEventListener('scroll', function () {
+      if (modal.scrollTop + modal.clientHeight < modal.scrollHeight - 160) return;
+      Array.prototype.forEach.call(modal.querySelectorAll('.pj-wait'), function (el) { var r = el.getBoundingClientRect(); if (r.top < window.innerHeight) { if (popIO) popIO.unobserve(el);
+        var go = function () { el.classList.remove('pj-wait'); el.classList.add('pj-rise'); };
+        if (el.tagName === 'IMG' && !(el.complete && el.naturalWidth)) { if (el.dataset.src && !el.getAttribute('src')) el.src = el.dataset.src; el.addEventListener('load', go, { once: true }); } else go(); } });
+    }, { passive: true }); }
+  }
+  var popIO = null;
+  function holdUntilLoaded(body, id) {
+    var imgs = Array.prototype.slice.call(body.querySelectorAll('img:not(.zs-pc):not(.mt-pc)'));
+    Array.prototype.forEach.call(body.querySelectorAll('img.zs-pc, img.mt-pc'), function (im) { im.loading = 'eager'; im.decoding = 'async'; if (im.complete && im.naturalWidth) im.classList.add('pj-in'); else im.addEventListener('load', function () { im.classList.add('pj-in'); }, { once: true }); });
+    imgs.forEach(function (im) {
+      im.dataset.src = im.getAttribute('src'); im.removeAttribute('src'); im.loading = 'eager';
+      if (!im.closest('.zs-slides') && !im.classList.contains('zs-pc') && !im.classList.contains('mt-pc')) im.classList.add('pj-seq');
+    });
+    var i = 0;
+    function next() {
+      if (id !== buildId || i >= imgs.length) return;
+      var im = imgs[i++];
+      var done = function () { im.classList.add('pj-in'); next(); };
+      im.addEventListener('load', done, { once: true });
+      im.addEventListener('error', done, { once: true });
+      im.src = im.dataset.src;
+    }
+    next();
+  }
+  var slideTimer = null;
+  function stopSlides() { if (slideTimer) { clearInterval(slideTimer); slideTimer = null; } }
+  function initSlides(root) {
+    var wrap = root.querySelector('.zs-slider');
+    if (!wrap) return;
+    var imgs = wrap.querySelectorAll('.zs-slides img'), dots = wrap.querySelectorAll('.zs-dots button');
+    var count = wrap.querySelector('.zs-count'), i = 0;
+    function show(n) {
+      i = (n + imgs.length) % imgs.length;
+      imgs.forEach(function (im, k) { im.classList.toggle('on', k === i); });
+      dots.forEach(function (d, k) { d.classList.toggle('on', k === i); });
+      if (count) count.textContent = 'pp. ' + imgs[i].getAttribute('data-pp');
+    }
+    function start() {
+      stopSlides();
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      slideTimer = setInterval(function () { show(i + 1); }, 4000);
+    }
+    dots.forEach(function (d, k) { d.addEventListener('click', function () { show(k); start(); }); });
+    show(0); start();
+  }
+
+  function build(idx) {
+    var block = document.getElementById(IDS[idx]);
+    if (!block) return;
+    var kids = block.children;
+    var header = kids[0], visual = kids[1], text = kids[2];
+    var metaEl = modal.querySelector('.pj-meta');
+    metaEl.innerHTML = '';
+    Array.prototype.forEach.call(header.children, function (d) {
+      var s = document.createElement('span'); s.textContent = d.textContent; metaEl.appendChild(s);
+    });
+    var body = modal.querySelector('.pj-body');
+    body.style.visibility = 'hidden';
+    body.innerHTML = '';
+    var title = visual.lastElementChild.cloneNode(true);
+    title.removeAttribute('style');
+    title.className = 'pj-title';
+    body.appendChild(title);
+    var gal = document.getElementById('pj-gallery-' + IDS[idx]);
+    var galFrag = gal ? gal.content.cloneNode(true) : null;
+    stopSlides();
+    var theme = gal && gal.dataset.theme;
+    modal.querySelector('.pj-panel').classList.toggle('dark', theme === 'dark');
+    modal.querySelector('.pj-panel').classList.toggle('barber', theme === 'barber');
+    modal.querySelector('.pj-panel').classList.toggle('manture', theme === 'manture');
+    if (!galFrag) {
+      var imgs = visual.querySelectorAll('img');
+      var fig = function (img) {
+        var f = document.createElement('figure');
+        var im = document.createElement('img');
+        im.src = img.getAttribute('src'); im.alt = img.alt; im.loading = 'lazy';
+        f.appendChild(im); return f;
+      };
+      if (imgs[0]) { var lead = fig(imgs[0]); lead.className = 'pj-lead'; body.appendChild(lead); }
+      if (imgs.length > 1) {
+        var tiles = document.createElement('div'); tiles.className = 'pj-tiles';
+        for (var k = 1; k < imgs.length; k++) tiles.appendChild(fig(imgs[k]));
+        body.appendChild(tiles);
+      }
+    }
+    if (text) {
+      var t = text.cloneNode(true);
+      t.classList.add('pj-text');
+      t.querySelectorAll('[sc-camel-on-mouse-enter]').forEach(function (a) { a.removeAttribute('sc-camel-on-mouse-enter'); });
+      t.querySelectorAll('a').forEach(function (a) {
+        a.target = '_blank'; a.rel = 'noopener';
+        var line = a.querySelector('span:last-child:not(:first-child)');
+        if (!line) return;
+        line.style.animation = 'none';
+        a.addEventListener('mouseenter', function () {
+          if (line.dataset.wiping) return;
+          line.dataset.wiping = '1';
+          line.style.animation = 'coordUnderlineWipe .62s cubic-bezier(.65,0,.35,1) 1';
+          setTimeout(function () { line.style.animation = 'none'; delete line.dataset.wiping; }, 640);
+        });
+      });
+      body.appendChild(t);
+    }
+    if (galFrag) body.appendChild(galFrag);
+    initSlides(body);
+    holdUntilLoaded(body, ++buildId);
+    riseIn(body);
+    var bid = buildId;
+    requestAnimationFrame(function () { requestAnimationFrame(function () { if (bid === buildId) body.style.visibility = ''; }); });
+    current = idx;
+    modal.scrollTop = 0;
+    modal.classList.remove('scrolled');
+  }
+
+  function open(idx) {
+    lastFocus = document.activeElement;
+    build(idx);
+    modal.classList.add('open');
+    document.documentElement.style.overflow = 'hidden';
+    cursor.classList.remove('on');
+    setHot(null);
+    modal.querySelector('.pj-panel').focus({ preventScroll: true });
+  }
+  function close() {
+    stopSlides();
+    modal.classList.remove('open');
+    document.documentElement.style.overflow = '';
+    current = -1;
+    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+  }
+  function step(d) { if (current > -1) build((current + d + IDS.length) % IDS.length); }
+
+  // only the framed area counts as the project, not the spacing between projects
+  function hotBlock(e) {
+    // resolve by pointer position against each frame, not e.target — robust to scaled/fullscreen hosts
+    for (var i = 0; i < IDS.length; i++) {
+      var b = document.getElementById(IDS[i]);
+      if (!b) continue;
+      var r = b.getBoundingClientRect(), cs = getComputedStyle(b, '::before');
+      var t = r.top + parseFloat(cs.top), bt = r.bottom - parseFloat(cs.bottom);
+      var l = r.left + parseFloat(cs.left), rt = r.right - parseFloat(cs.right);
+      if (e.clientY >= t && e.clientY <= bt && e.clientX >= l && e.clientX <= rt) return b;
+    }
+    return null;
+  }
+  var hot = null;
+  function setHot(b) {
+    if (hot === b) return;
+    if (hot) hot.classList.remove('pj-hot');
+    hot = b;
+    if (hot) hot.classList.add('pj-hot');
+  }
+  document.addEventListener('click', function (e) {
+    if (modal.contains(e.target)) return;
+    if (e.target.closest && e.target.closest('a, button')) return;
+    var b = hotBlock(e);
+    if (b) open(IDS.indexOf(b.id));
+  });
+  document.addEventListener('mousemove', function (e) {
+    var b = modal.classList.contains('open') ? null : hotBlock(e);
+    setHot(b);
+    var onLink = e.target.closest && e.target.closest('a, button');
+    if (b && !onLink) {
+      cursor.classList.add('on');
+      cursor.style.transform = 'translate(' + (e.clientX + 16) + 'px,' + (e.clientY + 16) + 'px)';
+    } else cursor.classList.remove('on');
+  }, { passive: true });
+  window.addEventListener('scroll', function () { setHot(null); cursor.classList.remove('on'); }, { passive: true });
+  document.addEventListener('mouseleave', function () { cursor.classList.remove('on'); setHot(null); });
+
+  // keep the page's smooth-scroll handler from hijacking wheel events inside the pop-up
+  modal.addEventListener('wheel', function (e) { e.stopPropagation(); }, { passive: true });
+  modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
+  modal.querySelector('.pj-close').addEventListener('click', close);
+  modal.querySelector('.pj-top').addEventListener('click', function () { modal.scrollTo({ top: 0, behavior: 'smooth' }); });
+  modal.addEventListener('scroll', function () { modal.classList.toggle('scrolled', modal.scrollTop > 400); }, { passive: true });
+  modal.querySelector('.pj-prev').addEventListener('click', function () { step(-1); });
+  modal.querySelector('.pj-next').addEventListener('click', function () { step(1); });
+  document.addEventListener('keydown', function (e) {
+    if (current < 0) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowRight') step(1);
+    else if (e.key === 'ArrowLeft') step(-1);
+  });
+})();
+
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  function kids(el) { return el ? Array.prototype.slice.call(el.children) : []; }
+  function collect() {
+    var els = [];
+    var work = document.getElementById('work');
+    if (work) { els.push(work); kids(work.nextElementSibling).forEach(function (r) { els.push(r); }); }
+    ['p01', 'p02', 'p03'].forEach(function (id) {
+      var b = document.getElementById(id); if (!b) return;
+      var c = kids(b);
+      if (c[0]) els.push(c[0]);
+      if (c[1]) els.push(c[1]);
+      kids(c[2]).forEach(function (x) { els.push(x); });
+    });
+    ['experience', 'about'].forEach(function (id) {
+      kids(document.getElementById(id)).forEach(function (col) {
+        var k = kids(col);
+        if (k.length > 1) k.forEach(function (x) { els.push(x); }); else els.push(col);
+      });
+    });
+    kids(document.getElementById('contact')).forEach(function (x) { els.push(x); });
+    return els;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    var n = 0;
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var el = e.target; io.unobserve(el);
+      el.style.setProperty('--pgd', n++);
+      el.classList.add('pg-rise');
+      el.addEventListener('animationend', function () { el.classList.remove('pg-rise', 'pg-hide'); el.style.removeProperty('--pgd'); }, { once: true });
+    });
+  }, { threshold: 0, rootMargin: '0px 0px -22% 0px' });
+  var shown = new WeakSet();
+  function init() {
+    collect().forEach(function (el) {
+      if (el.dataset.pg) return;
+      el.dataset.pg = '1';
+      var r = el.getBoundingClientRect();
+      if (r.bottom < 0) return;
+      el.classList.add('pg-hide'); io.observe(el);
+    });
+  }
+  var t = null;
+  function schedule() { clearTimeout(t); t = setTimeout(init, 300); }
+  var root = document.querySelector('x-dc') || document.body;
+  new MutationObserver(schedule).observe(root, { childList: true, subtree: true });
+  schedule();
+})();
+</script>
+</body></html>
