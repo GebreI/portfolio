@@ -41,6 +41,36 @@
     52%  { transform: scaleX(0); transform-origin: left; }
     100% { transform: scaleX(1); transform-origin: left; }
   }
+@media (max-width: 760px) {
+    [data-m="nav"] { grid-template-columns: 1fr !important; justify-items: start !important; row-gap: 6px; padding: 12px 20px 4px !important; }
+    [data-m="avail"] { display: none !important; }
+    [data-m="links"] { gap: 18px !important; flex-wrap: wrap; }
+    [data-m="links"] a { padding: 8px 0 !important; margin: 0 !important; }
+    [data-m="hero"] { padding: 32px 20px 28px !important; min-height: calc(100svh - 80px) !important; }
+    [data-m="herofoot"] { grid-template-columns: 1fr !important; gap: 22px !important; }
+    [data-m="heroright"] { text-align: left !important; }
+    [data-m="cue"] { justify-content: flex-start !important; margin-right: 0 !important; padding-right: 0 !important; }
+    [data-m="div"] { padding: 72px 0 !important; }
+    [data-m="row"] { grid-template-columns: 28px minmax(0,1fr) auto !important; gap: 14px !important; padding-left: 20px !important; padding-right: 20px !important; }
+    [data-m="row"] > :nth-child(3) { display: none; }
+    [data-m="proj"] { padding-bottom: 90px !important; }
+    [data-m="phead"] { padding: 24px 20px 16px !important; }
+    [data-m="phead"] > :nth-child(2) { display: none; }
+    [data-m="gal"] { grid-template-columns: 1fr 1fr !important; grid-template-rows: 220px 150px !important; gap: 8px !important; padding: 0 20px !important; }
+    [data-m="gal"] > :first-child { grid-column: 1 / -1; }
+    [data-m="ptitle"] { padding: 18px 20px 0 !important; }
+    [data-m="ptitle"] > div:not(:last-child) { font-size: min(13vw, 64px) !important; }
+    [data-m="ptext"] { grid-template-columns: 1fr !important; gap: 24px !important; padding: 28px 20px 0 !important; }
+    [data-m="exp"] { padding: 0 20px 32px !important; }
+    [data-m="emeta"] { max-width: none !important; margin-left: 0 !important; }
+    [data-m="about"] { grid-template-columns: 1fr !important; gap: 40px !important; padding: 0 20px 90px !important; }
+    [data-m="about"] > :first-child { max-width: 300px; }
+    [data-m="about2"] { grid-template-columns: 1fr !important; row-gap: 36px !important; }
+    [data-m="contact"] { padding: 0 20px 40px !important; gap: 44px !important; }
+    [data-m="cgrid"] { grid-template-columns: 1fr !important; gap: 32px !important; }
+    [data-m="cfoot"] { grid-template-columns: 1fr !important; gap: 10px !important; }
+    [data-m="cfoot"] > * { justify-content: flex-start !important; text-align: left !important; }
+  }
 </style>
 </helmet>
 <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#f2f1ec"></rect><rect x="30" y="30" width="40" height="40" fill="#ff5c1a"></rect></svg></template>
@@ -53,27 +83,27 @@
 
   <div style="position:relative; z-index:2;">
 
-    <div ref="{{ barRef }}" style="position:sticky; top:0; z-index:20; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; justify-items:center; padding:{{ navPad }}; border-bottom:1px solid rgba(20,20,15,.14); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; background:rgba(244,244,242,.9); backdrop-filter:blur(10px); box-shadow:{{ navShadow }}; transition:padding .28s ease, box-shadow .28s ease;">
-      <div sc-camel-on-click="{{ toTop }}" title="Back to top" style="justify-self:start; display:flex; align-items:center; gap:10px; cursor:pointer;" style-hover="color:#ff5c1a;">
+    <div data-m="nav" ref="{{ barRef }}" style="position:sticky; top:0; z-index:20; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; justify-items:center; padding:{{ navPad }}; border-bottom:1px solid rgba(20,20,15,.14); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; background:rgba(244,244,242,.9); backdrop-filter:blur(10px); box-shadow:{{ navShadow }}; transition:padding .28s ease, box-shadow .28s ease;">
+      <div data-m="brand" sc-camel-on-click="{{ toTop }}" title="Back to top" style="justify-self:start; display:flex; align-items:center; gap:10px; cursor:pointer;" style-hover="color:#ff5c1a;">
         <div style="position:relative; width:{{ navMark }}; height:{{ navMark }}; background:{{ markBg }}; transition:width .28s ease, height .28s ease, background .28s ease;">
           <span style="position:absolute; left:50%; top:50%; transform:{{ markArrowT }}; font-size:13px; line-height:1; color:#ff5c1a; opacity:{{ markArrow }}; transition:transform .5s cubic-bezier(.2,.7,.2,1) {{ markArrowDelay }}, opacity .35s ease {{ markArrowDelay }};">↑</span>
         </div>
         <div style="font-weight:700; font-size:{{ navName }}; transition:font-size .28s ease;">Gabriel Myśliwiec</div>
       </div>
-      <div ref="{{ navRef }}" sc-camel-on-mouse-leave="{{ leaveNav }}" style="position:relative; display:flex; gap:{{ navGap }}; padding-top:{{ navPadBottomHover }}; padding-bottom:{{ navPadBottomHover }}; transition:gap .28s ease, padding-top .28s ease, padding-bottom .28s ease;">
+      <div data-m="links" ref="{{ navRef }}" sc-camel-on-mouse-leave="{{ leaveNav }}" style="position:relative; display:flex; gap:{{ navGap }}; padding-top:{{ navPadBottomHover }}; padding-bottom:{{ navPadBottomHover }}; transition:gap .28s ease, padding-top .28s ease, padding-bottom .28s ease;">
         <a ref="{{ workRef }}" href="#work" sc-camel-on-click="{{ goWork }}" sc-camel-on-mouse-enter="{{ enterWork }}" style="padding:{{ navLinkPad }}; margin:{{ navLinkMargin }}; transition:padding .28s ease, margin .28s ease; color:{{ colWork }}; transition:color .25s ease;">work</a>
         <a ref="{{ experienceRef }}" href="#experience" sc-camel-on-click="{{ goExperience }}" sc-camel-on-mouse-enter="{{ enterExperience }}" style="padding:{{ navLinkPad }}; margin:{{ navLinkMargin }}; transition:padding .28s ease, margin .28s ease; color:{{ colExperience }}; transition:color .25s ease;">experience</a>
         <a ref="{{ aboutRef }}" href="#about" sc-camel-on-click="{{ goAbout }}" sc-camel-on-mouse-enter="{{ enterAbout }}" style="padding:{{ navLinkPad }}; margin:{{ navLinkMargin }}; transition:padding .28s ease, margin .28s ease; color:{{ colAbout }}; transition:color .25s ease;">about</a>
         <a ref="{{ contactRef }}" href="#contact" sc-camel-on-click="{{ goContact }}" sc-camel-on-mouse-enter="{{ enterContact }}" style="padding:{{ navLinkPad }}; margin:{{ navLinkMargin }}; transition:padding .28s ease, margin .28s ease; color:{{ colContact }}; transition:color .25s ease;">contact</a>
         <span style="position:absolute; bottom:0; left:{{ dotLeft }}; width:4px; height:4px; border-radius:50%; background:#ff5c1a; opacity:{{ dotOpacity }}; transform:{{ dotTransform }}; transition:{{ dotTransition }};"></span>
       </div>
-      <div style="justify-self:end; display:flex; align-items:center; gap:7px; color:#ff5c1a;"><span style="animation:coordPulse 2.6s ease-in-out infinite;">●</span>available for work</div>
+      <div data-m="avail" style="justify-self:end; display:flex; align-items:center; gap:7px; color:#ff5c1a;"><span style="animation:coordPulse 2.6s ease-in-out infinite;">●</span>available for work</div>
     </div>
 
     
 
     <sc-if value="{{ showMarquee }}" hint-placeholder-val="{{ true }}">
-      <div style="position:relative; min-height:{{ heroH }}; box-sizing:border-box; display:flex; flex-direction:column; justify-content:center; padding:min(72px,5vh) 44px min(64px,4vh);">
+      <div data-m="hero" style="position:relative; min-height:{{ heroH }}; box-sizing:border-box; display:flex; flex-direction:column; justify-content:center; padding:min(72px,5vh) 44px min(64px,4vh);">
 
 
       <div style="display:flex; justify-content:space-between; padding-top:14px;">
@@ -95,17 +125,17 @@
         </div>
       </div>
 
-      <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:56px; align-items:end; padding-top:min(34px,3vh);">
+      <div data-m="herofoot" style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:56px; align-items:end; padding-top:min(34px,3vh);">
         <div style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:2; letter-spacing:.06em; text-transform:uppercase; color:#5c5c56;">
           <div>Kraków, Poland</div>
           <div>UI/UX · Identity · E-commerce</div>
           <div>Computer graphics, 2026</div>
           <div style="font-size:10px; letter-spacing:.1em; text-transform:none; color:#b0b0a7;">−245</div>
         </div>
-        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; text-align:right; color:#5c5c56;">
+        <div data-m="heroright" style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; text-align:right; color:#5c5c56;">
           <div>03 selected projects</div>
           <div>01 job in design</div>
-          <div style="display:flex; justify-content:flex-end; margin-top:10px; margin-right:-44px; padding-right:44px; overflow:hidden;"><a href="#work" onClick="{{ goWork }}" style="position:relative; display:inline-flex; gap:.6em; color:#ff5c1a; isolation:isolate; cursor:pointer; pointer-events:{{ scrollCueEvents }};" style-hover="color:#14140f;"><span style="order:2; display:inline-block;">scroll</span><span style="order:1; position:relative; z-index:1; display:inline-block; animation:{{ cueArrowAnim }};"><span style="position:absolute; right:100%; top:-4px; bottom:-4px; width:12em; background:linear-gradient(to right, rgba(244,244,242,1) 0%, rgba(244,244,242,1) 88%, rgba(244,244,242,0) 100%); pointer-events:none;"></span>↓</span></a></div>
+          <div data-m="cue" style="display:flex; justify-content:flex-end; margin-top:10px; margin-right:-44px; padding-right:44px; overflow:hidden;"><a href="#work" onClick="{{ goWork }}" style="position:relative; display:inline-flex; gap:.6em; color:#ff5c1a; isolation:isolate; cursor:pointer; pointer-events:{{ scrollCueEvents }};" style-hover="color:#14140f;"><span style="order:2; display:inline-block;">scroll</span><span style="order:1; position:relative; z-index:1; display:inline-block; animation:{{ cueArrowAnim }};"><span style="position:absolute; right:100%; top:-4px; bottom:-4px; width:12em; background:linear-gradient(to right, rgba(244,244,242,1) 0%, rgba(244,244,242,1) 88%, rgba(244,244,242,0) 100%); pointer-events:none;"></span>↓</span></a></div>
         </div>
       </div>
     </div><div ref="{{ bandRef }}" style="position:relative; border-top:1px solid rgba(20,20,15,.14); border-bottom:1px solid rgba(20,20,15,.14); overflow:hidden; padding:14px 0; background:#14140f;">
@@ -124,7 +154,7 @@
       </div>
     </sc-if>
 
-    <div ref="{{ divWorkRef }}" style="padding:122px 0; display:flex; flex-direction:column; align-items:center; gap:14px;">
+    <div ref="{{ divWorkRef }}" data-m="div" style="padding:122px 0; display:flex; flex-direction:column; align-items:center; gap:14px;">
       <div style="position:relative; display:flex; gap:9px;">
         <div style="width:6px; height:6px; background:#d8d7d0;"></div>
         <div style="width:6px; height:6px; background:#d8d7d0;"></div>
@@ -135,39 +165,39 @@
       <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.34em; text-transform:uppercase; color:#8a8a85; opacity:{{ labWork }}; transition:opacity .4s ease;">Work</div>
     </div>
 
-    <div id="work" style="display:grid; grid-template-columns:72px minmax(0,1fr) minmax(0,1fr) 100px; gap:24px; padding:56px 44px 20px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:#a8a89f; border-bottom:1px solid rgba(20,20,15,.14);">
+    <div id="work" data-m="row" style="display:grid; grid-template-columns:72px minmax(0,1fr) minmax(0,1fr) 100px; gap:24px; padding:56px 44px 20px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:#a8a89f; border-bottom:1px solid rgba(20,20,15,.14);">
       <div style="color:#a8a89f;">Index</div><div>project</div><div>discipline</div><div style="text-align:right;">year</div>
     </div>
     <div style="display:flex; flex-direction:column;">
-      <a href="#p01" style="display:grid; grid-template-columns:72px minmax(0,1fr) minmax(0,1fr) 100px; gap:24px; padding:20px 44px; border-bottom:1px solid rgba(20,20,15,.14); font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:.06em; text-transform:uppercase; transition:background 0s, color 0s;" style-hover="background:#14140f; color:#f4f4f2; transition:background .32s ease, color .32s ease;">
+      <a href="#p01" data-m="row" style="display:grid; grid-template-columns:72px minmax(0,1fr) minmax(0,1fr) 100px; gap:24px; padding:20px 44px; border-bottom:1px solid rgba(20,20,15,.14); font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:.06em; text-transform:uppercase; transition:background 0s, color 0s;" style-hover="background:#14140f; color:#f4f4f2; transition:background .32s ease, color .32s ease;">
         <div style="color:#a8a89f;">01</div><div style="font-weight:700;">Zły Sen</div><div>Interactive story · art direction</div><div style="text-align:right;">2026</div>
       </a>
-      <a href="#p02" style="display:grid; grid-template-columns:72px minmax(0,1fr) minmax(0,1fr) 100px; gap:24px; padding:20px 44px; border-bottom:1px solid rgba(20,20,15,.14); font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:.06em; text-transform:uppercase; transition:background 0s, color 0s;" style-hover="background:#14140f; color:#f4f4f2; transition:background .32s ease, color .32s ease;">
+      <a href="#p02" data-m="row" style="display:grid; grid-template-columns:72px minmax(0,1fr) minmax(0,1fr) 100px; gap:24px; padding:20px 44px; border-bottom:1px solid rgba(20,20,15,.14); font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:.06em; text-transform:uppercase; transition:background 0s, color 0s;" style-hover="background:#14140f; color:#f4f4f2; transition:background .32s ease, color .32s ease;">
         <div style="color:#a8a89f;">02</div><div style="font-weight:700;">Manture</div><div>Brand identity · packaging</div><div style="text-align:right;">2026</div>
       </a>
-      <a href="#p03" style="display:grid; grid-template-columns:72px minmax(0,1fr) minmax(0,1fr) 100px; gap:24px; padding:20px 44px; border-bottom:1px solid rgba(20,20,15,.14); font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:.06em; text-transform:uppercase; transition:background 0s, color 0s;" style-hover="background:#14140f; color:#f4f4f2; transition:background .32s ease, color .32s ease;">
+      <a href="#p03" data-m="row" style="display:grid; grid-template-columns:72px minmax(0,1fr) minmax(0,1fr) 100px; gap:24px; padding:20px 44px; border-bottom:1px solid rgba(20,20,15,.14); font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:.06em; text-transform:uppercase; transition:background 0s, color 0s;" style-hover="background:#14140f; color:#f4f4f2; transition:background .32s ease, color .32s ease;">
         <div style="color:#a8a89f;">03</div><div style="font-weight:700;">Zakład Barberski</div><div>App concept · UX/UI + branding</div><div style="text-align:right;">2025</div>
       </a>
     </div>
 
-    <div id="p01" style="padding-bottom:150px;">
-      <div style="display:flex; justify-content:space-between; align-items:baseline; padding:130px 44px 20px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f;">
+    <div id="p01" data-m="proj" style="padding-bottom:150px;">
+      <div data-m="phead" style="display:flex; justify-content:space-between; align-items:baseline; padding:130px 44px 20px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f;">
         <div>Project 1 / 03</div>
         <div>Interactive dark fantasy story</div>
         <div>2026</div>
       </div>
       <div style="position:relative;">
-        <div style="display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:300px; gap:10px; padding:0 44px;">
+        <div data-m="gal" style="display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:300px; gap:10px; padding:0 44px;">
         <div style="position:relative; background:#0e0e0e; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="zly-sen/img-01.webp" alt="Zły Sen - open book and logo" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></div>
         <div style="position:relative; background:#0e0e0e; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="zly-sen/img-02.webp" alt="Zły Sen - page spreads" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></div>
         <div style="position:relative; background:#0e0e0e; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="zly-sen/img-03.webp" alt="Zły Sen - cover" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></div>
         </div>
-        <div style="padding:22px 44px 0; font-size:clamp(56px,8.4vw,124px);">
+        <div data-m="ptitle" style="padding:22px 44px 0; font-size:clamp(56px,8.4vw,124px);">
           <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(56px,8.4vw,124px); line-height:.86; letter-spacing:-.045em; text-transform:uppercase; color:#14140f;">Zły Sen</div>
           <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(20px,2.4vw,34px); line-height:1; letter-spacing:.02em; text-transform:uppercase; margin-top:6px; display:flex; flex-wrap:wrap; column-gap:.4em;"><span style="color:#2b6fff; filter:blur(1px);">editorial</span><span style="color:#ff5c1a;">interactive story</span></div>
         </div>
       </div>
-      <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(260px,340px); gap:48px; padding:40px 44px 0;">
+      <div data-m="ptext" style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(260px,340px); gap:48px; padding:40px 44px 0;">
         <div style="font-size:16px; line-height:1.68; color:#3d3d38; text-wrap:pretty;">Zły Sen - "Bad Dream" - is a branching dark-fantasy story I wrote, designed and art-directed myself. The reader moves through biological labyrinths, cold mechanical corridors and crystalline chambers, and the layout shifts with them: type, imagery and pacing all change as the world does.</div>
         <div style="font-size:16px; line-height:1.68; color:#3d3d38; text-wrap:pretty;">The hard part was structure. Overt and hidden paths, decisions that pay off chapters later, several endings including the protagonist’s death - all of it mapped before a single spread was designed. It taught me to treat a story the way you treat a product: as a system of states someone navigates.</div>
         <div style="display:flex; flex-direction:column; gap:13px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;">
@@ -181,24 +211,24 @@
       </div>
     </div>
 
-    <div id="p02" style="padding-bottom:150px;">
-      <div style="display:flex; justify-content:space-between; align-items:baseline; padding:34px 44px 20px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f;">
+    <div id="p02" data-m="proj" style="padding-bottom:150px;">
+      <div data-m="phead" style="display:flex; justify-content:space-between; align-items:baseline; padding:34px 44px 20px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f;">
         <div>Project 2 / 03</div>
         <div>Brand identity · men’s natural cosmetics</div>
         <div>2026</div>
       </div>
       <div style="position:relative;">
-        <div style="display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:300px; gap:10px; padding:0 44px;">
+        <div data-m="gal" style="display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:300px; gap:10px; padding:0 44px;">
         <div style="position:relative; background:#eceef0; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="manture/img-04.webp" alt="Manture - product range and logo" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:70% center; display:block;"></div>
         <div style="position:relative; background:#eceef0; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="manture/img-05.webp" alt="Manture - bottle and product icons" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></div>
         <div style="position:relative; background:#eceef0; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="manture/img-06.webp" alt="Manture - mountain logo pattern" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></div>
         </div>
-        <div style="padding:22px 44px 0; font-size:clamp(56px,8.4vw,124px);">
+        <div data-m="ptitle" style="padding:22px 44px 0; font-size:clamp(56px,8.4vw,124px);">
           <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(56px,8.4vw,124px); line-height:.86; letter-spacing:-.045em; text-transform:uppercase; color:#14140f;">Manture</div>
           <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(20px,2.4vw,34px); line-height:1; letter-spacing:.02em; text-transform:uppercase; margin-top:6px; display:flex; flex-wrap:wrap; column-gap:.4em;"><span style="color:#2b6fff; filter:blur(1px);">brand identity</span><span style="color:#ff5c1a;">packaging</span></div>
         </div>
       </div>
-      <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(260px,340px); gap:48px; padding:40px 44px 0;">
+      <div data-m="ptext" style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(260px,340px); gap:48px; padding:40px 44px 0;">
         <div style="font-size:16px; line-height:1.68; color:#3d3d38; text-wrap:pretty;">Men’s grooming brands almost all reach for the same shelf: black, red, chrome, shouting. Manture is a natural cosmetics line, so that language would have been a lie - the brief was to look honest rather than aggressive.</div>
         <div style="font-size:16px; line-height:1.68; color:#3d3d38; text-wrap:pretty;">I built the identity around restraint: a single-line mountain mark that says “less is more”, a palette of stone and slate greys instead of black and red, and typography that leaves room to breathe. The system covers the logo, a custom alphabet, palette, icon set and a packaging family - enough for a small line to stand on a shelf next to the shouting and still get picked up.</div>
         <div style="display:flex; flex-direction:column; gap:13px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;">
@@ -213,24 +243,24 @@
     </div>
 
     <div id="p03" style="padding-bottom:40px;">
-      <div style="display:flex; justify-content:space-between; align-items:baseline; padding:34px 44px 20px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f;">
+      <div data-m="phead" style="display:flex; justify-content:space-between; align-items:baseline; padding:34px 44px 20px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f;">
         <div>Project 3 / 03</div>
         <div>Barbershop app concept · UX/UI design</div>
         <div>2025</div>
       </div>
       <div style="position:relative;">
-        <div style="display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:300px; gap:10px; padding:0 44px;">
+        <div data-m="gal" style="display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:300px; gap:10px; padding:0 44px;">
         <div style="position:relative; background:#ffffff; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="barber/img-07.webp" alt="Zakład Barberski - app screens and logo" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:61% center; display:block;"></div>
         <div style="position:relative; background:#ffffff; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="barber/img-08.webp" alt="Zakład Barberski - services screen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></div>
         <div style="position:relative; background:#ffffff; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="barber/img-09.webp" alt="Zakład Barberski - about screen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></div>
         </div>
-        <div style="padding:22px 44px 0; font-size:clamp(56px,8.4vw,124px);">
+        <div data-m="ptitle" style="padding:22px 44px 0; font-size:clamp(56px,8.4vw,124px);">
           <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(56px,8.4vw,124px); line-height:.86; letter-spacing:-.045em; text-transform:uppercase; color:#14140f;">Zakład</div>
           <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(56px,8.4vw,124px); line-height:.86; letter-spacing:-.045em; text-transform:uppercase; color:#14140f;">Barberski</div>
           <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(20px,2.4vw,34px); line-height:1; letter-spacing:.02em; text-transform:uppercase; margin-top:6px; display:flex; flex-wrap:wrap; column-gap:.4em;"><span style="color:#2b6fff; filter:blur(1px);">UX/UI</span><span style="color:#ff5c1a;">branding</span></div>
         </div>
       </div>
-      <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(260px,340px); gap:48px; padding:40px 44px 0;">
+      <div data-m="ptext" style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(260px,340px); gap:48px; padding:40px 44px 0;">
         <div style="font-size:16px; line-height:1.68; color:#3d3d38; text-wrap:pretty;">A barbershop app has three jobs: show what’s on offer, make the price clear before anyone books, and get new clients through the door. Every screen is built around one of them - services sorted the way clients actually search, the price and scope of each visit stated upfront, and directions one tap away.</div>
         <div style="font-size:16px; line-height:1.68; color:#3d3d38; text-wrap:pretty;">Visually, the concept breaks from the clean-tech look most booking apps share. A bold, gothic identity drawn from the shop’s own character sets the tone, while a restrained black-and-white UI keeps content legible - an interface that feels like walking in, not a template with a logo dropped on it.</div>
         <div style="display:flex; flex-direction:column; gap:13px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;">
@@ -244,7 +274,7 @@
       </div>
     </div>
 
-    <div ref="{{ divExperienceRef }}" style="padding:122px 0; display:flex; flex-direction:column; align-items:center; gap:14px;">
+    <div ref="{{ divExperienceRef }}" data-m="div" style="padding:122px 0; display:flex; flex-direction:column; align-items:center; gap:14px;">
       <div style="position:relative; display:flex; gap:9px;">
         <div style="width:6px; height:6px; background:#d8d7d0;"></div>
         <div style="width:6px; height:6px; background:#d8d7d0;"></div>
@@ -255,7 +285,7 @@
       <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.34em; text-transform:uppercase; color:#8a8a85; opacity:{{ labExperience }}; transition:opacity .4s ease;">Experience</div>
     </div>
 
-    <div id="experience" style="padding:0 44px 40px;">
+    <div id="experience" data-m="exp" style="padding:0 44px 40px;">
       <div style="display:flex; justify-content:space-between; align-items:baseline; padding-bottom:20px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f;">
         <div>Roles</div><div>2024 - now</div>
       </div>
@@ -266,7 +296,7 @@
             <div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:clamp(22px,2.1vw,28px); line-height:1.08; letter-spacing:-.02em; text-wrap:balance;">E-commerce Design &amp; Management</div>
           </div>
           <div style="flex:2 1 320px; font-size:16px; line-height:1.68; color:#3d3d38; text-wrap:pretty;">I design and visually develop websites for international markets - layout and UX/UI changes, graphics for the store, and product presentation that has to sell. I also oversee order fulfilment across Allegro and our own store, and coordinate the team on shipping.</div>
-          <div style="flex:1 1 260px; max-width:340px; margin-left:auto; display:flex; flex-direction:column; gap:13px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;">
+          <div data-m="emeta" style="flex:1 1 260px; max-width:340px; margin-left:auto; display:flex; flex-direction:column; gap:13px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;">
             <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Period</div><div style="text-align:right; color:#ff5c1a;">11.2025 - present</div></div>
             <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Company</div><div style="text-align:right;">Datan Sp. z o.o.</div></div>
             <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Place</div><div style="text-align:right;">Kraków</div></div>
@@ -278,7 +308,7 @@
             <div style="font-family:'Archivo',sans-serif; font-weight:600; font-size:clamp(17px,1.5vw,20px); line-height:1.15; letter-spacing:-.02em; text-wrap:balance; color:#3d3d38;">Warehouse Associate</div>
           </div>
           <div style="flex:2 1 320px; font-size:14px; line-height:1.6; color:#5c5c56; text-wrap:pretty;">Order assembly, warehouse systems, quality checks. Where I learned what “on time” actually costs.</div>
-          <div style="flex:1 1 260px; max-width:340px; margin-left:auto; display:flex; flex-direction:column; gap:13px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;">
+          <div data-m="emeta" style="flex:1 1 260px; max-width:340px; margin-left:auto; display:flex; flex-direction:column; gap:13px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;">
             <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Period</div><div style="text-align:right;">01.2025 - 11.2025</div></div>
             <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Company</div><div style="text-align:right;">Aramus Sp. z o.o.</div></div>
           </div>
@@ -289,7 +319,7 @@
             <div style="font-family:'Archivo',sans-serif; font-weight:600; font-size:clamp(17px,1.5vw,20px); line-height:1.15; letter-spacing:-.02em; text-wrap:balance; color:#3d3d38;">Customer Advisor</div>
           </div>
           <div style="flex:2 1 320px; font-size:14px; line-height:1.6; color:#5c5c56; text-wrap:pretty;">Advising customers on product and trend, hitting sales targets, handling returns and complaints.</div>
-          <div style="flex:1 1 260px; max-width:340px; margin-left:auto; display:flex; flex-direction:column; gap:13px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;">
+          <div data-m="emeta" style="flex:1 1 260px; max-width:340px; margin-left:auto; display:flex; flex-direction:column; gap:13px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;">
             <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Period</div><div style="text-align:right;">07.2024 - 10.2024</div></div>
             <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Company</div><div style="text-align:right;">Sizeer · Marketing Investment Group</div></div>
           </div>
@@ -297,7 +327,7 @@
       </div>
     </div>
 
-    <div ref="{{ divAboutRef }}" style="padding:122px 0; display:flex; flex-direction:column; align-items:center; gap:14px;">
+    <div ref="{{ divAboutRef }}" data-m="div" style="padding:122px 0; display:flex; flex-direction:column; align-items:center; gap:14px;">
       <div style="position:relative; display:flex; gap:9px;">
         <div style="width:6px; height:6px; background:#d8d7d0;"></div>
         <div style="width:6px; height:6px; background:#d8d7d0;"></div>
@@ -308,7 +338,7 @@
       <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.34em; text-transform:uppercase; color:#8a8a85; opacity:{{ labAbout }}; transition:opacity .4s ease;">About</div>
     </div>
 
-    <div id="about" style="display:grid; grid-template-columns:minmax(260px,340px) minmax(0,1fr); gap:72px; padding:0 44px 150px; align-items:start;">
+    <div id="about" data-m="about" style="display:grid; grid-template-columns:minmax(260px,340px) minmax(0,1fr); gap:72px; padding:0 44px 150px; align-items:start;">
       <div style="display:flex; flex-direction:column; gap:12px;">
         <div style="aspect-ratio:3 / 4; background:#e8e7e1; border:1px solid rgba(20,20,15,.2); overflow:hidden;">
           <img src="about/portrait.webp" alt="Gabriel Myśliwiec" style="display:block; width:100%; height:100%; object-fit:cover; object-position:50% 30%; filter:saturate(.78) sepia(.12) contrast(.94) brightness(1.03);">
@@ -320,7 +350,7 @@
           <div style="font-size:clamp(22px,2.2vw,30px); line-height:1.36; letter-spacing:-.015em; max-width:820px; text-wrap:pretty;">I'm a graphic and UI/UX designer with a computer graphics degree. I care about the whole picture - the identity, the layout and the moment someone actually uses it.</div>
           <div style="font-size:16px; line-height:1.68; color:#3d3d38; max-width:620px; text-wrap:pretty;">Day to day I design for an online store selling to international markets - layouts, UX changes, store graphics and product presentation - and I see every change go live in front of real customers. Before design school I trained as an IT technician, so I know how the technical side works and can talk to developers in their own language.</div>
         </div>
-        <div style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); column-gap:48px; row-gap:48px;">
+        <div data-m="about2" style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); column-gap:48px; row-gap:48px;">
           <div style="display:flex; flex-direction:column; gap:16px;"><div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f; padding-bottom:10px; border-bottom:1px solid rgba(20,20,15,.14);">Education</div><div style="display:flex; flex-direction:column; gap:12px;"><div style="display:flex; flex-direction:column; gap:5px; padding-bottom:12px; border-bottom:1px solid rgba(20,20,15,.14);"><div style="font-size:16px; font-weight:600; line-height:1.3;">Computer Graphics</div><div style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.5; letter-spacing:.06em; color:#8a8a85;">Szkoła Grafiki Komputerowej · 2024 - 2026</div></div><div style="display:flex; flex-direction:column; gap:5px; padding-bottom:12px; border-bottom:1px solid rgba(20,20,15,.14);"><div style="font-size:16px; font-weight:600; line-height:1.3;">IT Specialist</div><div style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.5; letter-spacing:.06em; color:#8a8a85;">Technikum Energetyczno-Elektroniczne nr 9, Kraków · 2017 - 2021</div></div></div></div>
           <div style="display:flex; flex-direction:column; gap:16px;"><div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f; padding-bottom:10px; border-bottom:1px solid rgba(20,20,15,.14);">Languages</div><div style="display:flex; flex-direction:column; gap:13px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;"><div style="display:flex; justify-content:space-between; gap:16px; padding-bottom:8px; border-bottom:1px solid rgba(20,20,15,.14);"><div>Polish</div><div style="color:#8a8a85;">native</div></div><div style="display:flex; justify-content:space-between; gap:16px; padding-bottom:8px; border-bottom:1px solid rgba(20,20,15,.14);"><div>English</div><div style="color:#8a8a85;">advanced</div></div></div></div>
           <div style="display:flex; flex-direction:column; gap:16px;"><div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f; padding-bottom:10px; border-bottom:1px solid rgba(20,20,15,.14);">Tools</div><div style="display:flex; flex-wrap:wrap; gap:8px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;"><div style="display:flex; align-items:center; gap:7px; border:1px solid rgba(20,20,15,.24); padding:7px 11px;"><img src="icons/ico-figma.svg" alt="" width="12" height="12" style="display:block; width:12px; height:12px;">Figma</div><div style="display:flex; align-items:center; gap:7px; border:1px solid rgba(20,20,15,.24); padding:7px 11px;"><img src="icons/ico-photoshop.svg" alt="" width="12" height="12" style="display:block; width:12px; height:12px;">Photoshop</div><div style="display:flex; align-items:center; gap:7px; border:1px solid rgba(20,20,15,.24); padding:7px 11px;"><img src="icons/ico-illustrator.svg" alt="" width="12" height="12" style="display:block; width:12px; height:12px;">Illustrator</div><div style="display:flex; align-items:center; gap:7px; border:1px solid rgba(20,20,15,.24); padding:7px 11px;"><img src="icons/ico-indesign.svg" alt="" width="12" height="12" style="display:block; width:12px; height:12px;">InDesign</div><div style="display:flex; align-items:center; gap:7px; border:1px solid rgba(20,20,15,.24); padding:7px 11px;"><img src="icons/ico-canva.svg" alt="" width="12" height="12" style="display:block; width:12px; height:12px;">Canva</div><div style="display:flex; align-items:center; gap:7px; border:1px solid rgba(20,20,15,.24); padding:7px 11px;"><img src="icons/ico-claude.svg" alt="" width="12" height="12" style="display:block; width:12px; height:12px;">Claude</div><div style="display:flex; align-items:center; gap:7px; border:1px solid rgba(20,20,15,.24); padding:7px 11px;"><img src="icons/ico-chatgpt.svg" alt="" width="12" height="12" style="display:block; width:12px; height:12px;">ChatGPT</div></div></div>
@@ -329,7 +359,7 @@
       </div>
     </div>
 
-    <div ref="{{ divContactRef }}" style="padding:122px 0; display:flex; flex-direction:column; align-items:center; gap:14px;">
+    <div ref="{{ divContactRef }}" data-m="div" style="padding:122px 0; display:flex; flex-direction:column; align-items:center; gap:14px;">
       <div style="position:relative; display:flex; gap:9px;">
         <div style="width:6px; height:6px; background:#d8d7d0;"></div>
         <div style="width:6px; height:6px; background:#d8d7d0;"></div>
@@ -340,9 +370,9 @@
       <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.34em; text-transform:uppercase; color:#8a8a85; opacity:{{ labContact }}; transition:opacity .4s ease;">Contact</div>
     </div>
 
-    <div id="contact" style="padding:0 44px 60px; display:flex; flex-direction:column; gap:64px;">
+    <div id="contact" data-m="contact" style="padding:0 44px 60px; display:flex; flex-direction:column; gap:64px;">
       <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(56px,9vw,132px); line-height:.88; letter-spacing:-.05em; text-transform:uppercase;"><div style="display:flex; flex-wrap:wrap; column-gap:.22em;"><span>Let's</span><span style="color:#2b6fff; filter:blur(1.4px);">work</span></div><div style="color:#ff5c1a;">together.</div></div>
-      <div style="display:grid; grid-template-columns:minmax(0,2fr) minmax(260px,340px); gap:48px; align-items:end;">
+      <div data-m="cgrid" style="display:grid; grid-template-columns:minmax(0,2fr) minmax(260px,340px); gap:48px; align-items:end;">
         <div style="display:flex; flex-direction:column; gap:14px; container-type:inline-size;">
           <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f;">Write to me</div>
           <a href="mailto:gabriel.mysliwiec10@gmail.com" style="align-self:flex-start; font-family:'Archivo',sans-serif; font-weight:800; font-size:min(40px, 5.6cqi); line-height:1.1; letter-spacing:-.02em; color:#14140f; border-bottom:2px solid #ff5c1a; padding-bottom:6px; white-space:nowrap;" style-hover="color:#ff5c1a;">gabriel.mysliwiec10@gmail.com</a>
@@ -351,7 +381,7 @@
           <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Behance</div><div style="text-align:right; display:flex; gap:12px;"><a href="https://www.behance.net/gabrielmyliwiec" target="_blank" rel="noopener" style="color:#14140f;" style-hover="color:#ff5c1a;">gabrielmyliwiec ↗</a></div></div>
         </div>
       </div>
-      <div style="display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:24px; align-items:center; padding-top:24px; border-top:1px solid rgba(20,20,15,.14); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#8a8a85;">
+      <div data-m="cfoot" style="display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:24px; align-items:center; padding-top:24px; border-top:1px solid rgba(20,20,15,.14); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#8a8a85;">
         <div>Kraków · 50.0614 N / 19.9366 E</div>
         <div style="display:flex; justify-content:center; align-items:center; gap:8px; color:#ff5c1a;"><span style="animation:coordPulse 2.6s ease-in-out infinite;">●</span>available for work</div>
         <div style="text-align:right;">© 2026 Gabriel Myśliwiec</div>
