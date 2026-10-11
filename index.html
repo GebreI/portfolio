@@ -23,7 +23,7 @@
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800;900&amp;family=Space+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800;900&amp;family=Space+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&amp;display=swap" rel="stylesheet">
 <style>
   body { margin: 0; background: #f4f4f2; }
   a { color: inherit; text-decoration: none; }
@@ -113,10 +113,10 @@
 
       <div style="flex:1 1 0; min-height:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
         <div style="display:inline-flex; flex-direction:column; align-items:center;">
-          <div ref="{{ l1Ref }}" style="font-family:'Archivo',sans-serif; font-weight:900; font-size:calc(min(9.6vw, 16vh, 122px) * {{ titleScale }}); line-height:.9; letter-spacing:-.05em; text-transform:uppercase; white-space:nowrap;">Junior title,</div>
-          <div ref="{{ l2Ref }}" style="display:flex; align-items:flex-end; gap:min(2.2vw,26px); white-space:nowrap;">
-            <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:min(9.6vw, 16vh, 122px); line-height:.9; letter-spacing:-.05em; text-transform:uppercase; color:#2b6fff; filter:blur(2px);">Senior</div>
-            <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:min(9.6vw, 16vh, 122px); line-height:.9; letter-spacing:-.05em; text-transform:uppercase; color:#ff5c1a;">appetite.</div>
+          <div ref="{{ l1Ref }}" style="font-family:'Archivo',sans-serif; font-weight:900; font-size:calc(min(9.6vw, 16vh, 122px) * {{ titleScale }}); line-height:.9; letter-spacing:-.05em; word-spacing:.08em; text-transform:uppercase; white-space:nowrap;">Junior title,</div>
+          <div ref="{{ l2Ref }}" style="display:flex; align-items:flex-end; gap:min(3vw,34px); white-space:nowrap;">
+            <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:min(9.45vw, 15.75vh, 120px); line-height:.9; letter-spacing:-.05em; text-transform:uppercase; color:#2b6fff; filter:blur(2px);">Senior</div>
+            <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:min(9.45vw, 15.75vh, 120px); line-height:.9; letter-spacing:-.05em; text-transform:uppercase; color:#ff5c1a;">appetite.</div>
           </div>
           <div style="width:0; min-width:100%; display:flex; flex-direction:column; align-items:center; gap:2px; margin-top:32px;">
             <div style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.6; letter-spacing:.02em; color:#3d3d38; text-align:center; text-wrap:balance;">A year ago I couldn't have built this. In a year I'll be embarrassed by it.</div>
@@ -133,7 +133,7 @@
           <div style="font-size:10px; letter-spacing:.1em; text-transform:none; color:#b0b0a7;">−245</div>
         </div>
         <div data-m="heroright" style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; text-align:right; color:#5c5c56;">
-          <div>03 selected projects</div>
+          <div>04 selected projects</div>
           <div>01 job in design</div>
           <div data-m="cue" style="display:flex; justify-content:flex-end; margin-top:10px; margin-right:-44px; padding-right:44px; overflow:hidden;"><a href="#work" onClick="{{ goWork }}" style="position:relative; display:inline-flex; gap:.6em; color:#ff5c1a; isolation:isolate; cursor:pointer; pointer-events:{{ scrollCueEvents }};" style-hover="color:#14140f;"><span style="order:2; display:inline-block;">scroll</span><span style="order:1; position:relative; z-index:1; display:inline-block; animation:{{ cueArrowAnim }};"><span style="position:absolute; right:100%; top:-4px; bottom:-4px; width:12em; background:linear-gradient(to right, rgba(244,244,242,1) 0%, rgba(244,244,242,1) 88%, rgba(244,244,242,0) 100%); pointer-events:none;"></span>↓</span></a></div>
         </div>
@@ -172,17 +172,20 @@
       <a href="#p01" data-m="row" style="display:grid; grid-template-columns:72px minmax(0,1fr) minmax(0,1fr) 100px; gap:24px; padding:20px 44px; border-bottom:1px solid rgba(20,20,15,.14); font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:.06em; text-transform:uppercase; transition:background 0s, color 0s;" style-hover="background:#14140f; color:#f4f4f2; transition:background .32s ease, color .32s ease;">
         <div style="color:#a8a89f;">01</div><div style="font-weight:700;">Zły Sen</div><div>Interactive story · art direction</div><div style="text-align:right;">2026</div>
       </a>
+      <a href="#p04" data-m="row" style="display:grid; grid-template-columns:72px minmax(0,1fr) minmax(0,1fr) 100px; gap:24px; padding:20px 44px; border-bottom:1px solid rgba(20,20,15,.14); font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:.06em; text-transform:uppercase; transition:background 0s, color 0s;" style-hover="background:#14140f; color:#f4f4f2; transition:background .32s ease, color .32s ease;">
+        <div style="color:#a8a89f;">02</div><div style="font-weight:700;">Bestiariusz</div><div>Poster series · social media</div><div style="text-align:right;">2026</div>
+      </a>
       <a href="#p02" data-m="row" style="display:grid; grid-template-columns:72px minmax(0,1fr) minmax(0,1fr) 100px; gap:24px; padding:20px 44px; border-bottom:1px solid rgba(20,20,15,.14); font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:.06em; text-transform:uppercase; transition:background 0s, color 0s;" style-hover="background:#14140f; color:#f4f4f2; transition:background .32s ease, color .32s ease;">
-        <div style="color:#a8a89f;">02</div><div style="font-weight:700;">Manture</div><div>Brand identity · packaging</div><div style="text-align:right;">2026</div>
+        <div style="color:#a8a89f;">03</div><div style="font-weight:700;">Manture</div><div>Brand identity · packaging</div><div style="text-align:right;">2026</div>
       </a>
       <a href="#p03" data-m="row" style="display:grid; grid-template-columns:72px minmax(0,1fr) minmax(0,1fr) 100px; gap:24px; padding:20px 44px; border-bottom:1px solid rgba(20,20,15,.14); font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:.06em; text-transform:uppercase; transition:background 0s, color 0s;" style-hover="background:#14140f; color:#f4f4f2; transition:background .32s ease, color .32s ease;">
-        <div style="color:#a8a89f;">03</div><div style="font-weight:700;">Zakład Barberski</div><div>App concept · UX/UI + branding</div><div style="text-align:right;">2025</div>
+        <div style="color:#a8a89f;">04</div><div style="font-weight:700;">Zakład Barberski</div><div>App concept · UX/UI + branding</div><div style="text-align:right;">2025</div>
       </a>
     </div>
 
     <div id="p01" data-m="proj" style="padding-bottom:150px;">
       <div data-m="phead" style="display:flex; justify-content:space-between; align-items:baseline; padding:130px 44px 20px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f;">
-        <div>Project 1 / 03</div>
+        <div>Project 1 / 04</div>
         <div>Interactive dark fantasy story</div>
         <div>2026</div>
       </div>
@@ -211,9 +214,37 @@
       </div>
     </div>
 
-    <div id="p02" data-m="proj" style="padding-bottom:150px;">
+    <div id="p04" data-m="proj" style="padding-bottom:150px; scroll-margin-top:96px;">
       <div data-m="phead" style="display:flex; justify-content:space-between; align-items:baseline; padding:34px 44px 20px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f;">
-        <div>Project 2 / 03</div>
+        <div>Project 2 / 04</div>
+        <div>Poster series · endangered species of Poland</div>
+        <div>2026</div>
+      </div>
+      <div style="position:relative;">
+        <div data-m="gal" style="display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:300px; gap:10px; padding:0 44px;">
+        <div style="position:relative; background:#0e0f0d; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="bst/k1.webp" alt="Bestiariusz - Eurasian curlew cover" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 24%; display:block;"></div>
+        <div style="position:relative; background:#0e0f0d; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="bst/j1.webp" alt="Bestiariusz - Atlantic sturgeon cover" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 50%; display:block;"></div>
+        <div style="position:relative; background:#0e0f0d; overflow:hidden; border:1px solid rgba(20,20,15,.18);"><img src="bst/z4.webp" alt="Bestiariusz - garden dormouse, 1961" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:0% 30%; display:block;"></div>
+        </div>
+        <div data-m="ptitle" style="padding:22px 44px 0; font-size:clamp(56px,8.4vw,124px);">
+          <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(56px,8.4vw,124px); line-height:.86; letter-spacing:-.045em; text-transform:uppercase; color:#14140f;">Bestiariusz</div>
+          <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(20px,2.4vw,34px); line-height:1; letter-spacing:.02em; text-transform:uppercase; margin-top:6px; display:flex; flex-wrap:wrap; column-gap:.4em;"><span style="color:#2b6fff; filter:blur(1px);">poster series</span><span style="color:#ff5c1a;">social media</span></div>
+        </div>
+      </div>
+      <div data-m="ptext" style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(260px,340px); gap:48px; padding:40px 44px 0;">
+        <div style="font-size:16px; line-height:1.68; color:#3d3d38; text-wrap:pretty;">Bestiariusz - "Bestiary" - is a series of posters about animals that are disappearing from Poland, or already have. Each species gets five slides built for Instagram: a cover, the facts, where it lives, why it is vanishing and what is being done about it. The goal is simple: to make people stop scrolling and notice species most of them have never heard of - and to show that their fate is still being decided, by mowing dates, dams and whether anyone bothers to look.</div>
+        <div style="font-size:16px; line-height:1.68; color:#3d3d38; text-wrap:pretty;">Instead of one template, every animal got its own visual language: deep water and monumental type for the sturgeon, red calligraphy and mist for the curlew, night and halftone for the garden dormouse. What holds them together is the idea of a medieval book of creatures - the mark, the serif type and the paper textures.</div>
+        <div style="display:flex; flex-direction:column; gap:13px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;">
+          <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Role</div><div style="text-align:right;">Concept · art direction · poster design</div></div>
+          <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Tools</div><div style="text-align:right;">Photoshop · Illustrator</div></div>
+          <div style="display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(20,20,15,.14); padding-bottom:8px;"><div style="color:#a8a89f;">Type</div><div style="text-align:right;">Personal project</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="p02" data-m="proj" style="padding-bottom:150px; scroll-margin-top:96px;">
+      <div data-m="phead" style="display:flex; justify-content:space-between; align-items:baseline; padding:34px 44px 20px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f;">
+        <div>Project 3 / 04</div>
         <div>Brand identity · men’s natural cosmetics</div>
         <div>2026</div>
       </div>
@@ -242,9 +273,9 @@
       </div>
     </div>
 
-    <div id="p03" style="padding-bottom:40px;">
+    <div id="p03" style="padding-bottom:40px; scroll-margin-top:96px;">
       <div data-m="phead" style="display:flex; justify-content:space-between; align-items:baseline; padding:34px 44px 20px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f;">
-        <div>Project 3 / 03</div>
+        <div>Project 4 / 04</div>
         <div>Barbershop app concept · UX/UI design</div>
         <div>2025</div>
       </div>
@@ -284,6 +315,7 @@
       </div>
       <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.34em; text-transform:uppercase; color:#8a8a85; opacity:{{ labExperience }}; transition:opacity .4s ease;">Experience</div>
     </div>
+
 
     <div id="experience" data-m="exp" style="padding:0 44px 40px;">
       <div style="display:flex; justify-content:space-between; align-items:baseline; padding-bottom:20px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a8a89f;">
@@ -725,18 +757,19 @@ class Component extends DCLogic {
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;700&family=Jost:wght@300;400;500&display=swap">
 <style id="pj-modal-css">
-  #p01, #p02, #p03 { position: relative; isolation: isolate; }
-  #p01.pj-hot, #p02.pj-hot, #p03.pj-hot { cursor: pointer; }
-  #p01::before, #p02::before, #p03::before {
+  #p01, #p02, #p03, #p04 { position: relative; isolation: isolate; }
+  #p01.pj-hot, #p02.pj-hot, #p03.pj-hot, #p04.pj-hot { cursor: pointer; }
+  #p01::before, #p02::before, #p03::before, #p04::before {
     content: ""; position: absolute; inset: 108px 22px 118px 22px; z-index: -1;
     background: rgba(20,20,15,.035); border: 1px solid rgba(20,20,15,.16);
     opacity: 0; transition: opacity .25s ease; pointer-events: none;
   }
-  #p01.pj-hot::before, #p02.pj-hot::before, #p03.pj-hot::before { opacity: 1; }
+  #p01.pj-hot::before, #p02.pj-hot::before, #p03.pj-hot::before, #p04.pj-hot::before { opacity: 1; }
   /* match each block's own spacing: ~22px above the header row, ~32px below the text */
   #p02::before { inset: 12px 22px 118px 22px; }
+  #p04::before { inset: 12px 22px 118px 22px; }
   #p03::before { inset: 12px 22px 8px 22px; }
-  #p01 a, #p02 a, #p03 a { cursor: pointer; }
+  #p01 a, #p02 a, #p03 a, #p04 a { cursor: pointer; }
 
   #pj-cursor {
     position: fixed; left: 0; top: 0; z-index: 900; pointer-events: none;
@@ -1077,6 +1110,73 @@ class Component extends DCLogic {
     #pj-modal .pj-panel.barber .pj-cover { margin-top: 48px; }
     #pj-modal .pj-panel.barber .pj-sections { margin-top: 56px; gap: 56px; }
   }
+
+  /* ---- Bestiariusz theme ---- */
+  #pj-modal .pj-panel.bestiary { --bs-ink: #ebe7df; --bs-mute: #a19c92; --bs-red: #c8372d; --bs-line: rgba(235,231,223,.14); --bs-serif: 'Cormorant Garamond', Georgia, serif;
+    background: #0e0f0d; border-color: #0e0f0d; color: var(--bs-ink); font-family: var(--bs-serif); font-variant-numeric: lining-nums; }
+  #pj-modal .pj-panel.bestiary .pj-bar { background: rgba(14,15,13,.94); border-bottom-color: var(--bs-line); font: 400 16px/1.3 var(--bs-serif); letter-spacing: .06em; text-transform: none; font-style: italic; color: var(--bs-mute); }
+  #pj-modal .pj-panel.bestiary .pj-meta span:first-child { color: var(--bs-ink); }
+  #pj-modal .pj-panel.bestiary .pj-nav button { font: inherit; font-style: normal; letter-spacing: .04em; color: var(--bs-ink); border-color: var(--bs-line); }
+  #pj-modal .pj-panel.bestiary .pj-nav button:hover { background: var(--bs-ink); color: #0e0f0d; border-color: var(--bs-ink); }
+  #pj-modal .pj-panel.bestiary .pj-nav .pj-close:hover { background: var(--bs-red); border-color: var(--bs-red); color: var(--bs-ink); }
+  #pj-modal .pj-panel.bestiary, #pj-modal .pj-panel.bestiary * { font-family: var(--bs-serif) !important; }
+  #pj-modal .pj-panel.bestiary .pj-body { padding-top: 72px; }
+  #pj-modal .pj-panel.bestiary .pj-title > div:first-child { font-size: 0 !important; line-height: 0 !important; color: transparent !important; height: clamp(84px, 11vw, 150px);
+    background: #ebe7df; -webkit-mask: url(bst/logotyp.svg) left center / contain no-repeat; mask: url(bst/logotyp.svg) left center / contain no-repeat; }
+  #pj-modal .pj-panel.bestiary .pj-title > div:last-child { font-weight: 400 !important; font-style: italic; font-size: clamp(18px, 1.6vw, 22px) !important; letter-spacing: .04em !important;
+    text-transform: none !important; color: var(--bs-mute) !important; margin-top: 18px !important; }
+  #pj-modal .pj-panel.bestiary .pj-title > div:last-child span + span::before { content: "· "; }
+  #pj-modal .pj-panel.bestiary .pj-text { margin-top: 64px; gap: 48px !important; }
+  #pj-modal .pj-panel.bestiary .pj-text > div { font-size: 19px !important; line-height: 1.6 !important; color: #cfcac0 !important; }
+  #pj-modal .pj-panel.bestiary .pj-text > div:last-child { font-size: 16px !important; letter-spacing: .02em !important; text-transform: none !important; gap: 12px !important; }
+  #pj-modal .pj-panel.bestiary .pj-text > div:last-child > div { border-bottom-color: var(--bs-line) !important; padding-bottom: 10px !important; }
+  #pj-modal .pj-panel.bestiary .pj-text > div:last-child > div > div:first-child { color: var(--bs-mute) !important; font-style: italic; }
+  #pj-modal .bst-flow { margin-top: clamp(88px, 10vw, 140px); display: flex; flex-direction: column; gap: clamp(96px, 11vw, 160px); }
+  #pj-modal .bst-head { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: 48px; row-gap: 6px; margin-bottom: 32px; align-items: start; }
+  #pj-modal .bst-head > :not(p) { grid-column: 1; }
+  #pj-modal .bst-head p { grid-column: 2; grid-row: 1 / span 4; margin: 0; max-width: 580px; font-size: 18px; line-height: 1.6; color: #cfcac0; text-wrap: pretty; }
+  #pj-modal .bst-n { font-size: 16px; letter-spacing: .08em; color: var(--bs-mute); }
+  #pj-modal .bst-head h3 { margin: 6px 0 0; font-weight: 400; font-style: italic; font-size: clamp(38px, 4.6vw, 64px); line-height: 1; letter-spacing: -.01em; color: var(--bs-ink); }
+  #pj-modal .bst-lat { font-size: 18px; font-style: italic; color: var(--bs-mute); }
+  #pj-modal .bst-st { margin-top: 10px; font-size: 14px; letter-spacing: .16em; text-transform: uppercase; color: var(--bs-red); }
+  #pj-modal .bst-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto auto; gap: 10px; }
+  #pj-modal .bst-grid img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; cursor: zoom-in; background: #1a1b18; }
+  #pj-modal .bst-grid img:first-child { grid-row: 1 / span 2; height: 100%; }
+  #pj-modal .bst-sp.flip .bst-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 2fr); }
+  #pj-modal .bst-sp.flip .bst-grid img:first-child { grid-column: 3; }
+  #pj-modal .bst-end { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 40px 0 24px; text-align: center; }
+  #pj-modal .bst-end img { width: 64px; height: auto; filter: invert(.92) !important; margin-bottom: 18px; }
+  #pj-modal .bst-end p { margin: 0; font-size: clamp(22px, 2.4vw, 30px); font-style: italic; color: var(--bs-ink); }
+  #pj-modal .bst-end p + p { font-size: 17px; color: var(--bs-mute); }
+  #bst-lb { position: fixed; inset: 0; z-index: 1100; display: flex; align-items: center; justify-content: center; background: rgba(8,8,7,.94); opacity: 0; pointer-events: none; transition: opacity .2s ease; cursor: zoom-out; }
+  #bst-lb.open { opacity: 1; pointer-events: auto; }
+  #bst-lb .w { display: flex; align-items: center; gap: clamp(28px, 3.5vw, 56px); max-width: min(1240px, calc(100vw - 160px)); }
+  #bst-lb img { max-width: min(62vw, calc(88vh * .8)); max-height: 88vh; width: auto; height: auto; display: block; flex: none; box-shadow: 0 20px 60px rgba(0,0,0,.5); cursor: zoom-out; }
+  #bst-lb .tx { width: 320px; flex: 0 1 320px; max-height: 88vh; overflow-y: auto; cursor: default; font-family: 'Cormorant Garamond', Georgia, serif; font-variant-numeric: lining-nums; color: #cfcac0; }
+  #bst-lb .tx h4 { margin: 14px 0 18px; font-weight: 400; font-style: italic; font-size: 30px; line-height: 1.1; color: #ebe7df; text-wrap: balance; }
+  #bst-lb .tx p { margin: 0 0 12px; font-size: 17px; line-height: 1.55; text-wrap: pretty; }
+  #bst-lb .tx p.h { margin: 18px 0 6px; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: #a19c92; }
+  #bst-lb .tx p.r { margin-top: 18px; font-style: italic; color: #d0493f; }
+  #bst-lb .tx ul { margin: 0 0 12px; padding: 0; list-style: none; }
+  #bst-lb .tx li { position: relative; padding-left: 16px; font-size: 17px; line-height: 1.5; margin-bottom: 4px; }
+  #bst-lb .tx li::before { content: "·"; position: absolute; left: 2px; color: #d0493f; }
+  #bst-lb button { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; border: 1px solid rgba(235,231,223,.25); background: transparent; color: #ebe7df; font: 20px/1 Georgia, serif; cursor: pointer; }
+  #bst-lb button:hover { background: #ebe7df; color: #0e0f0d; }
+  #bst-lb .p { left: 24px; } #bst-lb .n { right: 24px; }
+  #bst-lb .c { font-size: 15px; letter-spacing: .08em; color: #a19c92; }
+  @media (max-width: 760px) {
+    #pj-modal .pj-panel.bestiary .pj-body { padding-top: 40px; }
+    #pj-modal .pj-panel.bestiary .pj-text { margin-top: 40px; gap: 28px !important; }
+    #pj-modal .bst-head { grid-template-columns: 1fr; }
+    #pj-modal .bst-head p { grid-column: 1; grid-row: auto; margin-top: 18px; font-size: 17px; }
+    #pj-modal .bst-grid, #pj-modal .bst-sp.flip .bst-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+    #pj-modal .bst-grid img:first-child, #pj-modal .bst-sp.flip .bst-grid img:first-child { grid-column: 1 / -1; grid-row: auto; height: auto; }
+    #bst-lb { align-items: flex-start; overflow-y: auto; padding: 24px 20px 96px; }
+    #bst-lb .w { flex-direction: column; align-items: stretch; gap: 20px; max-width: 100%; }
+    #bst-lb img { max-width: 100%; max-height: 64vh; margin: 0 auto; }
+    #bst-lb .tx { width: auto; flex: none; max-height: none; overflow: visible; }
+    #bst-lb button { position: fixed; top: auto; bottom: 16px; transform: none; background: rgba(8,8,7,.8); }
+  }
 </style>
 <div id="pj-cursor">Open project ↗</div>
 <div id="pj-modal" role="dialog" aria-modal="true" aria-label="Project overview">
@@ -1137,6 +1237,14 @@ class Component extends DCLogic {
 <div class="mt-ab"><img width="1920" height="360" class="mt-full" src="manture/mt-ab10-g.webp" alt="Manture - closing" loading="lazy"><img class="mt-pc" width="354" height="220" src="manture/mt-ab10-00-0000.webp" alt="" style="left:40.521%;top:16.667%;width:18.438%" loading="lazy"></div>
 </div>
 </template>
+<template id="pj-gallery-p04" data-theme="bestiary">
+<div class="bst-flow">
+<section class="bst-sp"><div class="bst-head"><span class="bst-n">01 / 03</span><h3>Jesiotr ostronosy</h3><span class="bst-lat">Atlantic sturgeon · Acipenser oxyrinchus</span><span class="bst-st">Extinct in Poland · reintroduced</span><p>A fish older than the dinosaurs: up to 5 m long, 600 kg and over a hundred years old. It once swam from the Baltic up the Vistula and the Oder to spawn; overfishing and the Włocławek dam cut that route, and in 1970 it was declared extinct in Poland. Since 2004 young sturgeon have been released back into both rivers. The series moves from deep water to a wall of facts, then to the slow return.</p></div><div class="bst-grid"><img width="1080" height="1350" src="bst/j1.webp" alt="Bestiariusz - Jesiotr ostronosy, cover" loading="lazy"><img width="1080" height="1350" src="bst/j2.webp" alt="Bestiariusz - Jesiotr ostronosy, older than dinosaurs" loading="lazy"><img width="1080" height="1350" src="bst/j3.webp" alt="Bestiariusz - Jesiotr ostronosy, from the Baltic up the Vistula and the Oder" loading="lazy"><img width="1080" height="1350" src="bst/j4.webp" alt="Bestiariusz - Jesiotr ostronosy, why it disappeared" loading="lazy"><img width="1080" height="1350" src="bst/j5.webp" alt="Bestiariusz - Jesiotr ostronosy, a return a generation long" loading="lazy"></div></section>
+<section class="bst-sp flip"><div class="bst-head"><span class="bst-n">02 / 03</span><h3>Kulik wielki</h3><span class="bst-lat">Eurasian curlew · Numenius arquata</span><span class="bst-st">Endangered</span><p>Europe’s largest wader, with a bill of up to 16 cm curving down like a hook. Before 2004 Poland had 650–700 breeding pairs; by 2018 only 160 were left, as wet meadows were drained, mown early and raided by predators. Since 2014 nests are fenced and chicks reared in aviaries - 738 birds released by 2024 - and the decline has been halted. Red calligraphy and soft, misty photography carry the bird’s wide, open landscape.</p></div><div class="bst-grid"><img width="1080" height="1350" src="bst/k1.webp" alt="Bestiariusz - Kulik wielki, cover" loading="lazy"><img width="1080" height="1350" src="bst/k2.webp" alt="Bestiariusz - Kulik wielki, the largest wader in Europe" loading="lazy"><img width="1080" height="1350" src="bst/k3.webp" alt="Bestiariusz - Kulik wielki, where it lives" loading="lazy"><img width="1080" height="1350" src="bst/k4.webp" alt="Bestiariusz - Kulik wielki, 200 pairs" loading="lazy"><img width="1080" height="1350" src="bst/k5.webp" alt="Bestiariusz - Kulik wielki, the decline was halted" loading="lazy"></div></section>
+<section class="bst-sp"><div class="bst-head"><span class="bst-n">03 / 03</span><h3>Żołędnica europejska</h3><span class="bst-lat">Garden dormouse · Eliomys quercinus</span><span class="bst-st">Critically endangered</span><p>A small rodent in a black mask, 10–17 cm long, with a black-and-white tuft on its tail. Unlike other dormice it spends most of its time on the ground, eating insects, snails and fruit. The last certain record in Poland dates from 1961, in Zawoja below Babia Góra; across Europe it has lost half its range since 1978, and no one knows exactly why. Night, halftone and risograph colour make it an animal you can barely see.</p></div><div class="bst-grid"><img width="1080" height="1350" src="bst/z1.webp" alt="Bestiariusz - Żołędnica europejska, cover" loading="lazy"><img width="1080" height="1350" src="bst/z2.webp" alt="Bestiariusz - Żołędnica europejska, a rodent in a black mask" loading="lazy"><img width="1080" height="1350" src="bst/z3.webp" alt="Bestiariusz - Żołędnica europejska, three places in Poland" loading="lazy"><img width="1080" height="1350" src="bst/z4.webp" alt="Bestiariusz - Żołędnica europejska, 1961" loading="lazy"><img width="1080" height="1350" src="bst/z5.webp" alt="Bestiariusz - Żołędnica europejska, recorded in the book, absent from the forest" loading="lazy"></div></section>
+<div class="bst-end"><img src="bst/sygnet.svg" alt=""><p>Na granicy istnienia.</p><p>On the edge of existence.</p></div>
+</div>
+</template>
 <template id="pj-gallery-p03" data-theme="barber">
 <figure class="pj-cover"><span class="mt-ab" style="display:block"><img width="2240" height="1263" class="mt-full" src="barber/bb-img-23-g.webp" alt="Zakład Barberski - case study cover"><img class="mt-pc" width="160" height="56" src="barber/bb-img-23-0.webp" alt="" style="left:0.000%;top:0.000%;width:7.143%" loading="lazy"><img class="mt-pc" width="664" height="1252" src="barber/bb-img-23-2.webp" alt="" style="left:35.179%;top:0.000%;width:29.643%" loading="lazy"><img class="mt-pc" width="164" height="74" src="barber/bb-img-23-3.webp" alt="" style="left:92.679%;top:0.000%;width:7.321%" loading="lazy"><img class="mt-pc" width="76" height="278" src="barber/bb-img-23-4.webp" alt="" style="left:96.607%;top:40.697%;width:3.393%" loading="lazy"><img class="mt-pc" width="72" height="264" src="barber/bb-img-23-1.webp" alt="" style="left:0.000%;top:41.330%;width:3.214%" loading="lazy"></span></figure>
 <div class="pj-sections">
@@ -1151,7 +1259,7 @@ class Component extends DCLogic {
 </template>
 <script>
 (function () {
-  var IDS = ['p01', 'p02', 'p03'];
+  var IDS = ['p01', 'p04', 'p02', 'p03'];
   var modal = document.getElementById('pj-modal');
   var cursor = document.getElementById('pj-cursor');
   var current = -1, lastFocus = null;
@@ -1179,7 +1287,7 @@ class Component extends DCLogic {
     if (after) els.push(after);
     els.forEach(function (el, k) { el.classList.remove('pj-rise'); void el.offsetWidth; el.style.setProperty('--d', k); el.classList.add('pj-rise'); });
     if (popIO) popIO.disconnect();
-    var later = body.querySelectorAll('.pj-sec-head, .mt-strip .mt-cols > div, .mt-strip .mt-note p, .zs-intro, .zs-slider, .zs-pc, .mt-pc, .zs-end p');
+    var later = body.querySelectorAll('.pj-sec-head, .mt-strip .mt-cols > div, .mt-strip .mt-note p, .bst-head, .bst-end p, .zs-intro, .zs-slider, .zs-pc, .mt-pc, .zs-end p');
     popIO = new IntersectionObserver(function (entries) {
       var n = 0;
       entries.forEach(function (e) {
@@ -1265,6 +1373,7 @@ class Component extends DCLogic {
     modal.querySelector('.pj-panel').classList.toggle('dark', theme === 'dark');
     modal.querySelector('.pj-panel').classList.toggle('barber', theme === 'barber');
     modal.querySelector('.pj-panel').classList.toggle('manture', theme === 'manture');
+    modal.querySelector('.pj-panel').classList.toggle('bestiary', theme === 'bestiary');
     if (!galFrag) {
       var imgs = visual.querySelectorAll('img');
       var fig = function (img) {
@@ -1387,6 +1496,32 @@ class Component extends DCLogic {
     }
     new MutationObserver(function () { var c = modal.querySelector('.bb-sm .mt-sm-car'); if (c) setup(c); }).observe(modal, { childList: true, subtree: true });
   })();
+
+  // bestiary: click a poster to see it full size
+  (function () {
+    var lb = document.createElement('div'); lb.id = 'bst-lb';
+    lb.innerHTML = '<div class="w"><img alt=""><div class="tx"><span class="c"></span><h4></h4><div class="b"></div></div></div><button type="button" class="p" aria-label="Previous">←</button><button type="button" class="n" aria-label="Next">→</button>';
+    document.body.appendChild(lb);
+    var CAP = {"j1":["Jesiotr ostronosy","<p><i>Acipenser oxyrinchus</i></p><p class=\"r\">EX · wymarły w Polsce.<br>Przywracany od 2004 roku.</p>"],"j2":["Ryba starsza niż dinozaury","<ul><li>do 5 m długości</li><li>do 600 kg</li><li>żyje ponad 100 lat</li></ul><p>Jesiotrokształtne pływają po Ziemi od około 300 milionów lat.</p><p>Przez dekady sądzono, że w Bałtyku żył jesiotr zachodni. Dopiero badania DNA muzealnych okazów pokazały, że to jesiotr ostronosy.</p>"],"j3":["Z Bałtyku w górę Wisły i Odry","<p>Jesiotr żyje w morzu, ale rodzi się w rzece. Większość życia spędza w Bałtyku, a co wiosnę, w kwietniu i maju, płynie setki kilometrów w górę tej samej rzeki, w której się wykluł.</p><p>Dawniej docierał Wisłą aż po Śląsk, a Odrą do Raciborza. Narybek ma około 9 mm, młode spędzają w rzece 2–6 lat, a samice dojrzewają do rozrodu dopiero po kilkunastu latach. Dlatego każda przeszkoda na rzece uderza w gatunek na całe pokolenia.</p><p>Regulacja koryt zniszczyła tarliska, a od około 1970 roku zapora we Włocławku zamyka jesiotrom drogę w górę Wisły.</p>"],"j4":["0 dzikich jesiotrów w Polsce","<p>W 1970 roku gatunek uznano u nas za wymarły.</p><p class=\"h\">Dlaczego zniknął</p><ul><li>połowy dla mięsa i ikry</li><li>ścieki w rzekach</li><li>zapora we Włocławku, która odcięła drogę na tarliska</li></ul>"],"j5":["Powrót, który potrwa pokolenie","<p>Od 2004 roku Instytut Rybactwa Śródlądowego sprowadza ikrę z kanadyjskiej rzeki Świętego Jana i wypuszcza młode jesiotry do Odry i Wisły. Niektóre przepływają nawet 3000 km, aż do ujścia Loary we Francji.</p><p class=\"r\">Dopiszmy ciąg dalszy.</p>"],"k1":["Kulik wielki","<p><i>Numenius arquata</i></p><p class=\"r\">EN · zagrożony</p>"],"k2":["Największy z bekasowatych Europy","<ul><li>50–65 cm długości</li><li>skrzydła do 100 cm</li><li>dziób od 10 do 16 cm, wygięty w łuk</li></ul><p>U samicy dziób jest dłuższy niż u samca. Wyciąga nim z ziemi dżdżownice i owady.</p>"],"k3":["Występowanie","<p>Wilgotne łąki w dolinach rzek:</p><p><i>Noteć · Warta · Narew · Bug · Wisła · Omulew · Biebrza</i></p><p>Gniazduje na ziemi, na torfowych łąkach i pastwiskach. Przylatuje w marcu lub kwietniu.</p>"],"k4":["200 par","<p>Przed 2004 rokiem było ich 650–700. W 2018 zostało 160.</p><p class=\"h\">Dlaczego znikają</p><ul><li>coraz wcześniejsze i częstsze koszenie łąk</li><li>lisy i kruki zjadające jaja</li><li>osuszanie podmokłych terenów</li></ul>"],"k5":["Spadek udało się zatrzymać","<p>Od 2014 roku przyrodnicy grodzą gniazda i odchowują pisklęta w wolierach. Do 2024 roku wypuścili 738 kulików. Od 2019 roku populacja powoli rośnie.</p><p class=\"r\">Późniejsze koszenie łąki ratuje lęg.</p>"],"z1":["Żołędnica europejska","<p><i>Eliomys quercinus</i></p><p class=\"r\">CR · krytycznie zagrożona</p>"],"z2":["Gryzoń w czarnej masce","<p>Ssak · rodzina popielicowatych · 10–17 cm długości · ogon z czarno-białą kitką.</p><p>Aktywna nocą, zimę przesypia. W przeciwieństwie do innych popielicowatych większość czasu spędza na ziemi.</p><p>Zjada owady, ślimaki, owoce i nasiona.</p>"],"z3":["Trzy pewne miejsca w całej Polsce","<p>Jedno na Śląsku, pozostałe w Zawoi pod Babią Górą. Lubi kamieniste, skaliste lasy.</p>"],"z4":["1961","<p>Rok ostatniego pewnego zapisu w Polsce. Zawoja, podnóże Babiej Góry.</p><ul><li>od 1978 roku straciła połowę zasięgu w Europie</li><li>naukowcy nadal nie potrafią wyjaśnić przyczyn</li><li>wśród podejrzeń: zmiany w lasach i konkurencja innych popielicowatych</li></ul>"],"z5":["Zapisana w księdze, nieobecna w lesie","<p>Przez dziesięciolecia mylono ją z koszatką, która ma podobną maskę. Dlatego długo sądzono, że wciąż u nas żyje. Autorzy analizy z 2024 roku proponują uznać ją za wymarłą w Polsce.</p><p class=\"r\">Nie spisujmy na straty kolejnych.</p>"]};
+    var im = lb.querySelector('img'), cap = lb.querySelector('.c'), ttl = lb.querySelector('h4'), bd = lb.querySelector('.b'), list = [], i = 0;
+    lb.querySelector('.tx').addEventListener('click', function (e) { e.stopPropagation(); });
+    function show(k) { i = (k + list.length) % list.length; var s = list[i], src = s.dataset.src || s.getAttribute('src'); im.src = src; im.alt = s.alt;
+      var key = (src.match(/([a-z]\d)\.webp/) || [])[1], c = CAP[key] || ['', ''];
+      cap.textContent = (i % 5 + 1) + ' / 5'; ttl.textContent = c[0]; bd.innerHTML = c[1]; lb.querySelector('.tx').scrollTop = 0; }
+    function close() { lb.classList.remove('open'); }
+    modal.addEventListener('click', function (e) {
+      var t = e.target; if (!t.closest || !t.closest('.bst-grid') || t.tagName !== 'IMG') return;
+      list = Array.prototype.slice.call(modal.querySelectorAll('.bst-grid img')); show(list.indexOf(t)); lb.classList.add('open');
+    });
+    lb.querySelector('.p').addEventListener('click', function (e) { e.stopPropagation(); show(i - 1); });
+    lb.querySelector('.n').addEventListener('click', function (e) { e.stopPropagation(); show(i + 1); });
+    lb.addEventListener('click', close);
+    window.addEventListener('keydown', function (e) {
+      if (!lb.classList.contains('open')) return;
+      e.stopImmediatePropagation(); e.preventDefault();
+      if (e.key === 'Escape') close(); else if (e.key === 'ArrowRight') show(i + 1); else if (e.key === 'ArrowLeft') show(i - 1);
+    }, true);
+  })();
   // keep the page's smooth-scroll handler from hijacking wheel events inside the pop-up
   modal.addEventListener('wheel', function (e) { e.stopPropagation(); }, { passive: true });
   modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
@@ -1410,7 +1545,7 @@ class Component extends DCLogic {
     var els = [];
     var work = document.getElementById('work');
     if (work) { els.push(work); kids(work.nextElementSibling).forEach(function (r) { els.push(r); }); }
-    ['p01', 'p02', 'p03'].forEach(function (id) {
+    ['p01', 'p04', 'p02', 'p03'].forEach(function (id) {
       var b = document.getElementById(id); if (!b) return;
       var c = kids(b);
       if (c[0]) els.push(c[0]);
